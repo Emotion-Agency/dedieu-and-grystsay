@@ -32,9 +32,22 @@ useHead({
     <Landscape />
     <SmoothScroll>
       <NuxtLayout>
+        <AppHeader />
         <NuxtPage />
       </NuxtLayout>
     </SmoothScroll>
     <ToastGroup />
   </div>
 </template>
+
+<style scoped lang="scss">
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+}
+</style>

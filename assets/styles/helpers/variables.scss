@@ -1,15 +1,11 @@
 :root {
-  --background: #f8f8f8;
-  --bg-muted-50: rgba(#f8f8f8, 0.5);
-  --foreground: #000;
-  --foreground-muted: #64698b;
-  --border: #e2e4f0;
+  --background: #ffffff;
+  --foreground: #000000;
+  --foreground-muted: #c0bfbf;
+  --dark: #282828;
+  --border: #000000;
   --card: #fff;
-  --muted: #f1f2f9;
-  --dark: #2c2c2c;
-  --secondary: #f1f2f9;
-  --primary: #9047ff;
-  --secondary-button: #f1f2f9;
+  --primary: #c0bfbf;
 
   --status-danger: #ff3b30;
   --status-danger-active: #c91b11;
@@ -26,31 +22,26 @@
   --card-shadow-color: rgba(0, 0, 0, 0.05);
 
   --card-shadow-b: 0px 1px 2px 0px var(--card-shadow-color);
-  --card-shadow:
-    0px 1px 2px 0px var(--card-shadow-color),
-    0px -1px 2px 0px var(--card-shadow-color);
+  --card-shadow: 0px 1px 2px 0px var(--card-shadow-color), 0px -1px 2px 0px var(--card-shadow-color);
 
-  --card-shadow-md:
-    hsl(206 22% 7% / 35%) 0px 10px 38px -10px,
-    hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
+  --card-shadow-md: hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
 }
 
 .dark {
-  --background: #121212;
-  --bg-muted-50: rgba(#121212, 0.5);
-  --foreground: #fff;
-  --foreground-muted: #a3a6c1;
-  --border: #30343f;
-  --card: #181818;
-  --muted: #25282e;
-  --dark: #e5e5e5;
-  --secondary: #25282e;
+  --background: #000000;
+  --foreground: #ffffff;
+  --foreground-muted: #c0bfbf;
+  --dark: #282828;
+  --border: #ffffff;
+  --card: #000000;
+  --primary: #c0bfbf;
+
   --card-shadow-color: rgba(255, 255, 255, 0.05);
 }
 
 //screen config
 $maxWidth: 1440;
-$minWidth: 390;
+$minWidth: 375;
 
 $base-rem-unit: 16;
 

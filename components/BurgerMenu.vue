@@ -125,6 +125,9 @@ watch(isMenuOpened, () => {
             variant="menu"
             @close="toggleMenu"
           />
+
+          <LanguageSwitcher variant="menu" />
+          <MadeByText />
         </div>
       </Transition>
     </Teleport>

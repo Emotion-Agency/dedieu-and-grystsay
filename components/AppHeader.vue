@@ -32,7 +32,10 @@ onBeforeUnmount(() => {
       >
         <Logo />
       </NuxtLink>
-      <Navigation :links="story?.content?.links" variant="header" />
+      <div class="header__navigation">
+        <Navigation :links="story?.content?.links" variant="header" />
+        <LanguageSwitcher variant="header" />
+      </div>
       <BurgerMenu :content="story?.content" />
     </div>
   </header>
@@ -95,5 +98,10 @@ onBeforeUnmount(() => {
       width: 192px;
     }
   }
+}
+
+.header__navigation {
+  display: flex;
+  align-items: center;
 }
 </style>

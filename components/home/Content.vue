@@ -2,6 +2,7 @@
 import { useHomeStory } from '~/composables/stories/homeStory'
 import PageMeta from '../PageMeta.vue'
 import HeroSection from './HeroSection.vue'
+import HomeTicker from './HomeTicker.vue'
 
 const { story } = await useHomeStory()
 console.log(story.value)
@@ -13,6 +14,7 @@ const body = computed(() => {
 const resolveSectionByName = (name: string) => {
   const sections = {
     hero_v1: HeroSection,
+    marquee: HomeTicker,
   }
 
   return sections[name]

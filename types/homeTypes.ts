@@ -12,3 +12,9 @@ export interface iHomeHero {
   component: string
   _uid: string
 }
+
+export interface iHomeTicker {
+  text: string
+  component: string
+  _uid: string
+}

@@ -26,6 +26,7 @@ export const useGetStory = async (route: string) => {
               ? 'draft'
               : 'published',
           cv: Date.now(),
+          resolve_relations: ['projects_carousel.projects'],
         })
 
         response.value = data.story

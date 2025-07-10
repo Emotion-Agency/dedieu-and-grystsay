@@ -3,6 +3,10 @@ import { useHomeStory } from '~/composables/stories/homeStory'
 import PageMeta from '../PageMeta.vue'
 import HeroSection from './HeroSection.vue'
 import HomeTicker from './HomeTicker.vue'
+import ProjectsCarousel from './ProjectsCarousel.vue'
+import AllProjects from './AllProjects.vue'
+import WhoAreWe from './WhoAreWe.vue'
+import CurrentProjects from './CurrentProjects.vue'
 
 const { story } = await useHomeStory()
 console.log(story.value)
@@ -15,6 +19,10 @@ const resolveSectionByName = (name: string) => {
   const sections = {
     hero_v1: HeroSection,
     marquee: HomeTicker,
+    projects_carousel: ProjectsCarousel,
+    all_projects: AllProjects,
+    who_are_we: WhoAreWe,
+    current_projects: CurrentProjects,
   }
 
   return sections[name]

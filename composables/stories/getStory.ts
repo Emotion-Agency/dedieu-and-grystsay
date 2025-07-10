@@ -26,7 +26,10 @@ export const useGetStory = async (route: string) => {
               ? 'draft'
               : 'published',
           cv: Date.now(),
-          resolve_relations: ['projects_carousel.projects'],
+          resolve_relations: [
+            'projects_carousel.projects',
+            'current_projects.projects',
+          ],
         })
 
         response.value = data.story

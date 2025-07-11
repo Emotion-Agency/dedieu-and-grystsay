@@ -1,33 +1,32 @@
 import type { iImage, iMeta } from './story'
 
-export interface iProjectsContent {
+export interface iNewsContent {
   body: any
   meta: iMeta[]
   component: string
   _uid: string
 }
 
-export interface iProjectsHero {
+export interface iNewsHero {
   asset: iImage
-  text: string
   title: string
   component: string
   _uid: string
 }
 
-export interface iProjectsTicker {
+export interface iNewsTicker {
   text: string
   component: string
   _uid: string
 }
 
-export interface iProjectsGrid {
+export interface iNewsGrid {
   button: string
   component: string
   _uid: string
 }
 
-export interface iProjectsCurrentProjects {
+export interface iNewsCurrentProjects {
   marquee_title: string
   projects: any
   component: string

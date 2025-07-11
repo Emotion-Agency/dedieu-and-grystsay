@@ -1,16 +1,16 @@
 <script lang="ts" setup>
-import CurrentProjects from '~/components/projects/CurrentProjects.vue'
-import ProjectsGrid from '~/components/projects/ProjectsGrid.vue'
-import ProjectsHero from '~/components/projects/ProjectsHero.vue'
-import ProjectsTicker from '~/components/projects/ProjectsTicker.vue'
-import { useProjectsStory } from '~/composables/stories/projects/projectsStory'
+import CurrentProjects from '~/components/news/CurrentProjects.vue'
+import NewsGrid from '~/components/news/NewsGrid.vue'
+import NewsHero from '~/components/news/NewsHero.vue'
+import NewsTicker from '~/components/news/NewsTicker.vue'
+import { useNewsStory } from '~/composables/stories/news/newsStory'
 import { pageTransition } from '~/transitions/base'
 
 definePageMeta({
   pageTransition,
 })
 
-const { story } = await useProjectsStory('projects')
+const { story } = await useNewsStory('news')
 
 const body = computed(() => {
   return story?.value?.content?.body
@@ -18,9 +18,9 @@ const body = computed(() => {
 
 const resolveSectionByName = (name: string) => {
   const sections = {
-    hero_v3: ProjectsHero,
-    marquee: ProjectsTicker,
-    projects_grid: ProjectsGrid,
+    hero_v4: NewsHero,
+    marquee: NewsTicker,
+    news_grid: NewsGrid,
     current_projects: CurrentProjects,
   }
 
@@ -45,7 +45,6 @@ const meta = computed(() => {
 <template>
   <div>
     <PageMeta v-if="meta" v-bind="meta" />
-
     <template v-for="item in body" :key="item._uid">
       <component
         :is="resolveSectionByName(item.component)"

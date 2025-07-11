@@ -42,7 +42,17 @@ export default defineNuxtConfig({
         accessToken: process.env.STORYBLOK_TOKEN,
       },
     ],
+    '@nuxtjs/i18n',
   ],
+
+  i18n: {
+    locales: [
+      { code: 'fr', language: 'fr-FR' },
+      { code: 'en', language: 'en-GB' },
+    ],
+    detectBrowserLanguage: false,
+    defaultLocale: 'fr',
+  },
 
   icon: {
     serverBundle: {

@@ -3,6 +3,7 @@ import { useMenuStory } from '~/composables/stories/menuStory'
 
 const { story } = await useMenuStory()
 const { isMenuOpened } = useAppState()
+const localePath = useLocalePath()
 
 let navbarPos
 
@@ -25,7 +26,7 @@ onBeforeUnmount(() => {
   <header class="header container">
     <div class="header__wrapper">
       <NuxtLink
-        to="/"
+        :to="localePath('/')"
         class="header__link"
         aria-label="Site logo"
         @click="onClick"

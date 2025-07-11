@@ -12,6 +12,7 @@ export const useGetStory = async (route: string) => {
   const config = useRuntimeConfig()
   const storyapi = useStoryblokApi()
 
+  const { locale } = useI18n()
   const { isInEditor } = useAppState()
   const { addToast } = useToasts()
 
@@ -26,6 +27,7 @@ export const useGetStory = async (route: string) => {
               ? 'draft'
               : 'published',
           cv: Date.now(),
+          language: locale.value,
           resolve_relations: [
             'projects_carousel.projects',
             'current_projects.projects',

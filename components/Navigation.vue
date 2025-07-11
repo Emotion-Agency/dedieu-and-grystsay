@@ -9,6 +9,8 @@ interface iProps {
 defineProps<iProps>()
 
 const emit = defineEmits(['close'])
+
+const localePath = useLocalePath()
 </script>
 
 <template>
@@ -22,7 +24,7 @@ const emit = defineEmits(['close'])
   >
     <div v-for="(link, idx) in links" :key="idx" class="navigation__item">
       <NuxtLink
-        :to="link?.url?.cached_url"
+        :to="localePath(`/${link?.url?.cached_url?.replace(/^\/+/, '')}`)"
         class="underline navigation__link"
         @click="emit('close')"
       >

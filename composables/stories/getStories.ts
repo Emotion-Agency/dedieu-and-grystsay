@@ -12,6 +12,7 @@ export const useGetStories = async (opts: ISbStoriesParams) => {
 
   const config = useRuntimeConfig()
 
+  const { locale } = useI18n()
   const storyapi = useStoryblokApi()
   const { isInEditor } = useAppState()
   const { addToast } = useToasts()
@@ -23,6 +24,7 @@ export const useGetStories = async (opts: ISbStoriesParams) => {
       try {
         const { data }: tResStory = await storyapi.get('cdn/stories/', {
           sort_by: 'name:asc',
+          language: locale.value,
           version:
             config.public.ENVIROMENT === 'development' || isInEditor.value
               ? 'draft'

@@ -1,3 +1,4 @@
+import type { iCurrentProjects, iProjects } from './projectsTypes'
 import type { iImage, iLink, iMeta } from './story'
 
 export interface iHomeContent {
@@ -22,7 +23,7 @@ export interface iHomeTicker {
 export interface iHomeProjectsCarousel {
   button_text: string
   hover_text: string
-  projects: any
+  projects: iProjects
   component: string
   _uid: string
 }
@@ -54,7 +55,7 @@ export interface iWhoAreLink {
 
 export interface iHomeCurrentProjects {
   marquee_title: string
-  projects: any
+  projects: iCurrentProjects
   component: string
   _uid: string
 }

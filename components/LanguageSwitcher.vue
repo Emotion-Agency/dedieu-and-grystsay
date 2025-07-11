@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import type { LocaleObject } from '@nuxtjs/i18n'
+
 interface iProps {
   variant: 'header' | 'menu'
 }
@@ -6,6 +8,11 @@ interface iProps {
 defineProps<iProps>()
 
 const { locales, setLocale, locale } = useI18n()
+
+const handleClick = (l: LocaleObject) => {
+  setLocale(l.code)
+  setTimeout(() => window.location.reload(), 100)
+}
 </script>
 
 <template>
@@ -21,7 +28,7 @@ const { locales, setLocale, locale } = useI18n()
       :key="l.code"
       class="lang-switch__btn"
       :class="{ 'lang-switch__btn--active': l.code === locale }"
-      @click="setLocale(l.code)"
+      @click="handleClick(l)"
     >
       {{ l.code }}
     </button>

@@ -7,6 +7,28 @@ export interface iProjectsContent {
   _uid: string
 }
 
+export interface iCurrentProjects {
+  items: iCurrentProject[]
+  component: string
+  _uid: string
+}
+
+export interface iCurrentProject {
+  asset: iImage
+  text: string
+  title: string
+  component: string
+  _uid: string
+}
+
+export interface iProjects {
+  body: any
+  description: string
+  title: string
+  component: string
+  _uid: string
+}
+
 export interface iProjectsHero {
   asset: iImage
   text: string
@@ -29,7 +51,7 @@ export interface iProjectsGrid {
 
 export interface iProjectsCurrentProjects {
   marquee_title: string
-  projects: any
+  projects: iCurrentProjects
   component: string
   _uid: string
 }

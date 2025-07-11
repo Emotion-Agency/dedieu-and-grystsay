@@ -4,6 +4,8 @@ interface iProps {
 }
 
 defineProps<iProps>()
+
+const { locales, setLocale, locale } = useI18n()
 </script>
 
 <template>
@@ -14,8 +16,15 @@ defineProps<iProps>()
       'lang-switch--menu': variant === 'menu',
     }"
   >
-    <button class="lang-switch__btn">fr</button>
-    <button class="lang-switch__btn">en</button>
+    <button
+      v-for="l in locales"
+      :key="l.code"
+      class="lang-switch__btn"
+      :class="{ 'lang-switch__btn--active': l.code === locale }"
+      @click="setLocale(l.code)"
+    >
+      {{ l.code }}
+    </button>
   </div>
 </template>
 
@@ -57,7 +66,8 @@ defineProps<iProps>()
     background-color 0.3s ease,
     border 0.3s ease;
 
-  &:hover {
+  &:hover,
+  &--active {
     color: var(--background);
     background-color: var(--foreground);
   }

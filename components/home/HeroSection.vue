@@ -28,4 +28,74 @@ defineProps<IProps>()
   </section>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.hero {
+  padding-top: vw(120);
+  padding-bottom: vw(60);
+
+  @media (max-width: $br1) {
+    padding-top: 80px;
+    padding-bottom: 30px;
+  }
+}
+
+.hero__wrapper {
+  display: grid;
+  height: 100%;
+
+  @media (min-width: $br1) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: vw(35);
+  }
+
+  @media (max-width: $br1) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+.hero__title {
+  @include medium;
+  font-size: vw(152);
+  line-height: 0.84em;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+
+  @media (max-width: $br1) {
+    font-size: size(152, 70);
+    line-height: 0.89em;
+  }
+
+  @media (max-width: $br4) {
+    font-size: 70px;
+  }
+}
+
+.hero__d-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.hero__img {
+  display: block;
+  width: 100%;
+  height: vw(287);
+  object-fit: cover;
+
+  @media (max-width: $br1) {
+    display: none;
+  }
+}
+
+.hero__description {
+  @include medium;
+  font-size: vw(18);
+  line-height: 1.4em;
+  letter-spacing: -0.01em;
+
+  @media (max-width: $br1) {
+    margin-top: 30px;
+    font-size: 18px;
+  }
+}
+</style>

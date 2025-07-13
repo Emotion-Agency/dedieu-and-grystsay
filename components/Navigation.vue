@@ -45,7 +45,7 @@ const localePath = useLocalePath()
     &::before {
       content: '';
       position: absolute;
-      bottom: 0;
+      bottom: -2px;
       left: 50%;
       transform: translateX(-50%);
       width: 100%;
@@ -53,10 +53,6 @@ const localePath = useLocalePath()
       background: currentColor;
       transition: width 0.3s ease;
       pointer-events: none;
-    }
-
-    &:hover::before {
-      width: 0;
     }
   }
 

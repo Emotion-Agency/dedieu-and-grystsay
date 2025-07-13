@@ -20,11 +20,13 @@ onMounted(async () => {
 onBeforeUnmount(() => {
   navbarPos && navbarPos.destroy()
 })
+
+const { headerColor, $headerRef } = useHeaderColor()
 </script>
 
 <template>
-  <header class="header container">
-    <div class="header__wrapper">
+  <header class="header container" :class="`header--${headerColor}`">
+    <div ref="$headerRef" class="header__wrapper">
       <NuxtLink
         :to="localePath('/')"
         class="header__link"

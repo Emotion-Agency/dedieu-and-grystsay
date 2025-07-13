@@ -94,24 +94,26 @@ watch(isMenuOpened, () => {
 
 <template>
   <div class="burger-menu">
-    <button
-      type="button"
-      class="burger-menu__btn"
-      :class="isMenuOpened && 'burger-menu__btn--opened'"
-      :aria-expanded="isMenuOpened"
-      aria-label="Toggle menu"
-      @click="toggleMenu"
-    >
-      <div class="burger-menu__lines">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-      <div class="burger-menu__x">
-        <span></span>
-        <span></span>
-      </div>
-    </button>
+    <Teleport to="body">
+      <button
+        type="button"
+        class="burger-menu__btn"
+        :class="{ 'burger-menu__btn--opened': isMenuOpened }"
+        :aria-expanded="isMenuOpened"
+        aria-label="Toggle menu"
+        @click="toggleMenu"
+      >
+        <div class="burger-menu__lines">
+          <span />
+          <span />
+          <span />
+        </div>
+        <div class="burger-menu__x">
+          <span />
+          <span />
+        </div>
+      </button>
+    </Teleport>
 
     <Teleport to="#teleports">
       <Transition v-bind="menuTransition">
@@ -144,10 +146,26 @@ watch(isMenuOpened, () => {
 }
 
 .burger-menu__btn {
-  position: relative;
   width: 34px;
   height: 34px;
   background: transparent;
+  position: fixed;
+  top: 18px;
+  mix-blend-mode: difference;
+  color: white;
+  z-index: 120;
+
+  @media (min-width: $br1) {
+    display: none;
+  }
+
+  @media (max-width: $br1) {
+    right: $g-sm;
+  }
+
+  @media (max-width: $br3) {
+    right: $g-s;
+  }
 
   .burger-menu__lines {
     position: absolute;
@@ -265,7 +283,7 @@ watch(isMenuOpened, () => {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  z-index: 90;
+  z-index: 110;
   position: fixed;
   top: 50%;
   left: 50%;

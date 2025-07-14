@@ -22,8 +22,9 @@ export interface iHomeTicker {
 
 export interface iHomeProjectsCarousel {
   button_text: string
+  back_button_text: string
   hover_text: string
-  projects: iProjects
+  projects: iProjects[]
   component: string
   _uid: string
 }

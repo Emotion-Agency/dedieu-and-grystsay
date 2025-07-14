@@ -22,11 +22,13 @@ export interface iCurrentProject {
 }
 
 export interface iProjects {
-  body: any
-  description: string
-  title: string
-  component: string
-  _uid: string
+  content: {
+    body: any
+    description: string
+    title: string
+    component: string
+    _uid: string
+  }
 }
 
 export interface iProjectsHero {

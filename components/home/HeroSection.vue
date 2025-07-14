@@ -63,6 +63,7 @@ defineProps<IProps>()
   @media (max-width: $br1) {
     font-size: size(152, 70);
     line-height: 0.89em;
+    word-break: break-word;
   }
 
   @media (max-width: $br4) {

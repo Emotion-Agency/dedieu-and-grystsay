@@ -24,12 +24,12 @@ const titleParts = computed(() => {
       <div class="who-are__top">
         <div class="who-are__line" />
         <div class="who-are__top-content">
-          <img
+          <CustomImage
             class="who-are__img"
             :src="content?.assets[0]?.filename"
             :alt="content?.assets[0]?.alt"
           />
-          <img
+          <CustomImage
             class="who-are__img who-are__img--top-right"
             :src="content?.assets[1]?.filename"
             :alt="content?.assets[1]?.alt"
@@ -52,7 +52,7 @@ const titleParts = computed(() => {
         <div class="who-are__line" />
       </div>
       <div class="who-are__bottom">
-        <img
+        <CustomImage
           class="who-are__img"
           :src="content?.assets[2]?.filename"
           :alt="content?.assets[2]?.alt"
@@ -60,7 +60,7 @@ const titleParts = computed(() => {
         <p class="who-are__text">
           {{ content?.text }}
         </p>
-        <img
+        <CustomImage
           class="who-are__img who-are__img--bottom-right"
           :src="content?.assets[3]?.filename"
           :alt="content?.assets[3]?.alt"

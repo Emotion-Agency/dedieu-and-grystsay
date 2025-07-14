@@ -29,7 +29,7 @@ useHead({
       <Link rel="icon" type="image/x-icon" href="/favicon.ico"></Link>
     </Head>
     <AppGrid />
-    <Landscape />
+    <!-- <Landscape /> -->
     <SmoothScroll>
       <NuxtLayout>
         <AppHeader />

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import CurrentProjects from '~/components/news/CurrentProjects.vue'
+import CurrentProjects from '~/components/CurrentProjects.vue'
 import NewsGrid from '~/components/news/NewsGrid.vue'
 import NewsHero from '~/components/news/NewsHero.vue'
 import NewsTicker from '~/components/news/NewsTicker.vue'

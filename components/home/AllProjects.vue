@@ -11,7 +11,7 @@ defineProps<IProps>()
 <template>
   <section class="all-projects container">
     <div class="all-projects__wrapper">
-      <img
+      <CustomImage
         v-for="(item, idx) in content?.assets"
         :key="idx"
         class="all-projects__images"

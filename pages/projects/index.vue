@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import CurrentProjects from '~/components/projects/CurrentProjects.vue'
+import CurrentProjects from '~/components/CurrentProjects.vue'
 import ProjectsGrid from '~/components/projects/ProjectsGrid.vue'
 import ProjectsHero from '~/components/projects/ProjectsHero.vue'
 import ProjectsTicker from '~/components/projects/ProjectsTicker.vue'

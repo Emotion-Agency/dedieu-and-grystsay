@@ -1,4 +1,3 @@
-import type { iCurrentProjects } from './projectsTypes'
 import type { iImage, iMeta } from './story'
 
 export interface iNewsContent {
@@ -23,13 +22,6 @@ export interface iNewsTicker {
 
 export interface iNewsGrid {
   button: string
-  component: string
-  _uid: string
-}
-
-export interface iNewsCurrentProjects {
-  marquee_title: string
-  projects: iCurrentProjects
   component: string
   _uid: string
 }

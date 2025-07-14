@@ -60,7 +60,7 @@ useIntersectionObserver(elRefs, entries => {
         @mouseup="isIndicatorActive = false"
       >
         <div class="p-carousel__item-wrapper">
-          <img
+          <CustomImage
             class="p-carousel__img"
             :src="project.content?.body[2]?.assets[0]?.filename"
             :alt="project.content?.body[2]?.assets[0]?.alt"

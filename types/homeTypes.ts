@@ -1,4 +1,4 @@
-import type { iCurrentProjects, iProjects } from './projectsTypes'
+import type { iProjects } from './projectsTypes'
 import type { iImage, iLink, iMeta } from './story'
 
 export interface iHomeContent {
@@ -50,13 +50,6 @@ export interface iWhoAreLink {
   icon: iImage
   label: string
   url: iLink
-  component: string
-  _uid: string
-}
-
-export interface iHomeCurrentProjects {
-  marquee_title: string
-  projects: iCurrentProjects
   component: string
   _uid: string
 }

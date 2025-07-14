@@ -7,10 +7,20 @@ export interface iProjectsContent {
   _uid: string
 }
 
-export interface iCurrentProjects {
-  items: iCurrentProject[]
+export interface iCurrentProjectsContent {
+  marquee_title: string
+  projects: iCurrentProjects[]
+  button_text: string
   component: string
   _uid: string
+}
+
+export interface iCurrentProjects {
+  content: {
+    items: iCurrentProject[]
+    component: string
+    _uid: string
+  }
 }
 
 export interface iCurrentProject {

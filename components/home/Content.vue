@@ -6,7 +6,7 @@ import HomeTicker from './HomeTicker.vue'
 import ProjectsCarousel from './ProjectsCarousel.vue'
 import AllProjects from './AllProjects.vue'
 import WhoAreWe from './WhoAreWe.vue'
-import CurrentProjects from './CurrentProjects.vue'
+import CurrentProjects from '../CurrentProjects.vue'
 
 const { story } = await useHomeStory()
 console.log(story.value)

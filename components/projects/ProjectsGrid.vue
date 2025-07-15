@@ -50,7 +50,11 @@ const onGetAll = () => (showAll.value = true)
             <p class="prs-grid__description">
               {{ project?.content?.description }}
             </p>
-            <TextButton class="prs-grid__text-btn">
+            <TextButton
+              tag="nuxt-link"
+              :href="`/${project?.full_slug}`"
+              class="prs-grid__text-btn"
+            >
               {{ story?.content?.see_more }}
             </TextButton>
           </div>

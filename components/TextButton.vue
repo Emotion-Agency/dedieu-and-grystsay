@@ -1,14 +1,36 @@
 <script setup lang="ts">
-const emit = defineEmits(['click'])
+import type { IButton } from '~/types/button'
+
+const props = withDefaults(defineProps<IButton>(), {
+  tag: 'button',
+  type: 'button',
+})
+
+const tag = computed(() => {
+  if (props.tag === 'nuxt-link') {
+    return resolveComponent('NuxtLink')
+  } else return props.tag ?? 'button'
+})
+
+const to = props.tag === 'nuxt-link' ? props.href : undefined
+const href = props.tag === 'a' ? props.href : undefined
 </script>
 
 <template>
-  <button type="button" class="text-button" @click="emit('click')">
+  <component
+    :is="tag"
+    :type="type"
+    :to="to"
+    :href="href"
+    :target="props.tag === 'a' ? '_blank' : undefined"
+    :rel="props.tag === 'a' ? 'noreferer noopener' : undefined"
+    class="text-button"
+  >
     <IconsRightArrow />
     <span>
       <slot />
     </span>
-  </button>
+  </component>
 </template>
 
 <style scoped lang="scss">

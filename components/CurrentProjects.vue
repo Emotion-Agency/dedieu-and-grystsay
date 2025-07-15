@@ -14,7 +14,7 @@ const { story } = await useGlobalStory()
 <template>
   <section class="current-projects">
     <div class="current-projects__ticker">
-      <ScrollTicker>{{ content?.marquee_title }}</ScrollTicker>
+      <Ticker is-current-projects>{{ content?.marquee_title }}</Ticker>
     </div>
 
     <div class="current-projects__wrapper container">

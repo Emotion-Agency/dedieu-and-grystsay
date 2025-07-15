@@ -4,6 +4,7 @@ import DownArrow from './icons/DownArrow.vue'
 
 interface iProps {
   speed?: number
+  isCurrentProjects?: boolean
 }
 
 const props = defineProps<iProps>()
@@ -64,18 +65,22 @@ onMounted(async () => {
 </script>
 
 <template>
-  <section ref="containerRef" class="h-ticker">
+  <section
+    ref="containerRef"
+    class="ticker"
+    :class="{ 'ticker--projects': isCurrentProjects }"
+  >
     <div class="ticker__wrapper">
       <div ref="tickerRef1" class="ticker__content">
         <template v-for="i in repeatCount" :key="'slot1-' + i">
-          <slot />
-          <DownArrow />
+          <span><slot /></span>
+          <DownArrow v-if="!isCurrentProjects" />
         </template>
       </div>
       <div ref="tickerRef2" class="ticker__content">
         <template v-for="i in repeatCount" :key="'slot2-' + i">
-          <slot />
-          <DownArrow />
+          <span><slot /></span>
+          <DownArrow v-if="!isCurrentProjects" />
         </template>
       </div>
     </div>
@@ -83,7 +88,7 @@ onMounted(async () => {
 </template>
 
 <style scoped lang="scss">
-.h-ticker {
+.ticker {
   overflow: hidden;
   background: transparent;
   color: var(--foreground);
@@ -110,6 +115,27 @@ onMounted(async () => {
 
   &::after {
     bottom: 0;
+  }
+
+  &--projects {
+    padding: vw(35) 0;
+
+    @media (max-width: $br1) {
+      padding: 20px 0;
+    }
+
+    .ticker__content {
+      @include medium;
+      font-size: vw(100);
+      line-height: 1em;
+      gap: vw(35);
+      margin-right: vw(35);
+
+      @media (max-width: $br1) {
+        gap: 25px;
+        margin-right: 25px;
+      }
+    }
   }
 }
 

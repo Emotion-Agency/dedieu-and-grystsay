@@ -1,30 +1,65 @@
 <script setup lang="ts">
 import { useGlobalStory } from '~/composables/stories/globalStory'
-import type { iCurrentProjectsContent } from '~/types/projectsTypes'
+import type {
+  iCurrentProject,
+  iCurrentProjectsContent,
+} from '~/types/projectsTypes'
 
 interface IProps {
   content: iCurrentProjectsContent
 }
 
-defineProps<IProps>()
+const props = defineProps<IProps>()
 
 const { story } = await useGlobalStory()
+
+const projects = props.content.projects[0].content.items
+const totalProjects = projects.length
+const isMobile = ref(false)
+
+const currentIndex = ref(0)
+
+const visibleProjects = computed<iCurrentProject[]>(() => {
+  if (isMobile.value) {
+    return [...projects]
+  }
+
+  return Array.from(
+    { length: 3 },
+    (_, i) => projects[(currentIndex.value + i) % totalProjects]
+  )
+})
+
+const nextProject = computed<iCurrentProject>(
+  () => projects[(currentIndex.value + 3) % totalProjects]
+)
+
+const handleNext = () => {
+  currentIndex.value = (currentIndex.value + 1) % totalProjects
+}
+
+onMounted(() => {
+  const updateIsMobile = () => {
+    isMobile.value = window.innerWidth < 960
+  }
+
+  updateIsMobile()
+  window.addEventListener('resize', updateIsMobile)
+})
 </script>
 
 <template>
   <section class="current-projects">
     <div class="current-projects__ticker">
-      <Ticker is-current-projects>{{ content?.marquee_title }}</Ticker>
+      <Ticker is-current-projects>{{ content.marquee_title }}</Ticker>
     </div>
 
     <div class="current-projects__wrapper container">
       <ul class="current-projects__list">
+        <!-- First 3 visible projects -->
         <li
-          v-for="(project, idx) in content?.projects[0].content?.items.slice(
-            0,
-            -1
-          )"
-          :key="idx"
+          v-for="(project, idx) in visibleProjects"
+          :key="`${project.title}-${isMobile ? idx : (currentIndex + idx) % totalProjects}`"
           class="current-projects__item"
         >
           <div class="current-projects__item-content">
@@ -37,20 +72,34 @@ const { story } = await useGlobalStory()
             <div class="current-projects__info">
               <h3 class="current-projects__title">{{ project.title }}</h3>
               <p class="current-projects__text">{{ project.text }}</p>
-              <p class="current-projeects__number">{{ idx + 1 }}</p>
+              <p class="current-projeects__number">
+                {{
+                  isMobile
+                    ? idx + 1
+                    : ((currentIndex + idx) % totalProjects) + 1
+                }}
+              </p>
             </div>
           </div>
         </li>
 
-        <li class="current-projects__item current-projects__item--last">
+        <!-- 4th: next project preview with "Next" button -->
+        <li
+          v-if="!isMobile"
+          class="current-projects__item current-projects__item--last"
+        >
           <div class="current-projects__item-content">
             <CustomImage
-              :src="content?.projects[0].content?.items.at(-1)?.asset.filename"
-              :alt="content?.projects[0].content?.items.at(-1)?.asset.alt"
+              :src="nextProject.asset.filename"
+              :alt="nextProject.asset.alt"
               class="current-projects__img"
             />
 
-            <button type="button" class="current-projects__next-btn">
+            <button
+              type="button"
+              class="current-projects__next-btn"
+              @click="handleNext"
+            >
               <IconsRightArrow />
               <span>{{ story?.content?.slides_next }}</span>
             </button>

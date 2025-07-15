@@ -31,11 +31,9 @@ defineProps<IProps>()
 <style scoped lang="scss">
 .hero {
   padding-top: vw(120);
-  padding-bottom: vw(60);
 
   @media (max-width: $br1) {
     padding-top: 80px;
-    padding-bottom: 30px;
   }
 }
 
@@ -44,8 +42,8 @@ defineProps<IProps>()
   height: 100%;
 
   @media (min-width: $br1) {
-    grid-template-columns: repeat(2, 1fr);
-    gap: vw(35);
+    grid-template-columns: 1fr vw(424);
+    gap: vw(30);
   }
 
   @media (max-width: $br1) {

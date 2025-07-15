@@ -17,4 +17,12 @@ defineProps<IProps>()
   </section>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.h-ticker {
+  padding-top: vw(60);
+
+  @media (max-width: $br1) {
+    padding-top: 30px;
+  }
+}
+</style>

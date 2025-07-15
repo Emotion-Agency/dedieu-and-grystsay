@@ -95,14 +95,9 @@ onMounted(() => {
               class="current-projects__img"
             />
 
-            <button
-              type="button"
-              class="current-projects__next-btn"
-              @click="handleNext"
-            >
-              <IconsRightArrow />
-              <span>{{ story?.content?.slides_next }}</span>
-            </button>
+            <TextButton class="current-projects__btn" @click="handleNext">
+              {{ story?.content?.slides_next }}
+            </TextButton>
           </div>
         </li>
       </ul>
@@ -213,47 +208,9 @@ onMounted(() => {
   }
 }
 
-.current-projects__next-btn {
-  display: flex;
-  align-items: center;
-  gap: vw(15);
-  background-color: transparent;
+.current-projects__btn {
   margin: 0 auto;
   margin-top: vw(30);
-
-  &:hover {
-    span::before {
-      width: 100%;
-    }
-
-    svg {
-      transform: scale(0.8);
-    }
-  }
-
-  svg {
-    display: block;
-    width: vw(32.5);
-    height: vw(13);
-    transition: transform 0.3s ease;
-  }
-
-  span {
-    position: relative;
-
-    &::before {
-      content: '';
-      position: absolute;
-      bottom: -2px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 0;
-      height: 1px;
-      background: currentColor;
-      transition: width 0.3s ease;
-      pointer-events: none;
-    }
-  }
 
   @media (max-width: $br1) {
     display: none;

@@ -1,6 +1,15 @@
 import type { iImage, iMeta } from './story'
 
+export interface iProjectContent {
+  body: any
+  meta: iMeta[]
+  component: string
+  _uid: string
+}
+
 export interface iProjectsContent {
+  title: string
+  description: string
   body: any
   meta: iMeta[]
   component: string
@@ -28,16 +37,6 @@ export interface iCurrentProject {
   title: string
   component: string
   _uid: string
-}
-
-export interface iProjects {
-  content: {
-    body: any
-    description: string
-    title: string
-    component: string
-    _uid: string
-  }
 }
 
 export interface iProjectsHero {

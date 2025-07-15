@@ -18,13 +18,13 @@ html {
 
 body {
   color: var(--foreground);
-
   font-size: 1rem;
   position: relative;
   font-family: sans-serif;
   overscroll-behavior-y: none;
   overflow: hidden;
   @include smooth-font;
+  @include regular;
 
   @media (max-width: $br1) {
     font-size: 16px;

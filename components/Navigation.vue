@@ -85,6 +85,15 @@ const localePath = useLocalePath()
   }
 
   &--footer {
+    @media (min-width: $br1) {
+      gap: vw(20);
+    }
+
+    @media (max-width: $br1) {
+      width: 100%;
+      justify-content: space-between;
+    }
+
     .navigation__link {
       color: var(--background);
     }

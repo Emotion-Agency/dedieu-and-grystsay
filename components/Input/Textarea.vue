@@ -69,14 +69,17 @@ const onInput = () => {
   border: none;
   outline: none;
   resize: none;
-  padding: rem(8) rem(12);
+  padding: rem(25) rem(28);
   width: 100%;
   height: 100%;
   background-color: transparent;
-  color: var(--foreground);
+  color: var(--background);
+  @include regular;
 
   &::placeholder {
-    color: var(--foreground-muted);
+    color: var(--background);
+    text-transform: capitalize;
+    @include regular;
   }
 }
 </style>

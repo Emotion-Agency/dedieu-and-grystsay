@@ -9,7 +9,6 @@ import WhoAreWe from './WhoAreWe.vue'
 import CurrentProjects from '../CurrentProjects.vue'
 
 const { story } = await useHomeStory()
-console.log(story.value)
 
 const body = computed(() => {
   return story?.value?.content?.body

@@ -7,7 +7,6 @@ definePageMeta({
 })
 
 const { story } = await useContactStory()
-console.log(story.value)
 
 const meta = computed(() => {
   const data = story?.value?.content?.meta[0]

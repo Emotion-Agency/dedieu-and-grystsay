@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { TransitionProps } from 'vue'
+import { useMadeByStory } from '~/composables/stories/madeByStory'
 import { gsap } from '~/libs/gsap'
 import type { iMenuContent } from '~/types/menuTypes'
 
@@ -9,6 +10,7 @@ interface iProps {
 
 defineProps<iProps>()
 
+const { story: madeByStory } = await useMadeByStory()
 const { isMenuOpened } = useAppState()
 
 const toggleMenu = () => {
@@ -129,7 +131,7 @@ watch(isMenuOpened, () => {
           />
 
           <LanguageSwitcher variant="menu" />
-          <MadeByText />
+          <MadeByText :content="madeByStory?.content" color="light" />
         </div>
       </Transition>
     </Teleport>

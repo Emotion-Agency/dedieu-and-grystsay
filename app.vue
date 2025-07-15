@@ -20,7 +20,7 @@ useHead({
 </script>
 
 <template>
-  <div id="app">
+  <div id="app" class="app">
     <Head>
       <Meta
         name="viewport"
@@ -33,7 +33,10 @@ useHead({
     <SmoothScroll>
       <NuxtLayout>
         <AppHeader />
-        <NuxtPage />
+        <main class="app__main">
+          <NuxtPage />
+        </main>
+        <AppFooter />
       </NuxtLayout>
     </SmoothScroll>
     <ToastGroup />
@@ -42,12 +45,10 @@ useHead({
 
 <style scoped lang="scss">
 .app {
-  display: flex;
-  flex-direction: column;
   min-height: 100vh;
 }
 
-.main-content {
+.app__main {
   flex: 1;
 }
 </style>

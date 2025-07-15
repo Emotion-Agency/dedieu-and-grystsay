@@ -12,8 +12,6 @@ definePageMeta({
 
 const { story } = await useNewsStory('news')
 
-console.log(story.value)
-
 const body = computed(() => {
   return story?.value?.content?.body
 })

@@ -1,13 +1,14 @@
 <script setup lang="ts">
+import { useGlobalStory } from '~/composables/stories/globalStory'
 import type { iCurrentProjectsContent } from '~/types/projectsTypes'
 
 interface IProps {
   content: iCurrentProjectsContent
 }
 
-const props = defineProps<IProps>()
+defineProps<IProps>()
 
-console.log(props.content)
+const { story } = await useGlobalStory()
 </script>
 
 <template>
@@ -51,7 +52,7 @@ console.log(props.content)
 
             <button type="button" class="current-projects__next-btn">
               <IconsRightArrow />
-              <span>{{ content?.button_text }}</span>
+              <span>{{ story?.content?.slides_next }}</span>
             </button>
           </div>
         </li>

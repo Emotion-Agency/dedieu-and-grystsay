@@ -10,7 +10,6 @@ export interface iProjectsContent {
 export interface iCurrentProjectsContent {
   marquee_title: string
   projects: iCurrentProjects[]
-  button_text: string
   component: string
   _uid: string
 }

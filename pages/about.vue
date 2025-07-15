@@ -10,7 +10,6 @@ definePageMeta({
 })
 
 const { story } = await useAboutStory()
-console.log(story.value)
 
 const body = computed(() => {
   return story?.value?.content?.body

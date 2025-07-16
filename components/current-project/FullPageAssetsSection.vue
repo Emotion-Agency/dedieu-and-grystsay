@@ -10,8 +10,29 @@ defineProps<IProps>()
 
 <template>
   <section class="full-assets container">
-    <div class="full-assets__wrapper">Full page assets section</div>
+    <div class="full-assets__wrapper">
+      <CustomImage
+        :src="content?.assets[0]?.filename"
+        :alt="content?.assets[0]?.alt"
+        class="full-assets__img"
+      />
+    </div>
   </section>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.full-assets {
+  padding-top: vw(40);
+
+  @media (max-width: $br1) {
+    padding-top: 30px;
+  }
+}
+
+.full-assets__img {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+}
+</style>

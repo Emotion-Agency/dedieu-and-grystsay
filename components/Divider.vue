@@ -1,12 +1,4 @@
-<script setup lang="ts">
-import type { iCurrentProjectDivider } from '~/types/currentProjectTypes'
-
-interface IProps {
-  content: iCurrentProjectDivider
-}
-
-defineProps<IProps>()
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <div class="divider container">

@@ -57,10 +57,9 @@ const titleParts = computed(() => {
                 class="footer__textarea"
               />
             </div>
-
-            <button type="submit" class="footer__form-btn">
+            <LoFiButton type="submit" class="footer__form-btn">
               {{ formStory?.content?.submit_button }}
-            </button>
+            </LoFiButton>
           </form>
           <div class="footer__contacts">
             <a
@@ -192,29 +191,10 @@ const titleParts = computed(() => {
 }
 
 .footer__form-btn {
-  @include regular;
-  width: fit-content;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   margin-top: vw(28);
-  padding: vw(15) vw(45);
-  border-radius: vw(100);
-  font-size: vw(16);
-  letter-spacing: -0.03em;
-  line-height: 1.3em;
-  text-transform: capitalize;
-  transition: background-color 0.3s ease;
-
-  &:hover {
-    background-color: var(--foreground-muted);
-  }
 
   @media (max-width: $br1) {
     margin-top: 40px;
-    font-size: 16px;
-    padding: 13px 42px;
-    border-radius: 100px;
   }
 }
 

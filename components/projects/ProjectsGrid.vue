@@ -63,7 +63,7 @@ const onGetAll = () => (showAll.value = true)
       <CircleButton
         v-if="isButtonVisible"
         v-show="!isMobile"
-        direction="right"
+        direction="left"
         class="prs-grid__circle-btn"
         @click="onGetAll"
       >
@@ -72,7 +72,7 @@ const onGetAll = () => (showAll.value = true)
       <CircleButton
         v-if="isButtonVisible"
         v-show="isMobile"
-        direction="left"
+        direction="right"
         class="prs-grid__circle-btn"
         @click="onGetAll"
       >

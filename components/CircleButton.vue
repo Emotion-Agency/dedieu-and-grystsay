@@ -41,18 +41,18 @@ const emit = defineEmits(['click'])
   line-height: 1.13em;
 
   &--left {
-    transform: rotate(25deg);
-
-    &:hover {
-      transform: rotate(25deg) scale(0.9);
-    }
-  }
-
-  &--right {
     transform: rotate(-25deg);
 
     &:hover {
       transform: rotate(-25deg) scale(0.9);
+    }
+  }
+
+  &--right {
+    transform: rotate(25deg);
+
+    &:hover {
+      transform: rotate(25deg) scale(0.9);
     }
   }
 

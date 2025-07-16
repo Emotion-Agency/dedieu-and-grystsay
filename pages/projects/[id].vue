@@ -1,16 +1,17 @@
 <script setup lang="ts">
 import AssetTextSection from '~/components/current-project/AssetTextSection.vue'
 import ConceptSection from '~/components/current-project/ConceptSection.vue'
-import DividerSection from '~/components/current-project/DividerSection.vue'
 import FullPageAssetsSection from '~/components/current-project/FullPageAssetsSection.vue'
 import HeroSection from '~/components/current-project/HeroSection.vue'
 import ProjectTicker from '~/components/current-project/ProjectTicker.vue'
 import TextBlockSection from '~/components/current-project/TextBlockSection.vue'
 import VisionSection from '~/components/current-project/VisionSection.vue'
+import Divider from '~/components/Divider.vue'
 import { useCurrentProjectStory } from '~/composables/stories/projects/currentProjectStory'
 
 const { params } = useRoute()
 const { story } = await useCurrentProjectStory(params?.id as string, 'projects')
+console.log(story.value)
 
 if (!story.value) {
   showError({
@@ -30,7 +31,7 @@ const resolveSectionByName = (name: string) => {
     full_page_assets: FullPageAssetsSection,
     asset_text_section: AssetTextSection,
     concept: ConceptSection,
-    divider: DividerSection,
+    divider: Divider,
     vision: VisionSection,
     text_block: TextBlockSection,
   }

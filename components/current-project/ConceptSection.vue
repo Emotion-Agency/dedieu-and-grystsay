@@ -15,7 +15,6 @@ const { visibleItems, currentIndex, next } = useInfiniteSlider(
 
 <template>
   <section class="p-concept container">
-    <div class="p-concept__line" />
     <div class="p-concept__wrapper">
       <div class="p-concept__content">
         <h2 class="p-concept__title">
@@ -54,7 +53,6 @@ const { visibleItems, currentIndex, next } = useInfiniteSlider(
         <TextButton class="p-concept__btn" @click="next">Next</TextButton>
       </div>
     </div>
-    <div class="p-concept__line" />
   </section>
 </template>
 
@@ -67,16 +65,8 @@ const { visibleItems, currentIndex, next } = useInfiniteSlider(
   }
 }
 
-.p-concept__line {
-  display: block;
-  width: 100%;
-  height: 1px;
-  background-color: var(--foreground);
-}
-
 .p-concept__wrapper {
   display: flex;
-  padding: vw(60) 0;
 
   @media (min-width: $br1) {
     align-items: center;

@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import { useGlobalStory } from '~/composables/stories/globalStory'
-import type {
-  iCurrentProject,
-  iCurrentProjectsContent,
-} from '~/types/projectsTypes'
+import type { iCurrentProjectsContent } from '~/types/projectsTypes'
 
 interface IProps {
   content: iCurrentProjectsContent
@@ -14,38 +11,12 @@ const props = defineProps<IProps>()
 const { story } = await useGlobalStory()
 
 const projects = props.content.projects[0].content.items
-const totalProjects = projects.length
-const isMobile = ref(false)
 
-const currentIndex = ref(0)
-
-const visibleProjects = computed<iCurrentProject[]>(() => {
-  if (isMobile.value) {
-    return [...projects]
-  }
-
-  return Array.from(
-    { length: 3 },
-    (_, i) => projects[(currentIndex.value + i) % totalProjects]
-  )
-})
-
-const nextProject = computed<iCurrentProject>(
-  () => projects[(currentIndex.value + 3) % totalProjects]
+const { visibleItems, currentIndex, next } = useInfiniteSlider(
+  projects,
+  4,
+  projects.length
 )
-
-const handleNext = () => {
-  currentIndex.value = (currentIndex.value + 1) % totalProjects
-}
-
-onMounted(() => {
-  const updateIsMobile = () => {
-    isMobile.value = window.innerWidth < 960
-  }
-
-  updateIsMobile()
-  window.addEventListener('resize', updateIsMobile)
-})
 </script>
 
 <template>
@@ -56,13 +27,12 @@ onMounted(() => {
 
     <div class="current-projects__wrapper container">
       <ul class="current-projects__list">
-        <!-- First 3 visible projects -->
         <li
-          v-for="(project, idx) in visibleProjects"
-          :key="`${project.title}-${isMobile ? idx : (currentIndex + idx) % totalProjects}`"
+          v-for="(project, idx) in visibleItems"
+          :key="idx"
           class="current-projects__item"
         >
-          <div class="current-projects__item-content">
+          <div v-if="idx !== 3" class="current-projects__item-content">
             <CustomImage
               :src="project.asset.filename"
               :alt="project.asset.alt"
@@ -72,30 +42,32 @@ onMounted(() => {
             <div class="current-projects__info">
               <h3 class="current-projects__title">{{ project.title }}</h3>
               <p class="current-projects__text">{{ project.text }}</p>
-              <p class="current-projeects__number">
-                {{
-                  isMobile
-                    ? idx + 1
-                    : ((currentIndex + idx) % totalProjects) + 1
-                }}
+              <p class="current-projects__number">
+                {{ ((currentIndex + idx) % projects.length) + 1 }}
               </p>
             </div>
           </div>
-        </li>
 
-        <!-- 4th: next project preview with "Next" button -->
-        <li
-          v-if="!isMobile"
-          class="current-projects__item current-projects__item--last"
-        >
-          <div class="current-projects__item-content">
+          <div
+            v-else
+            class="current-projects__item-content"
+            :class="'current-projects__item-content--last'"
+          >
             <CustomImage
-              :src="nextProject.asset.filename"
-              :alt="nextProject.asset.alt"
+              :src="project.asset.filename"
+              :alt="project.asset.alt"
               class="current-projects__img"
             />
 
-            <TextButton class="current-projects__btn" @click="handleNext">
+            <div class="current-projects__info">
+              <h3 class="current-projects__title">{{ project.title }}</h3>
+              <p class="current-projects__text">{{ project.text }}</p>
+              <p class="current-projects__number">
+                {{ ((currentIndex + idx) % projects.length) + 1 }}
+              </p>
+            </div>
+
+            <TextButton class="current-projects__btn" @click="next">
               {{ story?.content?.slides_next }}
             </TextButton>
           </div>
@@ -139,13 +111,20 @@ onMounted(() => {
 
 .current-projects__item {
   width: 100%;
+}
 
+.current-projects__item-content {
   &--last {
     .current-projects__img {
       @media (min-width: $br1) {
         height: vw(200);
         width: vw(200);
         border-radius: 100%;
+      }
+    }
+    .current-projects__info {
+      @media (min-width: $br1) {
+        display: none;
       }
     }
   }
@@ -196,7 +175,7 @@ onMounted(() => {
   }
 }
 
-.current-projeects__number {
+.current-projects__number {
   @include regular;
   font-size: vw(100);
   line-height: 1em;

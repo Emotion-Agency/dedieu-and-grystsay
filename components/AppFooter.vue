@@ -243,6 +243,7 @@ const titleParts = computed(() => {
   display: flex;
   align-items: center;
   gap: vw(10);
+  transition: color 0.3s ease;
 
   svg {
     display: block;
@@ -253,6 +254,10 @@ const titleParts = computed(() => {
       width: 27px;
       height: 27px;
     }
+  }
+
+  &:hover {
+    color: var(--primary);
   }
 
   @media (max-width: $br1) {

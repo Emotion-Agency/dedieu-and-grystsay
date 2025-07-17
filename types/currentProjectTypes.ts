@@ -9,7 +9,7 @@ export interface iCurrentProjectTextBlock {
 }
 
 export interface iCurrentProjectVision {
-  corousel: iImage[]
+  carousel: iImage[]
   text: string
   title: string
   component: string

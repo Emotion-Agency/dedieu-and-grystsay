@@ -3,15 +3,28 @@ import AssetTextSection from '~/components/current-project/AssetTextSection.vue'
 import ConceptSection from '~/components/current-project/ConceptSection.vue'
 import FullPageAssetsSection from '~/components/current-project/FullPageAssetsSection.vue'
 import HeroSection from '~/components/current-project/HeroSection.vue'
+import NextProjectButton from '~/components/current-project/NextProjectButton.vue'
 import ProjectTicker from '~/components/current-project/ProjectTicker.vue'
 import TextBlockSection from '~/components/current-project/TextBlockSection.vue'
 import VisionSection from '~/components/current-project/VisionSection.vue'
 import Divider from '~/components/Divider.vue'
 import { useCurrentProjectStory } from '~/composables/stories/projects/currentProjectStory'
+import { useProjectsStories } from '~/composables/stories/projects/projectsStories'
 
 const { params } = useRoute()
 const { story } = await useCurrentProjectStory(params?.id as string, 'projects')
-console.log(story.value)
+const { projects } = await useProjectsStories('projects')
+
+const currentIndex = computed(() =>
+  projects.value.findIndex(p => p.full_slug === story.value.full_slug)
+)
+
+const nextProject = computed(() => {
+  if (currentIndex.value === -1 || projects.value.length === 0) return null
+  const nextIndex = (currentIndex.value + 1) % projects.value.length
+
+  return projects.value[nextIndex]
+})
 
 if (!story.value) {
   showError({
@@ -53,5 +66,8 @@ const resolveSectionByName = (name: string) => {
         <p>Unknown component: {{ item.component }}</p>
       </div>
     </template>
+    <div class="container">
+      <NextProjectButton :project="nextProject" />
+    </div>
   </div>
 </template>

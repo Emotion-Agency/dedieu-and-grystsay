@@ -11,7 +11,12 @@ defineProps<IProps>()
 <template>
   <section class="full-assets container">
     <div class="full-assets__wrapper">
+      <FullImageSlider
+        v-if="content?.assets.length > 1"
+        :images="content?.assets"
+      />
       <CustomImage
+        v-else
         :src="content?.assets[0]?.filename"
         :alt="content?.assets[0]?.alt"
         class="full-assets__img"

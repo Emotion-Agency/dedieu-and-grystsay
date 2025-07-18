@@ -9,7 +9,6 @@ interface IProps {
 defineProps<IProps>()
 
 const { projects } = await useProjectsStories('projects')
-console.log(projects.value)
 </script>
 
 <template>

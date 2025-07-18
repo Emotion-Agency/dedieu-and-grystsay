@@ -9,7 +9,6 @@ interface IProps {
 defineProps<IProps>()
 
 const { news } = await useNewsStories('news')
-console.log(news.value)
 </script>
 
 <template>

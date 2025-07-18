@@ -16,11 +16,3 @@ export interface iAboutTicker {
   component: string
   _uid: string
 }
-
-export interface iAboutTextBlock {
-  size: string
-  text: string
-  title: string
-  component: string
-  _uid: string
-}

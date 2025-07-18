@@ -1,13 +1,6 @@
 import type { iImage, iMeta } from './story'
+import type { iTextBlock } from './textBlockTypes'
 import type { iVisionContent } from './visionTypes'
-
-export interface iCurrentProjectTextBlock {
-  size: string
-  text: string
-  title: string
-  component: string
-  _uid: string
-}
 
 export interface iCurrentProjectDivider {
   component: string
@@ -58,7 +51,7 @@ export type iCurrentProjectBody =
   | iCurrentProjectConcept
   | iCurrentProjectDivider
   | iVisionContent
-  | iCurrentProjectTextBlock
+  | iTextBlock
 
 export interface iCurrentProjectContent {
   body: iCurrentProjectBody[]

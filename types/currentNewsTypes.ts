@@ -1,13 +1,6 @@
 import type { iImage, iMeta } from './story'
+import type { iTextBlock } from './textBlockTypes'
 import type { iVisionContent } from './visionTypes'
-
-export interface iCurrentNewsTextBlock {
-  size: string
-  text: string
-  title: string
-  component: string
-  _uid: string
-}
 
 export interface iCurrentNewsDivider {
   component: string
@@ -40,7 +33,7 @@ export type iCurrentNewsBody =
   | iCurrentNewsFullPageAssets
   | iCurrentNewsDivider
   | iVisionContent
-  | iCurrentNewsTextBlock
+  | iTextBlock
 
 export interface iCurrentNewsContent {
   body: iCurrentNewsBody[]

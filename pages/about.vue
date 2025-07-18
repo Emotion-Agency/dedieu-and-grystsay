@@ -3,7 +3,7 @@ import { pageTransition } from '~/transitions/base'
 import { useAboutStory } from '~/composables/stories/aboutStory'
 import HeroSection from '~/components/about/HeroSection.vue'
 import AboutTicker from '~/components/about/AboutTicker.vue'
-import TextBlock from '~/components/about/TextBlock.vue'
+import TextBlockSection from '~/components/about/TextBlockSection.vue'
 
 definePageMeta({
   pageTransition,
@@ -19,7 +19,7 @@ const resolveSectionByName = (name: string) => {
   const sections = {
     full_page_assets: HeroSection,
     marquee: AboutTicker,
-    text_block: TextBlock,
+    text_block: TextBlockSection,
   }
 
   return sections[name]

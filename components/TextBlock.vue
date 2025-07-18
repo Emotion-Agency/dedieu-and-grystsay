@@ -11,7 +11,7 @@ const size = props.content?.size?.toLowerCase()
 </script>
 
 <template>
-  <section class="text-block">
+  <div class="text-block">
     <h2
       class="text-block__title"
       :class="{
@@ -25,7 +25,7 @@ const size = props.content?.size?.toLowerCase()
     <p class="text-block__text">
       {{ content?.text }}
     </p>
-  </section>
+  </div>
 </template>
 
 <style scoped lang="scss">

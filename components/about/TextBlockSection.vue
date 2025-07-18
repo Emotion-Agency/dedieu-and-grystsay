@@ -9,15 +9,15 @@ defineProps<IProps>()
 </script>
 
 <template>
-  <section class="text-block container">
-    <div class="text-block__wrapper">
+  <section class="about-text-block container">
+    <div class="about-text-block__wrapper">
       <TextBlock :content="content" />
     </div>
   </section>
 </template>
 
 <style scoped lang="scss">
-.text-block {
+.about-text-block {
   padding-top: vw(60);
 
   @media (max-width: $br1) {

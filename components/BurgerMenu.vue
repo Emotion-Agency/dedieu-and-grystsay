@@ -31,6 +31,7 @@ const menuTransition: TransitionProps = {
     gsap.set(el, { clearProps: 'all' })
 
     const links = el.querySelectorAll('.navigation__link')
+    const bottomItems = el.querySelectorAll('.burger-menu__bottom')
     enterTimeline = gsap.timeline({ onComplete: done })
 
     enterTimeline
@@ -51,6 +52,18 @@ const menuTransition: TransitionProps = {
         },
         '<+0.2'
       )
+      .fromTo(
+        bottomItems,
+        { y: 20, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.5,
+          stagger: 0.1,
+          ease: 'power2.out',
+        },
+        '<+0.3'
+      )
   },
 
   onLeave(el, done) {
@@ -58,6 +71,7 @@ const menuTransition: TransitionProps = {
     gsap.set(el, { clearProps: 'all' })
 
     const links = el.querySelectorAll('.navigation__link')
+    const bottomItems = el.querySelectorAll('.burger-menu__bottom')
     leaveTimeline = gsap.timeline({ onComplete: done })
 
     leaveTimeline
@@ -71,6 +85,17 @@ const menuTransition: TransitionProps = {
           ease: 'power2.in',
         },
         0
+      )
+      .to(
+        bottomItems,
+        {
+          y: 20,
+          opacity: 0,
+          duration: 0.3,
+          stagger: 0.05,
+          ease: 'power2.in',
+        },
+        '<+0.1'
       )
       .to(
         el,
@@ -124,14 +149,20 @@ watch(isMenuOpened, () => {
           class="burger-menu__content"
           :class="isMenuOpened && 'burger-menu__content--opened'"
         >
-          <Navigation
-            :links="content?.links"
-            variant="menu"
-            @close="toggleMenu"
-          />
+          <div class="burger-menu__inner">
+            <div class="burger-menu__nav">
+              <Navigation
+                :links="content?.links"
+                variant="menu"
+                @close="toggleMenu"
+              />
+            </div>
 
-          <LanguageSwitcher variant="menu" />
-          <MadeByText :content="madeByStory?.content" color="light" />
+            <div class="burger-menu__bottom">
+              <LanguageSwitcher variant="menu" />
+              <MadeByText :content="madeByStory?.content" color="light" />
+            </div>
+          </div>
         </div>
       </Transition>
     </Teleport>
@@ -284,7 +315,7 @@ watch(isMenuOpened, () => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   z-index: 110;
   position: fixed;
   top: 50%;
@@ -294,5 +325,28 @@ watch(isMenuOpened, () => {
   height: 100dvh;
   background: var(--foreground);
   overflow-y: auto;
+  padding: 1rem;
+}
+
+.burger-menu__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+}
+
+.burger-menu__nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.burger-menu__bottom {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10vh;
+  margin-top: 20vh;
 }
 </style>

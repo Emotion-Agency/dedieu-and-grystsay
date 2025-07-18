@@ -51,6 +51,12 @@ const handleClick = (l: LocaleObject) => {
   &--menu {
     .lang-switch__btn {
       color: var(--background);
+      background-color: var(--foreground);
+
+      &--active {
+        color: var(--foreground);
+        background-color: var(--background);
+      }
     }
   }
 }
@@ -73,16 +79,14 @@ const handleClick = (l: LocaleObject) => {
     background-color 0.3s ease,
     border 0.3s ease;
 
-  &:hover,
   &--active {
     color: var(--background);
     background-color: var(--foreground);
   }
 
-  @media (max-width: $br1) {
-    &:active {
-      border-color: var(--background);
-    }
+  &:hover {
+    color: var(--background);
+    background-color: var(--foreground);
   }
 
   @media (max-width: $br1) {

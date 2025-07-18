@@ -1,15 +1,8 @@
 import type { iImage, iMeta } from './story'
+import type { iVisionContent } from './visionTypes'
 
 export interface iCurrentNewsTextBlock {
   size: string
-  text: string
-  title: string
-  component: string
-  _uid: string
-}
-
-export interface iCurrentNewsVision {
-  carousel: iImage[]
   text: string
   title: string
   component: string
@@ -46,7 +39,7 @@ export type iCurrentNewsBody =
   | iCurrentNewsMarquee
   | iCurrentNewsFullPageAssets
   | iCurrentNewsDivider
-  | iCurrentNewsVision
+  | iVisionContent
   | iCurrentNewsTextBlock
 
 export interface iCurrentNewsContent {

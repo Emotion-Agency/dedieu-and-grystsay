@@ -9,15 +9,15 @@ defineProps<IProps>()
 </script>
 
 <template>
-  <section class="p-vision container">
-    <div class="p-vision__wrapper">
+  <section class="news-vision container">
+    <div class="news-vision__wrapper">
       <Vision :content="content" />
     </div>
   </section>
 </template>
 
 <style scoped lang="scss">
-.p-vision {
+.news-vision {
   padding-top: vw(60);
 
   @media (max-width: $br1) {

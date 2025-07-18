@@ -1,15 +1,8 @@
 import type { iImage, iMeta } from './story'
+import type { iVisionContent } from './visionTypes'
 
 export interface iCurrentProjectTextBlock {
   size: string
-  text: string
-  title: string
-  component: string
-  _uid: string
-}
-
-export interface iCurrentProjectVision {
-  carousel: iImage[]
   text: string
   title: string
   component: string
@@ -64,7 +57,7 @@ export type iCurrentProjectBody =
   | iCurrentProjectAssetText
   | iCurrentProjectConcept
   | iCurrentProjectDivider
-  | iCurrentProjectVision
+  | iVisionContent
   | iCurrentProjectTextBlock
 
 export interface iCurrentProjectContent {

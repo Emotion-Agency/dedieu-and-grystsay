@@ -2,6 +2,7 @@
 import FullPageAssetsSection from '~/components/current-news/FullPageAssetsSection.vue'
 import HeroSection from '~/components/current-news/HeroSection.vue'
 import NewsTicker from '~/components/current-news/NewsTicker.vue'
+import VisionSection from '~/components/current-news/VisionSection.vue'
 import { useCurrentNewsStory } from '~/composables/stories/news/currentNewsStory'
 
 const { params } = useRoute()
@@ -24,6 +25,7 @@ const resolveSectionByName = (name: string) => {
     hero_v5: HeroSection,
     marquee: NewsTicker,
     full_page_assets: FullPageAssetsSection,
+    vision: VisionSection,
   }
 
   return sections[name]

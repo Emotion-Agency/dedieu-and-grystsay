@@ -35,7 +35,7 @@ const handleClick = (l: LocaleObject) => {
   </div>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
 .lang-switch {
   position: relative;
   display: flex;

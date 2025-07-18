@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const route = useRoute()
 
-const isContactPage = computed(() => route.fullPath === '/contact')
+const isContactPage = computed(() => route.path.includes('/contact'))
 </script>
 
 <template>

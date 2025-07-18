@@ -35,7 +35,7 @@ const localePath = useLocalePath()
   </nav>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
 .navigation {
   display: flex;
   align-items: center;

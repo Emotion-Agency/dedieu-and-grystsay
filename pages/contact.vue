@@ -43,8 +43,7 @@ const meta = computed(() => {
     padding-top: 85px;
   }
 }
-.contact__wrapper {
-}
+
 .contact__title {
   @include medium;
   font-size: vw(100);

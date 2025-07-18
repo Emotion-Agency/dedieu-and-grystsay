@@ -13,7 +13,7 @@ const { story: madeByStory } = await useMadeByStory()
 
 const localePath = useLocalePath()
 const route = useRoute()
-const isContactPage = computed(() => route.fullPath === '/contact')
+const isContactPage = computed(() => route.path.includes('/contact'))
 const titleParts = computed(() => {
   const title = footerStory.value?.content?.title || ''
   const [first = '', ...rest] = title.split(' ')

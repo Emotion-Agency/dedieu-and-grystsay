@@ -1,6 +1,12 @@
 <script lang="ts" setup>
 import { useMenuStory } from '~/composables/stories/menuStory'
 
+interface iProps {
+  isContactPage: boolean
+}
+
+defineProps<iProps>()
+
 const { story } = await useMenuStory()
 const { isMenuOpened } = useAppState()
 const localePath = useLocalePath()
@@ -20,20 +26,18 @@ onMounted(async () => {
 onBeforeUnmount(() => {
   navbarPos && navbarPos.destroy()
 })
-
-const { headerColor, $headerRef } = useHeaderColor()
 </script>
 
 <template>
-  <header class="header container" :class="`header--${headerColor}`">
-    <div ref="$headerRef" class="header__wrapper">
+  <header class="header container" :class="{ 'header--dark': isContactPage }">
+    <div class="header__wrapper">
       <NuxtLink
         :to="localePath('/')"
         class="header__link"
         aria-label="Site logo"
         @click="onClick"
       >
-        <Logo />
+        <Logo :color="isContactPage ? 'light' : 'dark'" />
       </NuxtLink>
       <div class="header__navigation">
         <Navigation :links="story?.content?.links" variant="header" />
@@ -44,7 +48,7 @@ const { headerColor, $headerRef } = useHeaderColor()
   </header>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
 .header {
   padding-top: vw(18);
   padding-bottom: vw(18);
@@ -81,6 +85,28 @@ const { headerColor, $headerRef } = useHeaderColor()
   @media (max-width: $br1) {
     padding-top: 16px;
     padding-bottom: 16px;
+  }
+
+  &--dark {
+    background-color: var(--foreground);
+    color: var(--background);
+
+    .navigation__link {
+      color: var(--background);
+    }
+
+    .lang-switch__btn {
+      color: var(--background);
+
+      &:hover {
+        color: var(--foreground);
+        background-color: var(--background);
+      }
+    }
+
+    &::before {
+      background-color: var(--background);
+    }
   }
 }
 

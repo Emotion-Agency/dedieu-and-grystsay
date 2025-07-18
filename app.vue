@@ -17,6 +17,10 @@ useHead({
     id: 'scroll-container',
   },
 })
+
+const route = useRoute()
+
+const isContactPage = computed(() => route.path.includes('/contact'))
 </script>
 
 <template>
@@ -32,7 +36,7 @@ useHead({
     <!-- <Landscape /> -->
     <SmoothScroll>
       <NuxtLayout>
-        <AppHeader />
+        <AppHeader :is-contact-page="isContactPage" />
         <main class="app__main">
           <NuxtPage />
         </main>

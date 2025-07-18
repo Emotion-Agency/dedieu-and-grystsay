@@ -1,7 +1,11 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const route = useRoute()
+
+const isContactPage = computed(() => route.fullPath === '/contact')
+</script>
 
 <template>
-  <div class="page-layout">
+  <div class="page-layout" :class="{ 'page-layout--contact': isContactPage }">
     <slot />
   </div>
 </template>
@@ -11,5 +15,9 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+
+  &--contact {
+    background-color: var(--foreground);
+  }
 }
 </style>

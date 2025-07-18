@@ -12,7 +12,8 @@ const { story: menuStory } = await useMenuStory()
 const { story: madeByStory } = await useMadeByStory()
 
 const localePath = useLocalePath()
-
+const route = useRoute()
+const isContactPage = computed(() => route.fullPath === '/contact')
 const titleParts = computed(() => {
   const title = footerStory.value?.content?.title || ''
   const [first = '', ...rest] = title.split(' ')
@@ -25,13 +26,13 @@ const titleParts = computed(() => {
 </script>
 
 <template>
-  <footer class="footer">
-    <h2 class="footer__title footer__title--first">
+  <footer class="footer" :class="{ 'footer--contact': isContactPage }">
+    <h2 v-if="!isContactPage" class="footer__title footer__title--first">
       {{ titleParts.first }}
     </h2>
     <div class="footer__main-wrapper">
       <div class="footer__wrapper container">
-        <h2 class="footer__title">
+        <h2 v-if="!isContactPage" class="footer__title">
           {{ titleParts.rest }}
         </h2>
         <div class="foooter__about-block">
@@ -124,6 +125,10 @@ const titleParts = computed(() => {
   @media (max-width: $br1) {
     padding-top: 100px;
   }
+
+  &--contact {
+    padding-top: 0;
+  }
 }
 
 .footer__wrapper {
@@ -158,6 +163,23 @@ const titleParts = computed(() => {
 
     @media (max-width: $br1) {
       top: 8px;
+    }
+  }
+
+  &--contact {
+    font-size: vw(100);
+    line-height: 0.87em;
+    letter-spacing: -0.03em;
+    text-align: left;
+
+    @media (max-width: $br1) {
+      font-size: size(100, 60);
+      line-height: 0.93em;
+      letter-spacing: -0.02em;
+    }
+
+    @media (max-width: $br4) {
+      font-size: 60px;
     }
   }
 }

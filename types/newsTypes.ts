@@ -4,6 +4,8 @@ export interface iNewsContent {
   body: any
   meta: iMeta[]
   component: string
+  title: string
+  description: string
   _uid: string
 }
 

@@ -1,0 +1,227 @@
+<script setup lang="ts">
+import { useGlobalStory } from '~/composables/stories/globalStory'
+import type { iGridContent, iGridItems } from '~/types/gridTypes'
+import type { iStory } from '~/types/story'
+
+interface IProps {
+  content: iGridContent
+  items: iStory<iGridItems>[]
+}
+
+const props = defineProps<IProps>()
+
+const { story } = await useGlobalStory()
+
+const { width } = useWindowSize()
+const isMobile = computed(() => width.value <= 960)
+
+const SHOW_LIMIT = 5
+const showAll = ref(false)
+
+const isButtonVisible = computed(
+  () => !showAll.value && props.items.length > SHOW_LIMIT
+)
+
+const filteredItems = computed(() =>
+  showAll.value ? props.items : props.items.slice(0, SHOW_LIMIT)
+)
+
+const onGetAll = () => (showAll.value = true)
+</script>
+
+<template>
+  <div class="grid-list">
+    <ul class="grid-list__items">
+      <li
+        v-for="(item, idx) in filteredItems"
+        :key="idx"
+        class="grid-list__item"
+      >
+        <CustomImage
+          :src="item?.content?.body[2]?.assets[0]?.filename"
+          :alt="item?.content?.body[2]?.assets[0]?.alt"
+          class="grid-list__img"
+        />
+        <div class="grid-list__content">
+          <h3 class="grid-list__title">
+            {{ item?.content?.title }}
+          </h3>
+          <p class="grid-list__description">
+            {{ item?.content?.description }}
+          </p>
+          <TextButton
+            tag="nuxt-link"
+            :href="`/${item?.full_slug}`"
+            class="grid-list__text-btn"
+          >
+            {{ story?.content?.see_more }}
+          </TextButton>
+        </div>
+      </li>
+    </ul>
+    <CircleButton
+      v-if="isButtonVisible"
+      v-show="!isMobile"
+      direction="left"
+      class="grid-list__circle-btn"
+      @click="onGetAll"
+    >
+      {{ content?.button }}
+    </CircleButton>
+    <CircleButton
+      v-if="isButtonVisible"
+      v-show="isMobile"
+      direction="right"
+      class="grid-list__circle-btn"
+      @click="onGetAll"
+    >
+      {{ content?.button }}
+    </CircleButton>
+  </div>
+</template>
+
+<style scoped lang="scss">
+.grid-list__items {
+  position: relative;
+
+  @media (min-width: $br1) {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    column-gap: vw(40);
+  }
+
+  @media (max-width: $br1) {
+    display: flex;
+    flex-direction: column;
+    gap: 72px;
+  }
+}
+
+.grid-list__item {
+  @media (min-width: $br1) {
+    &:nth-child(5n + 1) {
+      @include col(1, 6);
+
+      .grid-list__description {
+        max-width: 80%;
+      }
+    }
+
+    &:nth-child(5n + 2) {
+      @include col(9, 12);
+
+      .grid-list__img {
+        height: vw(567);
+      }
+    }
+
+    &:nth-child(5n + 3) {
+      @include col(1, 7);
+      margin-top: vw(158);
+      display: flex;
+      gap: vw(38);
+
+      .grid-list__img {
+        width: vw(364);
+        height: vw(454);
+      }
+
+      .grid-list__content {
+        margin-top: 0;
+      }
+
+      .grid-list__description {
+        max-width: 80%;
+      }
+    }
+
+    &:nth-child(5n + 4) {
+      @include col(9, 12);
+      margin-top: vw(571);
+
+      .grid-list__img {
+        height: vw(493);
+      }
+    }
+
+    &:nth-child(5n + 5) {
+      @include col(1, 6);
+      margin-top: vw(-88);
+      margin-bottom: vw(88);
+
+      .grid-list__img {
+        height: vw(392);
+      }
+
+      .grid-list__description {
+        max-width: 80%;
+      }
+    }
+  }
+}
+
+.grid-list__content {
+  margin-top: vw(35);
+
+  @media (max-width: $br1) {
+    margin-top: 35px;
+  }
+}
+
+.grid-list__img {
+  display: block;
+  height: auto;
+  width: 100%;
+  object-fit: cover;
+
+  @media (max-width: $br1) {
+    height: 504px;
+  }
+}
+
+.grid-list__title {
+  @include medium;
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+  line-height: 0.83em;
+  font-size: vw(65);
+  word-break: break-word;
+
+  @media (max-width: $br1) {
+    font-size: 65px;
+  }
+}
+
+.grid-list__description {
+  @include regular;
+  font-size: vw(16);
+  line-height: 1.4em;
+  letter-spacing: -0.01em;
+  margin-top: vw(25);
+
+  @media (max-width: $br1) {
+    font-size: 16px;
+    margin-top: 25px;
+  }
+}
+
+.grid-list__text-btn {
+  margin-top: vw(40);
+
+  @media (max-width: $br1) {
+    margin-top: 40px;
+  }
+}
+
+.grid-list__circle-btn {
+  @media (min-width: $br1) {
+    margin-left: auto;
+    margin-right: vw(50);
+  }
+
+  @media (max-width: $br1) {
+    margin-left: 50px;
+    margin-top: 50px;
+  }
+}
+</style>

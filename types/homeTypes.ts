@@ -1,5 +1,5 @@
 import type { iProjectsContent } from './projectsTypes'
-import type { iImage, iLink, iMeta } from './story'
+import type { iImage, iLink, iMeta, iStory } from './story'
 
 export interface iHomeContent {
   body: any
@@ -24,7 +24,7 @@ export interface iHomeProjectsCarousel {
   button_text: string
   back_button_text: string
   hover_text: string
-  projects: { content: iProjectsContent }[]
+  projects: iStory<iProjectsContent>[]
   component: string
   _uid: string
 }

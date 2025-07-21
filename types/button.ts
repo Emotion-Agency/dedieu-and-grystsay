@@ -4,4 +4,5 @@ export interface IButton {
   href?: string
   variant?: 'light' | 'dark'
   disabled?: boolean
+  isReversed?: boolean
 }

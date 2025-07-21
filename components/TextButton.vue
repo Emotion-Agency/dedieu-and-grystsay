@@ -25,6 +25,7 @@ const href = props.tag === 'a' ? props.href : undefined
     :target="props.tag === 'a' ? '_blank' : undefined"
     :rel="props.tag === 'a' ? 'noreferer noopener' : undefined"
     class="text-button"
+    :class="{ 'text-button--reversed': props.isReversed }"
   >
     <IconsRightArrow />
     <span>
@@ -84,6 +85,18 @@ const href = props.tag === 'a' ? props.href : undefined
     svg {
       width: 32.5px;
       height: 13px;
+    }
+  }
+
+  &--reversed {
+    svg {
+      transform: rotate(180deg);
+    }
+
+    &:hover {
+      svg {
+        transform: scale(0.8) rotate(180deg);
+      }
     }
   }
 }

@@ -65,22 +65,6 @@ useIntersectionObserver(elRefs, entries => {
             :src="project.content?.body[2]?.assets[0]?.filename"
             :alt="project.content?.body[2]?.assets[0]?.alt"
           />
-          <div class="p-carousel__content">
-            <div class="p-carousel__content-wrapper">
-              <button type="button" class="p-carousel__back-btn">
-                {{ content?.back_button_text }}
-              </button>
-              <h2 class="p-carousel__title">
-                {{ project?.content?.title }}
-              </h2>
-              <p class="p-carousel__text">
-                {{ project?.content?.description }}
-              </p>
-              <button type="button" class="p-carousel__btn">
-                {{ content?.button_text }}
-              </button>
-            </div>
-          </div>
         </div>
         <div
           ref="cursorIndicators"
@@ -91,6 +75,36 @@ useIntersectionObserver(elRefs, entries => {
           }"
         >
           {{ content?.hover_text }}
+        </div>
+      </div>
+    </div>
+    <div class="p-carousel__item-wrapper--opened">
+      <div class="p-carousel__content">
+        <CustomImage
+          class="p-carousel__content-img"
+          :src="content?.projects?.[0].content?.body[2]?.assets[0]?.filename"
+          :alt="content?.projects?.[0].content?.body[2]?.assets[0]?.alt"
+        />
+
+        <div class="p-carousel__content-wrapper">
+          <TextButton class="p-carousel__back-btn" is-reversed>
+            {{ content?.back_button_text }}
+          </TextButton>
+          <h2 class="p-carousel__title">
+            {{ content?.projects?.[0]?.content?.title }}
+          </h2>
+          <p class="p-carousel__text">
+            {{ content?.projects?.[0]?.content?.description }}
+          </p>
+
+          <LoFiButton
+            tag="nuxt-link"
+            :to="content?.projects?.[0].full_slug"
+            variant="dark"
+            class="p-carousel__btn"
+          >
+            {{ content?.button_text }}
+          </LoFiButton>
         </div>
       </div>
     </div>
@@ -106,6 +120,7 @@ useIntersectionObserver(elRefs, entries => {
     overflow-x: auto;
   }
 }
+
 .p-carousel__wrapper {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
@@ -118,6 +133,7 @@ useIntersectionObserver(elRefs, entries => {
     width: max-content;
   }
 }
+
 .p-carousel__item {
   position: relative;
 
@@ -126,8 +142,13 @@ useIntersectionObserver(elRefs, entries => {
     flex-shrink: 0;
   }
 }
+
 .p-carousel__item-wrapper {
+  &--opened {
+    display: none;
+  }
 }
+
 .p-carousel__img {
   display: block;
   width: 100%;
@@ -148,18 +169,65 @@ useIntersectionObserver(elRefs, entries => {
     cursor: pointer;
   }
 }
+
 .p-carousel__content {
-  display: none;
+  display: grid;
+  grid-template-columns: vw(840) 1fr;
+  width: 100%;
+  gap: vw(58);
+
+  @media (max-width: $br1) {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
 }
-.p-carousel__content-wrapper {
+
+.p-carousel__content-img {
+  display: block;
+  width: 100%;
+  height: vw(740);
+  object-fit: cover;
+
+  @media (max-width: $br1) {
+    height: 558px;
+  }
 }
-.p-carousel__back-btn {
-}
+
 .p-carousel__title {
+  @include medium;
+  font-size: vw(65);
+  line-height: 0.85em;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+  margin-top: vw(10);
+  word-break: break-word;
+
+  @media (max-width: $br1) {
+    font-size: 65px;
+    letter-spacing: -0.02em;
+    margin-top: 25px;
+  }
 }
+
 .p-carousel__text {
+  @include regular;
+  font-size: vw(16);
+  line-height: 1.4em;
+  margin-top: vw(30);
+
+  @media (max-width: $br1) {
+    font-size: 16px;
+    margin-top: 30px;
+  }
 }
+
 .p-carousel__btn {
+  text-transform: uppercase;
+  margin-top: vw(40);
+
+  @media (max-width: $br1) {
+    margin-top: 40px;
+  }
 }
 
 .p-carousel__cursor {

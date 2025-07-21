@@ -33,10 +33,10 @@
     }
   }
 
-  &::placeholder {
-    color: var(--background);
-    transition: color 0.3s $easing;
-  }
+  // &::placeholder {
+  //   color: var(--background);
+  //   transition: color 0.3s $easing;
+  // }
 
   &--number {
     padding-left: rem(12);

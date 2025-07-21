@@ -27,20 +27,25 @@ const meta = computed(() => {
   <div>
     <PageMeta v-if="meta" v-bind="meta" />
     <section class="contact container">
-      <div class="contact__wrapper">
-        <h1 class="contact__title">{{ story?.content?.title }}</h1>
-      </div>
+      <h1 class="contact__title">{{ story?.content?.title }}</h1>
+      <ContactContent />
     </section>
   </div>
 </template>
 
 <style scoped lang="scss">
 .contact {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  justify-content: space-between;
   background-color: var(--foreground);
   padding-top: vw(165);
+  padding-bottom: vw(35);
 
   @media (max-width: $br1) {
     padding-top: 85px;
+    padding-bottom: 30px;
   }
 }
 

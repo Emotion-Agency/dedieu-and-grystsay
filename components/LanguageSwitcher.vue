@@ -10,9 +10,9 @@ defineProps<iProps>()
 
 const { locales, setLocale, locale } = useI18n()
 
-const handleClick = (l: LocaleObject) => {
-  setLocale(l.code)
-  setTimeout(() => window.location.reload(), 100)
+const handleClick = async (l: LocaleObject) => {
+  await setLocale(l.code)
+  window.location.reload()
 }
 </script>
 

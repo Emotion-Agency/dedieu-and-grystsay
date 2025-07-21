@@ -128,6 +128,7 @@ const onSubmit = async (e: Event) => {
     >
       {{ story?.content?.submit_button }}
     </LoFiButton>
+    <ModalsThankyouModal />
   </form>
 </template>
 

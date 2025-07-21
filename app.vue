@@ -40,7 +40,8 @@ const isContactPage = computed(() => route.path.includes('/contact'))
         <main class="app__main">
           <NuxtPage />
         </main>
-        <AppFooter />
+        <Revealer />
+        <AppFooter v-if="!isContactPage" />
       </NuxtLayout>
     </SmoothScroll>
     <ToastGroup />

@@ -14,7 +14,7 @@ defineProps<iProps>()
     :href="content?.link[0]?.url?.cached_url"
     target="_blank"
     rel="noopener noreferrer"
-    class="made-by-text"
+    class="made-by-text underline"
     :class="{
       'made-by-text--light': color === 'light',
       'made-by-text--dark': color === 'dark',
@@ -30,6 +30,7 @@ defineProps<iProps>()
   display: block;
   font-size: vw(16);
   text-transform: lowercase;
+  position: relative;
 
   &--light {
     color: var(--background);

@@ -3,6 +3,7 @@ import type { LocaleObject } from '@nuxtjs/i18n'
 
 interface iProps {
   variant: 'header' | 'menu'
+  isContactPage?: boolean
 }
 
 defineProps<iProps>()
@@ -21,6 +22,7 @@ const handleClick = (l: LocaleObject) => {
     :class="{
       'lang-switch--header': variant === 'header',
       'lang-switch--menu': variant === 'menu',
+      'lang-switch--contact': isContactPage && variant === 'header',
     }"
   >
     <button
@@ -48,13 +50,14 @@ const handleClick = (l: LocaleObject) => {
     }
   }
 
-  &--menu {
+  &--menu,
+  &--contact {
     .lang-switch__btn {
       color: var(--background);
       background-color: var(--foreground);
 
       &--active {
-        color: var(--foreground);
+        color: var(--foreground) !important;
         background-color: var(--background);
       }
     }

@@ -41,7 +41,7 @@ onBeforeUnmount(() => {
       </NuxtLink>
       <div class="header__navigation">
         <Navigation :links="story?.content?.links" variant="header" />
-        <LanguageSwitcher variant="header" />
+        <LanguageSwitcher variant="header" :is-contact-page="isContactPage" />
       </div>
       <BurgerMenu :content="story?.content" />
     </div>

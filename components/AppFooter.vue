@@ -173,29 +173,6 @@ const titleParts = computed(() => {
   }
 }
 
-.footer__form {
-  width: 100%;
-}
-
-.footer__inputs {
-  display: flex;
-  flex-direction: column;
-  gap: vw(20);
-  width: 100%;
-
-  @media (max-width: $br1) {
-    gap: 20px;
-  }
-}
-
-.footer__form-btn {
-  margin-top: vw(28);
-
-  @media (max-width: $br1) {
-    margin-top: 40px;
-  }
-}
-
 .footer__contacts {
   display: flex;
   flex-direction: column;

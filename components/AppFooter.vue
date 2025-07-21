@@ -10,6 +10,7 @@ const { story: formStory } = await useFormStory()
 const { story: companyContactStory } = await useCompanyContactStory()
 const { story: menuStory } = await useMenuStory()
 const { story: madeByStory } = await useMadeByStory()
+const { showThankYou } = useThankyouScreen()
 
 const localePath = useLocalePath()
 const route = useRoute()
@@ -23,10 +24,19 @@ const titleParts = computed(() => {
     rest: rest.join(' '),
   }
 })
+
+const onSubmit = e => {
+  e.preventDefault()
+  showThankYou()
+}
 </script>
 
 <template>
-  <footer class="footer" :class="{ 'footer--contact': isContactPage }">
+  <footer
+    class="footer"
+    :class="{ 'footer--contact': isContactPage }"
+    @submit="onSubmit"
+  >
     <h2 v-if="!isContactPage" class="footer__title footer__title--first">
       {{ titleParts.first }}
     </h2>
@@ -114,6 +124,7 @@ const titleParts = computed(() => {
         </div>
       </div>
     </div>
+    <ModalsThankyouModal />
   </footer>
 </template>
 

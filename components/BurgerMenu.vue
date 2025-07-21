@@ -186,7 +186,7 @@ watch(isMenuOpened, () => {
   top: 18px;
   mix-blend-mode: difference;
   color: white;
-  z-index: 120;
+  z-index: 105;
 
   @media (min-width: $br1) {
     display: none;

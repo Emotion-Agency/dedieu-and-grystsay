@@ -4,5 +4,10 @@ export const useAppState = () => {
   const isWaiting = useState('isWaiting', () => false)
   const isMenuOpened = useState('isMenuOpened', () => false)
 
-  return { isInEditor, isLoaded, isWaiting, isMenuOpened }
+  return {
+    isInEditor,
+    isLoaded,
+    isWaiting,
+    isMenuOpened,
+  }
 }

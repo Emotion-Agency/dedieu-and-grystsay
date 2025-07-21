@@ -1,20 +1,19 @@
 <script lang="ts" setup>
 import { useCompanyContactStory } from '~/composables/stories/companyContactStory'
 import { useFooterStory } from '~/composables/stories/footerStory'
-import { useFormStory } from '~/composables/stories/formStory'
 import { useMadeByStory } from '~/composables/stories/madeByStory'
 import { useMenuStory } from '~/composables/stories/menuStory'
 
 const { story: footerStory } = await useFooterStory()
-const { story: formStory } = await useFormStory()
 const { story: companyContactStory } = await useCompanyContactStory()
 const { story: menuStory } = await useMenuStory()
 const { story: madeByStory } = await useMadeByStory()
-const { showThankYou } = useThankyouScreen()
 
 const localePath = useLocalePath()
 const route = useRoute()
+
 const isContactPage = computed(() => route.path.includes('/contact'))
+
 const titleParts = computed(() => {
   const title = footerStory.value?.content?.title || ''
   const [first = '', ...rest] = title.split(' ')
@@ -24,19 +23,10 @@ const titleParts = computed(() => {
     rest: rest.join(' '),
   }
 })
-
-const onSubmit = e => {
-  e.preventDefault()
-  showThankYou()
-}
 </script>
 
 <template>
-  <footer
-    class="footer"
-    :class="{ 'footer--contact': isContactPage }"
-    @submit="onSubmit"
-  >
+  <footer class="footer" :class="{ 'footer--contact': isContactPage }">
     <h2 v-if="!isContactPage" class="footer__title footer__title--first">
       {{ titleParts.first }}
     </h2>
@@ -46,32 +36,7 @@ const onSubmit = e => {
           {{ titleParts.rest }}
         </h2>
         <div class="foooter__about-block">
-          <form class="footer__form">
-            <div class="footer__inputs">
-              <InputField
-                :placeholder="formStory?.content?.name_field"
-                name="Form name"
-                type="text"
-                :required="true"
-                class="footer__input"
-              />
-              <InputField
-                :placeholder="formStory?.content?.email_field"
-                type="email"
-                name="Form email"
-                :required="true"
-                class="footer__input"
-              />
-              <InputTextarea
-                name="Form message"
-                :placeholder="formStory.content.message_field"
-                class="footer__textarea"
-              />
-            </div>
-            <LoFiButton type="submit" class="footer__form-btn">
-              {{ formStory?.content?.submit_button }}
-            </LoFiButton>
-          </form>
+          <AppForm />
           <div class="footer__contacts">
             <a
               :href="companyContactStory?.content?.links[0]?.url?.cached_url"

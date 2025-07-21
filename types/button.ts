@@ -3,4 +3,5 @@ export interface IButton {
   type?: 'button' | 'submit' | 'reset' | null
   href?: string
   variant?: 'light' | 'dark'
+  disabled?: boolean
 }

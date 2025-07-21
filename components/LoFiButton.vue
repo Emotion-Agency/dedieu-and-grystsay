@@ -27,6 +27,7 @@ const href = props.tag === 'a' ? props.href : undefined
     :rel="props.tag === 'a' ? 'noreferer noopener' : undefined"
     class="lofi-btn"
     :class="`lofi-btn--${props.variant}`"
+    :disabled="props.disabled"
   >
     <slot />
   </component>
@@ -53,7 +54,7 @@ const href = props.tag === 'a' ? props.href : undefined
     background-color: var(--background);
     color: var(--foreground);
 
-    &:hover {
+    &:hover:not(:disabled) {
       background-color: var(--foreground-muted);
     }
   }
@@ -62,9 +63,14 @@ const href = props.tag === 'a' ? props.href : undefined
     background-color: var(--dark);
     color: var(--background);
 
-    &:hover {
+    &:hover:not(:disabled) {
       opacity: 0.8;
     }
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 
   @media (max-width: $br1) {

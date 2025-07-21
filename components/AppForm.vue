@@ -5,7 +5,11 @@ import type { IForm } from '~/types/form'
 const { story } = await useFormStory()
 const { showThankYou } = useThankyouScreen()
 
-const model = defineModel<IForm>()
+const formModel = reactive<IForm>({
+  name: { value: '', error: null },
+  email: { value: '', error: null },
+  message: { value: '', error: null },
+})
 
 const inputs = reactiveComputed(() => [
   {
@@ -14,9 +18,8 @@ const inputs = reactiveComputed(() => [
     type: 'text',
     placeholder: story?.value?.content?.name_field || 'name',
     required: true,
-    value: model.value?.name.value,
-    error: model.value?.name?.error,
-    validators: [Validation.min(2, 'Please enter at least 2 characters')],
+    value: formModel.name.value,
+    error: formModel.name?.error,
   },
   {
     id: `form-email`,
@@ -24,9 +27,8 @@ const inputs = reactiveComputed(() => [
     type: 'email',
     placeholder: story?.value?.content?.email_field || 'email',
     required: true,
-    value: model.value?.email.value,
-    error: model.value?.email?.error,
-    validators: [Validation.email('Please enter a valid email address')],
+    value: formModel.email.value,
+    error: formModel.email?.error,
   },
   {
     id: `form-message`,
@@ -34,22 +36,14 @@ const inputs = reactiveComputed(() => [
     type: 'textarea',
     placeholder: story?.value?.content?.message_field || 'tape ton message',
     required: true,
-    value: model.value?.message.value,
-    error: model.value?.message?.error,
-    validators: [Validation.min(4, 'Please enter at least 4 characters')],
+    value: formModel.message.value,
+    error: formModel.message?.error,
   },
 ])
 
-const isFormValid = computed(() => {
-  if (!model.value) return false
-
-  return Object.values(model.value).every(field => {
-    return !!field.value?.trim() && !field.error
-  })
-})
-
 const onSubmit = e => {
   e.preventDefault()
+  console.log(formModel)
   showThankYou()
 }
 </script>
@@ -61,30 +55,30 @@ const onSubmit = e => {
         <InputTextarea
           v-if="input.type === 'textarea'"
           :id="input.id"
+          v-model="formModel[input.name].value"
           :name="input.name"
           :type="input.type"
           :value="input.value"
           :placeholder="input.placeholder"
           :required="input.required"
           :error="input.error"
-          :validators="input.validators"
           class="form__textarea"
         />
         <InputField
           v-else
           :id="input.id"
+          v-model="formModel[input.name].value"
           :name="input.name"
           :type="input.type"
           :value="input.value"
           :placeholder="input.placeholder"
           :required="input.required"
           :error="input.error"
-          :validators="input.validators"
           class="form__input"
         />
       </div>
     </div>
-    <LoFiButton type="submit" class="form__form-btn" :disabled="!isFormValid">
+    <LoFiButton type="submit" class="form__form-btn">
       {{ story?.content?.submit_button }}
     </LoFiButton>
   </form>

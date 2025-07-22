@@ -6,6 +6,12 @@ export interface iHomeContent {
   meta: iMeta[]
 }
 
+export interface iHomeImages {
+  assets: iImage[]
+  component: string
+  _uid: string
+}
+
 export interface iHomeHero {
   title: string
   text: string
@@ -30,7 +36,7 @@ export interface iHomeProjectsCarousel {
 }
 
 export interface iHomeAllProjects {
-  assets: iImage[]
+  assets: iHomeImages[]
   label: string
   component: string
   _uid: string

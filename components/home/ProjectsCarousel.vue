@@ -80,8 +80,8 @@ const handleClose = () => {
         <div class="p-carousel__item-wrapper">
           <CustomImage
             class="p-carousel__img"
-            :src="project.content?.body[2]?.assets[0]?.filename"
-            :alt="project.content?.body[2]?.assets[0]?.alt"
+            :src="project?.content?.body[2]?.assets[0]?.filename"
+            :alt="project?.content?.body[2]?.assets[0]?.alt"
           />
         </div>
         <div

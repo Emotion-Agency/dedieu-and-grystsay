@@ -40,11 +40,20 @@ const { story } = await useGlobalStory()
   width: 100%;
   margin: 0 auto;
   margin-top: vw(100);
+  overflow: hidden;
+  border-radius: vw(400);
 
   @media (max-width: $br1) {
     max-width: 100%;
     min-height: 498px;
     margin-top: 100px;
+    border-radius: 154px;
+  }
+
+  &:hover {
+    .next-btn__img {
+      transform: scale(1);
+    }
   }
 
   &::before {
@@ -55,12 +64,7 @@ const { story } = await useGlobalStory()
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.2);
-    border-radius: vw(400);
     z-index: 1;
-
-    @media (max-width: $br1) {
-      border-radius: 154px;
-    }
   }
 }
 
@@ -71,12 +75,9 @@ const { story } = await useGlobalStory()
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: vw(400);
   z-index: 0;
-
-  @media (max-width: $br1) {
-    border-radius: 154px;
-  }
+  transform: scale(1.05);
+  transition: transform 0.3s ease-in-out;
 }
 
 .next-btn__content {

@@ -52,6 +52,7 @@ const { visibleItems, currentIndex, next } = useInfiniteSlider(
             v-else
             class="current-projects__item-content"
             :class="'current-projects__item-content--last'"
+            @click="next"
           >
             <CustomImage
               :src="project.asset.filename"
@@ -67,7 +68,7 @@ const { visibleItems, currentIndex, next } = useInfiniteSlider(
               </p>
             </div>
 
-            <TextButton class="current-projects__btn" @click="next">
+            <TextButton class="current-projects__btn">
               {{ story?.content?.slides_next }}
             </TextButton>
           </div>
@@ -77,7 +78,7 @@ const { visibleItems, currentIndex, next } = useInfiniteSlider(
   </section>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
 .current-projects {
   padding-top: vw(80);
 
@@ -133,13 +134,41 @@ const { visibleItems, currentIndex, next } = useInfiniteSlider(
 
 .current-projects__item-content {
   &--last {
+    @media (min-width: $br1) {
+      cursor: pointer;
+      &:hover {
+        .current-projects__img {
+          border-radius: 0;
+        }
+
+        .current-projects__btn {
+          span::before {
+            width: 100%;
+          }
+
+          svg {
+            transform: scale(0.8);
+          }
+        }
+      }
+    }
+
     .current-projects__img {
+      transition: border-radius 0.6s ease;
+
       @media (min-width: $br1) {
         height: vw(200);
         width: vw(200);
         border-radius: 100%;
       }
     }
+
+    .current-projects__btn {
+      @media (max-width: $br1) {
+        display: none;
+      }
+    }
+
     .current-projects__info {
       @media (min-width: $br1) {
         display: none;

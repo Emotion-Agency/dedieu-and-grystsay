@@ -31,7 +31,6 @@ const emit = defineEmits(['click'])
   justify-content: center;
   background-color: var(--dark);
   color: var(--background);
-  transition: transform 0.3s ease;
   border-radius: 100%;
   width: vw(272);
   height: vw(272);
@@ -39,28 +38,34 @@ const emit = defineEmits(['click'])
   @include medium;
   font-size: vw(30);
   line-height: 1.13em;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 
-  &--left {
-    transform: rotate(-25deg);
-
-    &:hover {
-      transform: rotate(-25deg) scale(0.9);
-    }
+  &:hover {
+    transform: scale(0.9);
+    box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.5);
   }
 
-  &--right {
-    transform: rotate(25deg);
-
-    &:hover {
-      transform: rotate(25deg) scale(0.9);
-    }
+  span {
+    display: flex;
+    animation: rotate-animation 7s linear infinite;
   }
 
   @media (max-width: $br1) {
     width: 181px;
     height: 181px;
-    line-height: 1.2em;
     font-size: 20px;
+    line-height: 1.2em;
+  }
+}
+
+@keyframes rotate-animation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }
 </style>

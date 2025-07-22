@@ -5,21 +5,39 @@ interface IProps {
   content: iHomeAllProjects
 }
 
-defineProps<IProps>()
+const props = defineProps<IProps>()
+
+const activeImageIndex = ref(0)
+
+const nextImages = () => {
+  activeImageIndex.value =
+    (activeImageIndex.value + 1) % props.content.assets[0].assets.length
+}
 </script>
 
 <template>
   <section class="all-projects container">
     <div class="all-projects__wrapper">
-      <CustomImage
+      <div
         v-for="(item, idx) in content?.assets"
         :key="idx"
         class="all-projects__images"
-        :src="item?.filename"
-        :alt="item?.alt"
-      />
+      >
+        <CustomImage
+          v-for="(img, index) in item.assets"
+          :key="index"
+          class="all-projects__image"
+          :src="img?.filename"
+          :alt="img?.alt"
+          :class="{ 'all-projects__image--active': activeImageIndex === index }"
+        />
+      </div>
 
-      <h2 class="all-projects__title">
+      <h2
+        class="all-projects__title"
+        @mouseenter="nextImages"
+        @touchstart="nextImages"
+      >
         {{ content?.label }}
       </h2>
     </div>
@@ -53,7 +71,6 @@ defineProps<IProps>()
   display: block;
   width: vw(106);
   height: vw(106);
-  object-fit: cover;
 
   @media (max-width: $br1) {
     width: size(106, 76);
@@ -126,6 +143,20 @@ defineProps<IProps>()
       right: 0;
       bottom: 0;
     }
+  }
+}
+
+.all-projects__image {
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+
+  &--active {
+    opacity: 1;
   }
 }
 

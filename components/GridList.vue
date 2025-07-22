@@ -31,11 +31,12 @@ const onGetAll = () => (showAll.value = true)
 
 <template>
   <div class="grid-list">
-    <ul class="grid-list__items">
-      <li
+    <div class="grid-list__items">
+      <NuxtLink
         v-for="(item, idx) in filteredItems"
         :key="idx"
         class="grid-list__item"
+        :to="`/${item?.full_slug}`"
       >
         <CustomImage
           :src="item?.content?.body[2]?.assets[0]?.filename"
@@ -49,16 +50,12 @@ const onGetAll = () => (showAll.value = true)
           <p class="grid-list__description">
             {{ item?.content?.description }}
           </p>
-          <TextButton
-            tag="nuxt-link"
-            :href="`/${item?.full_slug}`"
-            class="grid-list__text-btn"
-          >
+          <TextButton class="grid-list__text-btn">
             {{ story?.content?.see_more }}
           </TextButton>
         </div>
-      </li>
-    </ul>
+      </NuxtLink>
+    </div>
     <CircleButton
       v-if="isButtonVisible"
       v-show="!isMobile"
@@ -80,7 +77,7 @@ const onGetAll = () => (showAll.value = true)
   </div>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
 .grid-list__items {
   position: relative;
 
@@ -98,6 +95,8 @@ const onGetAll = () => (showAll.value = true)
 }
 
 .grid-list__item {
+  height: fit-content;
+
   @media (min-width: $br1) {
     &:nth-child(5n + 1) {
       @include col(1, 6);
@@ -155,6 +154,18 @@ const onGetAll = () => (showAll.value = true)
 
       .grid-list__description {
         max-width: 80%;
+      }
+    }
+  }
+
+  &:hover {
+    .grid-list__text-btn {
+      span::before {
+        width: 100%;
+      }
+
+      svg {
+        transform: scale(0.8);
       }
     }
   }

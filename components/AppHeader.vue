@@ -60,9 +60,9 @@ onBeforeUnmount(() => {
   left: 0;
   transition:
     transform 1s ease,
-    opacity 1s ease;
+    opacity 1s ease,
+    background-color 0.6s ease;
   background-color: var(--background);
-  transition: background-color 0.6s ease;
 
   &::before {
     content: '';

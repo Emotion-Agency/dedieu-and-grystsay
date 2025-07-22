@@ -13,8 +13,6 @@ const nextImages = () => {
   activeImageIndex.value =
     (activeImageIndex.value + 1) % props.content.assets[0].assets.length
 }
-
-console.log(props.content)
 </script>
 
 <template>

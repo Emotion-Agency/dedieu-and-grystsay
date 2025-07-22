@@ -48,7 +48,6 @@ useIntersectionObserver(elRefs, entries => {
 })
 
 const handleOpen = (project: iStory<iProjectsContent>) => {
-  console.log(project)
   selectedProject.value = project
   isOpenedProject.value = true
 }

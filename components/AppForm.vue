@@ -7,6 +7,7 @@ import {
   email as emailRule,
   helpers,
 } from '@vuelidate/validators'
+import { InputField, InputTextarea } from '#components'
 
 interface IFormModel {
   name: string
@@ -94,28 +95,15 @@ const onSubmit = async (e: Event) => {
         :key="input.id || idx"
         class="form__field"
       >
-        <InputTextarea
-          v-if="input.type === 'textarea'"
+        <component
+          :is="input.type === 'textarea' ? InputTextarea : InputField"
           :id="input.id"
           v-model="formModel[input.name]"
           :name="input.name"
           :placeholder="input.placeholder"
           :required="input.required"
           :errors="v$[input.name].$errors"
-          class="form__textarea"
-          @blur="v$[input.name].$touch()"
-        />
-
-        <InputField
-          v-else
-          :id="input.id"
-          v-model="formModel[input.name]"
-          :name="input.name"
-          :type="input.type"
-          :placeholder="input.placeholder"
-          :required="input.required"
-          :errors="v$[input.name].$errors"
-          class="form__input"
+          :class="input.type === 'textarea' ? 'form__textarea' : 'form__input'"
           @blur="v$[input.name].$touch()"
         />
       </div>

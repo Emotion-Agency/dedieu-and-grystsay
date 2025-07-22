@@ -4,13 +4,11 @@ import { useFonts } from '~/composables/fonts'
 useFonts()
 
 onMounted(async () => {
-  const { hello } = await import('~/utils/hello')
   const { detectOrientationChanges } = await import(
     '~/utils/detectLandscapeOrientation'
   )
 
   detectOrientationChanges()
-  hello()
 })
 
 useHead({
@@ -20,17 +18,14 @@ useHead({
   },
 })
 
-const { toast } = useToasts()
+const route = useRoute()
 
-onMounted(() => {
-  toast.success('Welcome to Emotion template!')
-})
+const isContactPage = computed(() => route.path.includes('/contact'))
 </script>
 
 <template>
-  <div id="app">
+  <div id="app" class="app">
     <Head>
-      <Title>Emotion</Title>
       <Meta
         name="viewport"
         content="width=device-width, initial-scale=1"
@@ -38,12 +33,27 @@ onMounted(() => {
       <Link rel="icon" type="image/x-icon" href="/favicon.ico"></Link>
     </Head>
     <AppGrid />
-    <Landscape />
+    <!-- <Landscape /> -->
     <SmoothScroll>
       <NuxtLayout>
-        <NuxtPage />
+        <AppHeader :is-contact-page="isContactPage" />
+        <main class="app__main">
+          <NuxtPage />
+        </main>
+        <Revealer />
+        <AppFooter v-if="!isContactPage" />
       </NuxtLayout>
     </SmoothScroll>
     <ToastGroup />
   </div>
 </template>
+
+<style scoped lang="scss">
+.app {
+  min-height: 100vh;
+}
+
+.app__main {
+  flex: 1;
+}
+</style>

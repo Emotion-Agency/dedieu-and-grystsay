@@ -76,11 +76,13 @@ const onInput = () => {
   appearance: none;
   border: none;
   outline: none;
-  padding: rem(8) rem(12);
+  padding: rem(8) rem(28);
   width: 100%;
   height: 100%;
   background-color: transparent;
-  color: var(--foreground);
+  color: var(--background);
+  @include regular;
+
   &--start-icon {
     padding-left: rem(36);
   }
@@ -88,7 +90,10 @@ const onInput = () => {
     padding-right: rem(36);
   }
   &::placeholder {
-    color: var(--foreground-muted);
+    color: var(--background);
+    text-transform: capitalize;
+    transition: color 0.3s $easing;
+    @include regular;
   }
 }
 

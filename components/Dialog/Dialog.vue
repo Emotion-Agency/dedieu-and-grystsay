@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { DialogContent, DialogOverlay, DialogRoot } from 'reka-ui'
+import { DialogContent, DialogOverlay, DialogRoot, DialogClose } from 'reka-ui'
 import type { HtmlHTMLAttributes } from 'vue'
 
 defineProps<{
@@ -7,6 +7,15 @@ defineProps<{
 }>()
 
 const isOpen = defineModel<boolean>('open')
+
+watch(isOpen, () => {
+  if (isOpen.value) {
+    window.escroll.disabled = true
+    return
+  } else {
+    window.escroll.disabled = false
+  }
+})
 </script>
 
 <template>
@@ -20,6 +29,9 @@ const isOpen = defineModel<boolean>('open')
             :aria-describedby="undefined"
             v-bind="windowAttrs"
           >
+            <DialogClose @click="isOpen = false">
+              <CloseButton />
+            </DialogClose>
             <slot />
           </DialogContent>
         </div>
@@ -35,7 +47,7 @@ const isOpen = defineModel<boolean>('open')
   justify-content: center;
   align-items: center;
   position: fixed;
-  z-index: 50;
+  z-index: 110;
 }
 
 .dialog__backdrop {
@@ -43,24 +55,68 @@ const isOpen = defineModel<boolean>('open')
   background-color: var(--backdrop);
   position: fixed;
   z-index: 1;
-  backdrop-filter: blur(3px);
+  // backdrop-filter: blur(3px);
 }
 
 .dialog__window {
   position: relative;
-  max-width: rem(600);
-  min-width: rem(520);
   overflow: hidden;
-  background-color: var(--card);
-  border-radius: var(--rounded-lg);
-  max-height: 95vh;
   transition: all 0.3s ease;
-
+  background-color: var(--foreground);
+  color: var(--background);
   z-index: 2;
 
-  @media (max-width: rem(540)) {
-    min-width: auto;
-    width: 90%;
+  @media (min-width: $br1) {
+    max-height: 95vh;
+    min-width: vw(924);
+    padding: vw(145) vw(20);
+    border: 1px solid var(--background);
+  }
+
+  @media (max-width: $br1) {
+    width: 100%;
+    height: 100%;
+    padding: 25px;
+  }
+}
+
+.dialog__close {
+  width: vw(34);
+  height: vw(34);
+  background: transparent;
+  position: absolute;
+  top: vw(20);
+  right: vw(20);
+  z-index: 120;
+  border-radius: 100%;
+  border: 1px solid var(--background);
+  transition: border 0.3s ease;
+
+  @media (max-width: $br1) {
+    width: 34px;
+    height: 34px;
+    top: 20px;
+    right: 20px;
+  }
+
+  span {
+    position: absolute;
+    display: block;
+    background: currentColor;
+    transition: all 0.3s ease;
+    background-color: var(--background);
+    left: 50%;
+    top: 50%;
+    width: 40%;
+    height: 2px;
+
+    &:nth-child(1) {
+      transform: translate(-50%, -50%) rotate(-45deg);
+    }
+
+    &:nth-child(2) {
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
   }
 }
 

@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import type { iHomeProjectsCarousel } from '~/types/homeTypes'
+import type { iProjectsContent } from '~/types/projectsTypes'
+import type { iStory } from '~/types/story'
 
 interface IProps {
   content: iHomeProjectsCarousel
@@ -11,6 +13,7 @@ const isOpenedProject = ref(false)
 const cursorIndicators = ref<(HTMLElement | null)[]>([])
 const elRefs = ref<(HTMLElement | null)[]>([])
 const elRefWrappers = ref<(HTMLElement | null)[]>([])
+const selectedProject = ref<iStory<iProjectsContent> | null>(null)
 
 const isIndicatorActive = ref(false)
 const isIndicatorVisible = ref<boolean[]>([])
@@ -44,7 +47,9 @@ useIntersectionObserver(elRefs, entries => {
   })
 })
 
-const handleOpen = () => {
+const handleOpen = (project: iStory<iProjectsContent>) => {
+  console.log(project)
+  selectedProject.value = project
   isOpenedProject.value = true
 }
 
@@ -70,7 +75,7 @@ const handleClose = () => {
         @mouseleave="() => hideIndicator(idx)"
         @mousedown="isIndicatorActive = true"
         @mouseup="isIndicatorActive = false"
-        @click="handleOpen"
+        @click="handleOpen(project)"
       >
         <div class="p-carousel__item-wrapper">
           <CustomImage
@@ -103,8 +108,8 @@ const handleClose = () => {
         />
         <CustomImage
           class="p-carousel__content-img"
-          :src="content?.projects?.[0].content?.body[2]?.assets[0]?.filename"
-          :alt="content?.projects?.[0].content?.body[2]?.assets[0]?.alt"
+          :src="selectedProject?.content?.body[2]?.assets[0]?.filename"
+          :alt="selectedProject?.content?.body[2]?.assets[0]?.alt"
         />
       </div>
 
@@ -117,15 +122,15 @@ const handleClose = () => {
           {{ content?.back_button_text }}
         </TextButton>
         <h2 class="p-carousel__title">
-          {{ content?.projects?.[0]?.content?.title }}
+          {{ selectedProject?.content?.title }}
         </h2>
         <p class="p-carousel__text">
-          {{ content?.projects?.[0]?.content?.description }}
+          {{ selectedProject?.content?.description }}
         </p>
 
         <LoFiButton
           tag="nuxt-link"
-          :to="content?.projects?.[0].full_slug"
+          :to="selectedProject?.full_slug"
           variant="dark"
           class="p-carousel__btn"
         >

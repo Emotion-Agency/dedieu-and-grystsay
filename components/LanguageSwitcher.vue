@@ -9,8 +9,11 @@ interface iProps {
 defineProps<iProps>()
 
 const { locales, setLocale, locale } = useI18n()
+const { isTransitionEnabled } = useAppState()
 
 const handleClick = async (l: LocaleObject) => {
+  isTransitionEnabled.value = false
+  await nextTick()
   await setLocale(l.code)
   window.location.reload()
 }

@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { delayPromise } from '@emotionagency/utils'
 import { useMenuStory } from '~/composables/stories/menuStory'
 
 interface iProps {
@@ -8,6 +9,7 @@ interface iProps {
 defineProps<iProps>()
 
 const { story } = await useMenuStory()
+
 const { isMenuOpened } = useAppState()
 const localePath = useLocalePath()
 

@@ -30,15 +30,21 @@ const { visibleItems, currentIndex, next } = useInfiniteSlider(
           :key="idx"
           class="p-concept__item"
         >
+          <div v-if="idx === 2" class="p-concept__item-content" @click="next">
+            <CustomImage
+              :src="img.filename"
+              :alt="img.alt"
+              class="p-concept__img"
+              :class="{ 'p-concept__img--last': idx === 2 }"
+            />
+            <TextButton class="p-concept__btn"> Next </TextButton>
+          </div>
           <CustomImage
+            v-else
             :src="img.filename"
             :alt="img.alt"
             class="p-concept__img"
-            :class="{ 'p-concept__img--last': idx === 2 }"
           />
-          <TextButton v-if="idx === 2" class="p-concept__btn" @click="next">
-            Next
-          </TextButton>
         </li>
       </ul>
       <div class="p-concept__pagination p-concept__pagination--mob">
@@ -56,7 +62,7 @@ const { visibleItems, currentIndex, next } = useInfiniteSlider(
   </section>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
 .p-concept {
   padding-top: vw(60);
 
@@ -159,11 +165,37 @@ const { visibleItems, currentIndex, next } = useInfiniteSlider(
   }
 }
 
+.p-concept__item-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: vw(30);
+  cursor: pointer;
+
+  &:hover {
+    .p-concept__img {
+      border-radius: 0;
+    }
+
+    .p-concept__btn {
+      span::before {
+        width: 100%;
+      }
+
+      svg {
+        transform: scale(0.8);
+      }
+    }
+  }
+}
+
 .p-concept__img {
   display: block;
   width: vw(200);
   height: vw(290);
   object-fit: cover;
+  transition: border-radius 0.6s ease;
 
   &--last {
     @media (min-width: $br1) {
@@ -175,15 +207,6 @@ const { visibleItems, currentIndex, next } = useInfiniteSlider(
   @media (max-width: $br1) {
     width: 100%;
     height: 504px;
-  }
-}
-
-.p-concept__btn {
-  @media (min-width: $br1) {
-    position: absolute;
-    bottom: vw(-66);
-    left: 50%;
-    transform: translateX(-50%);
   }
 }
 

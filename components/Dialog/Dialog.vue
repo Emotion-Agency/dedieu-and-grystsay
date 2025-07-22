@@ -30,10 +30,7 @@ watch(isOpen, () => {
             v-bind="windowAttrs"
           >
             <DialogClose @click="isOpen = false">
-              <button type="button" class="dialog__close">
-                <span />
-                <span />
-              </button>
+              <CloseButton />
             </DialogClose>
             <slot />
           </DialogContent>

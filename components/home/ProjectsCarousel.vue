@@ -7,6 +7,7 @@ interface IProps {
 
 defineProps<IProps>()
 
+const isOpenedProject = ref(false)
 const cursorIndicators = ref<(HTMLElement | null)[]>([])
 const elRefs = ref<(HTMLElement | null)[]>([])
 const elRefWrappers = ref<(HTMLElement | null)[]>([])
@@ -42,11 +43,22 @@ useIntersectionObserver(elRefs, entries => {
     }
   })
 })
+
+const handleOpen = () => {
+  isOpenedProject.value = true
+}
+
+const handleClose = () => {
+  isOpenedProject.value = false
+}
 </script>
 
 <template>
   <section class="p-carousel container">
-    <div class="p-carousel__wrapper">
+    <div
+      class="p-carousel__wrapper"
+      :class="{ 'p-carousel__wrapper--opened': isOpenedProject }"
+    >
       <div
         v-for="(project, idx) in content?.projects?.slice(0, 6)"
         :key="idx"
@@ -58,6 +70,7 @@ useIntersectionObserver(elRefs, entries => {
         @mouseleave="() => hideIndicator(idx)"
         @mousedown="isIndicatorActive = true"
         @mouseup="isIndicatorActive = false"
+        @click="handleOpen"
       >
         <div class="p-carousel__item-wrapper">
           <CustomImage
@@ -78,34 +91,46 @@ useIntersectionObserver(elRefs, entries => {
         </div>
       </div>
     </div>
-    <div class="p-carousel__item-wrapper--opened">
-      <div class="p-carousel__content">
+    <div
+      class="p-carousel__content"
+      :class="{ 'p-carousel__content--opened': isOpenedProject }"
+    >
+      <div class="p-carousel__content-img-wrapper">
+        <CloseButton
+          color="dark"
+          class="p-carousel__close-btn"
+          @click="handleClose"
+        />
         <CustomImage
           class="p-carousel__content-img"
           :src="content?.projects?.[0].content?.body[2]?.assets[0]?.filename"
           :alt="content?.projects?.[0].content?.body[2]?.assets[0]?.alt"
         />
+      </div>
 
-        <div class="p-carousel__content-wrapper">
-          <TextButton class="p-carousel__back-btn" is-reversed>
-            {{ content?.back_button_text }}
-          </TextButton>
-          <h2 class="p-carousel__title">
-            {{ content?.projects?.[0]?.content?.title }}
-          </h2>
-          <p class="p-carousel__text">
-            {{ content?.projects?.[0]?.content?.description }}
-          </p>
+      <div class="p-carousel__content-wrapper">
+        <TextButton
+          class="p-carousel__back-btn"
+          is-reversed
+          @click="handleClose"
+        >
+          {{ content?.back_button_text }}
+        </TextButton>
+        <h2 class="p-carousel__title">
+          {{ content?.projects?.[0]?.content?.title }}
+        </h2>
+        <p class="p-carousel__text">
+          {{ content?.projects?.[0]?.content?.description }}
+        </p>
 
-          <LoFiButton
-            tag="nuxt-link"
-            :to="content?.projects?.[0].full_slug"
-            variant="dark"
-            class="p-carousel__btn"
-          >
-            {{ content?.button_text }}
-          </LoFiButton>
-        </div>
+        <LoFiButton
+          tag="nuxt-link"
+          :to="content?.projects?.[0].full_slug"
+          variant="dark"
+          class="p-carousel__btn"
+        >
+          {{ content?.button_text }}
+        </LoFiButton>
       </div>
     </div>
   </section>
@@ -132,6 +157,10 @@ useIntersectionObserver(elRefs, entries => {
     gap: 17px;
     width: max-content;
   }
+
+  &--opened {
+    display: none;
+  }
 }
 
 .p-carousel__item {
@@ -144,9 +173,7 @@ useIntersectionObserver(elRefs, entries => {
 }
 
 .p-carousel__item-wrapper {
-  &--opened {
-    display: none;
-  }
+  display: block;
 }
 
 .p-carousel__img {
@@ -171,6 +198,8 @@ useIntersectionObserver(elRefs, entries => {
 }
 
 .p-carousel__content {
+  display: none !important;
+  position: relative;
   display: grid;
   grid-template-columns: vw(840) 1fr;
   width: 100%;
@@ -179,6 +208,27 @@ useIntersectionObserver(elRefs, entries => {
   @media (max-width: $br1) {
     grid-template-columns: 1fr;
     gap: 30px;
+  }
+
+  &--opened {
+    display: grid !important;
+  }
+}
+
+.p-carousel__content-img-wrapper {
+  position: relative;
+}
+
+.p-carousel__close-btn {
+  display: none;
+
+  @media (max-width: $br1) {
+    display: flex;
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    width: 20px;
+    height: 20px;
   }
 }
 

@@ -99,7 +99,7 @@ const { visibleItems, currentIndex, next } = useInfiniteSlider(
 
   @media (min-width: $br1) {
     display: grid;
-    grid-template-columns: repeat(3, 1fr) vw(200);
+    grid-template-columns: vw(424) vw(424) vw(200) vw(200);
   }
 
   @media (max-width: $br1) {
@@ -111,6 +111,24 @@ const { visibleItems, currentIndex, next } = useInfiniteSlider(
 
 .current-projects__item {
   width: 100%;
+
+  @media (min-width: $br1) {
+    &:nth-of-type(1) {
+      .current-projects__img {
+        height: vw(518);
+      }
+    }
+    &:nth-of-type(2) {
+      .current-projects__img {
+        height: vw(198);
+      }
+    }
+    &:nth-of-type(3) {
+      .current-projects__img {
+        height: vw(380);
+      }
+    }
+  }
 }
 
 .current-projects__item-content {
@@ -156,6 +174,7 @@ const { visibleItems, currentIndex, next } = useInfiniteSlider(
   line-height: 0.9em;
   letter-spacing: -0.03em;
   text-transform: uppercase;
+  word-break: break-word;
 
   @media (max-width: $br1) {
     font-size: 36px;

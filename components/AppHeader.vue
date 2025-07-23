@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { delayPromise } from '@emotionagency/utils'
 import { useMenuStory } from '~/composables/stories/menuStory'
 
 interface iProps {
@@ -31,7 +30,10 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <header class="header container" :class="{ 'header--dark': isContactPage }">
+  <header
+    class="header container"
+    :class="{ 'header--dark': isContactPage, 'header--menu': isMenuOpened }"
+  >
     <div class="header__wrapper">
       <NuxtLink
         :to="localePath('/')"
@@ -45,8 +47,8 @@ onBeforeUnmount(() => {
         <Navigation :links="story?.content?.links" variant="header" />
         <LanguageSwitcher variant="header" :is-contact-page="isContactPage" />
       </div>
-      <BurgerMenu :content="story?.content" />
     </div>
+    <BurgerMenu :content="story?.content" />
   </header>
 </template>
 
@@ -111,6 +113,19 @@ onBeforeUnmount(() => {
       background-color: var(--background);
     }
   }
+
+  &--menu {
+    background-color: var(--foreground);
+
+    .header__wrapper {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    &::before {
+      background-color: var(--foreground);
+    }
+  }
 }
 
 .header__wrapper {
@@ -118,6 +133,7 @@ onBeforeUnmount(() => {
   justify-content: space-between;
   align-items: center;
   position: relative;
+  transition: opacity 0.3s ease;
 }
 
 .header__link {

@@ -38,11 +38,14 @@ const onGetAll = () => (showAll.value = true)
         class="grid-list__item"
         :to="`/${item?.full_slug}`"
       >
-        <CustomImage
-          :src="item?.content?.body[2]?.assets[0]?.filename"
-          :alt="item?.content?.body[2]?.assets[0]?.alt"
-          class="grid-list__img"
-        />
+        <div class="grid-list__img-wrapper">
+          <CustomImage
+            :src="item?.content?.body[2]?.assets[0]?.filename"
+            :alt="item?.content?.body[2]?.assets[0]?.alt"
+            class="grid-list__img"
+          />
+        </div>
+
         <div class="grid-list__content">
           <h3 class="grid-list__title">
             {{ item?.content?.title }}
@@ -109,7 +112,7 @@ const onGetAll = () => (showAll.value = true)
     &:nth-child(5n + 2) {
       @include col(9, 12);
 
-      .grid-list__img {
+      .grid-list__img-wrapper {
         height: vw(567);
       }
     }
@@ -120,7 +123,7 @@ const onGetAll = () => (showAll.value = true)
       display: flex;
       gap: vw(38);
 
-      .grid-list__img {
+      .grid-list__img-wrapper {
         width: vw(364);
         height: vw(454);
       }
@@ -138,7 +141,7 @@ const onGetAll = () => (showAll.value = true)
       @include col(9, 12);
       margin-top: vw(571);
 
-      .grid-list__img {
+      .grid-list__img-wrapper {
         height: vw(493);
       }
     }
@@ -148,7 +151,7 @@ const onGetAll = () => (showAll.value = true)
       margin-top: vw(-88);
       margin-bottom: vw(88);
 
-      .grid-list__img {
+      .grid-list__img-wrapper {
         height: vw(392);
       }
 
@@ -159,6 +162,10 @@ const onGetAll = () => (showAll.value = true)
   }
 
   &:hover {
+    .grid-list__img {
+      transform: scale(1);
+    }
+
     .grid-list__text-btn {
       span::before {
         width: 100%;
@@ -179,11 +186,21 @@ const onGetAll = () => (showAll.value = true)
   }
 }
 
+.grid-list__img-wrapper {
+  display: block;
+  flex: 1 0 auto;
+  overflow: hidden;
+  width: 100%;
+}
+
 .grid-list__img {
   display: block;
   height: auto;
   width: 100%;
+  height: 100%;
   object-fit: cover;
+  transform: scale(1.05);
+  transition: transform 0.3s ease-in-out;
 
   @media (max-width: $br1) {
     height: 504px;

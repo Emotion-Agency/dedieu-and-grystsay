@@ -33,11 +33,7 @@ const nextImages = () => {
         />
       </div>
 
-      <h2
-        class="all-projects__title"
-        @mouseenter="nextImages"
-        @touchstart="nextImages"
-      >
+      <h2 class="all-projects__title" @mouseenter="nextImages">
         {{ content?.label }}
       </h2>
     </div>

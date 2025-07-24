@@ -34,7 +34,7 @@ const handleSlideNext = () => {
     handleNext()
     isContentVisible.value = true
     isSliding.value = false
-  }, 500)
+  }, 500) // Transition duration from CSS
 }
 </script>
 

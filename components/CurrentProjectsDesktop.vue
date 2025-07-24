@@ -89,6 +89,7 @@ const handleSlideNext = () => {
     </ul>
   </div>
 </template>
+
 <style lang="scss">
 .curr-pr-desk__list {
   display: grid;
@@ -156,7 +157,7 @@ const handleSlideNext = () => {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  transition: border-radius 0.6s ease;
+  transition: border-radius 0.5s ease;
 }
 
 .curr-pr-desk__img-track {

@@ -25,11 +25,7 @@ const images = props.content.corousel
           {{ content?.text }}
         </p>
       </div>
-      <CurrentProjectConceptMobile
-        v-if="isMobile"
-        :images
-        :next-slide-button="story?.content?.slides_next"
-      />
+      <CurrentProjectConceptMobile v-if="isMobile" :images />
       <CurrentProjectConceptDesktop
         v-else
         :images

@@ -75,7 +75,7 @@ const handleSlideNext = () => {
             >
               <h3 class="curr-pr-desk__title">{{ project.title }}</h3>
               <p class="curr-pr-desk__desc">{{ project.text }}</p>
-              <p class="curr-pr-desc__number">
+              <p class="curr-pr-desk__number">
                 {{ ((current + idx) % props.projects.length) + 1 }}
               </p>
             </div>
@@ -211,7 +211,7 @@ const handleSlideNext = () => {
   margin-top: vw(18);
 }
 
-.curr-pr-desc__number {
+.curr-pr-desk__number {
   @include regular;
   font-size: vw(100);
   line-height: 1em;

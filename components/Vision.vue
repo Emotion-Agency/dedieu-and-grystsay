@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useGlobalStory } from '~/composables/stories/globalStory'
 import type { iVisionContent } from '~/types/visionTypes'
 
 interface IProps {
@@ -10,8 +9,7 @@ const props = defineProps<IProps>()
 
 const images = props.content.carousel
 
-const { story } = await useGlobalStory()
-const { visibleItems, currentIndex, next } = useInfiniteSlider(images, 3, 1)
+const isMobile = useSSRMediaQuery('(max-width: 960px)')
 </script>
 
 <template>
@@ -25,30 +23,8 @@ const { visibleItems, currentIndex, next } = useInfiniteSlider(images, 3, 1)
       </p>
     </div>
     <div class="vision__line" />
-    <div class="vision__slider">
-      <ul class="vision__list">
-        <li v-for="(item, idx) in visibleItems" :key="idx" class="vision__item">
-          <CustomImage
-            :src="item.filename"
-            :alt="item.alt"
-            class="vision__img"
-          />
-        </li>
-      </ul>
-      <div class="vision__pagination">
-        <div class="vision__squares">
-          <div
-            v-for="(_, idx) in content?.carousel"
-            :key="idx"
-            class="vision__square"
-            :class="{ 'vision__square--active': currentIndex === idx }"
-          />
-        </div>
-        <TextButton class="vision__btn" @click="next">
-          {{ story?.content?.slides_next }}
-        </TextButton>
-      </div>
-    </div>
+    <VisionMobile v-if="isMobile" :images="images" />
+    <VisionDesktop v-else :images="images" />
   </div>
 </template>
 
@@ -103,93 +79,6 @@ const { visibleItems, currentIndex, next } = useInfiniteSlider(images, 3, 1)
 
   @media (max-width: $br1) {
     display: none;
-  }
-}
-
-.vision__slider {
-  margin-top: vw(40);
-
-  @media (max-width: $br1) {
-    margin-top: 60px;
-  }
-}
-
-.vision__list {
-  position: relative;
-  gap: vw(24);
-
-  @media (min-width: $br1) {
-    width: 100%;
-    height: 100%;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  @media (max-width: $br1) {
-    display: flex;
-    align-items: center;
-    gap: 30px;
-  }
-}
-
-.vision__item {
-  display: block;
-  width: 100%;
-}
-
-.vision__img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-
-  @media (min-width: $br1) {
-    max-height: vw(346);
-  }
-
-  @media (max-width: $br1) {
-    max-height: 376px;
-  }
-}
-
-.vision__pagination {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: vw(16);
-  margin-top: vw(24);
-
-  @media (max-width: $br1) {
-    margin-top: 27px;
-    gap: 16px;
-  }
-}
-
-.vision__squares {
-  display: flex;
-  align-items: center;
-  gap: vw(8);
-
-  @media (max-width: $br1) {
-    gap: 8px;
-  }
-}
-
-.vision__square {
-  display: block;
-  width: vw(10);
-  height: vw(10);
-  background-color: transparent;
-  border: 1px solid var(--foreground);
-  transition: background-color 0.3s ease;
-
-  @media (max-width: $br1) {
-    width: 10px;
-    height: 10px;
-  }
-
-  &--active {
-    background-color: var(--foreground);
   }
 }
 </style>

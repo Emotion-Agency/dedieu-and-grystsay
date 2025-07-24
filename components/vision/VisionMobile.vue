@@ -55,20 +55,20 @@ watch(current, handleChangeSlide)
 </script>
 
 <template>
-  <div class="concept-mob">
-    <div class="concept-mob__wrapper">
-      <ul class="concept-mob__list">
+  <div class="vision-mob">
+    <div class="vision-mob__wrapper">
+      <ul class="vision-mob__list">
         <li
           v-for="(img, idx) in images"
           :key="idx"
           ref="$items"
-          class="concept-mob__item"
+          class="vision-mob__item"
           :class="{ active: idx === current, prev: idx === prev }"
         >
           <CustomImage
             :src="img?.filename"
             :alt="img?.alt"
-            class="concept-mob__img"
+            class="vision-mob__img"
             :width="1920"
           />
         </li>
@@ -84,25 +84,26 @@ watch(current, handleChangeSlide)
 </template>
 
 <style lang="scss">
-.concept-mob {
+.vision-mob {
   position: relative;
   width: 100%;
+  padding-top: 50px;
 }
 
-.concept-mob__wrapper {
+.vision-mob__wrapper {
   width: 100%;
   height: 100%;
   overflow: hidden;
   position: relative;
 }
 
-.concept-mob__list {
+.vision-mob__list {
   height: 504px;
   width: 100%;
   position: relative;
 }
 
-.concept-mob__item {
+.vision-mob__item {
   width: 100%;
   height: 100%;
   will-change: transform, clip-path;
@@ -125,7 +126,7 @@ watch(current, handleChangeSlide)
   }
 }
 
-.concept-mob__img {
+.vision-mob__img {
   display: block;
   width: 100%;
   height: 100%;

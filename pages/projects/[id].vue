@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import AssetTextSection from '~/components/current-project/AssetTextSection.vue'
-import ConceptSection from '~/components/current-project/ConceptSection.vue'
+import ConceptSection from '~/components/current-project/concept/ConceptSection.vue'
 import FullPageAssetsSection from '~/components/current-project/FullPageAssetsSection.vue'
 import HeroSection from '~/components/current-project/HeroSection.vue'
 import NextProjectButton from '~/components/current-project/NextProjectButton.vue'

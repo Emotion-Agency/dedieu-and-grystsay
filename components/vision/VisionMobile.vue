@@ -98,7 +98,7 @@ watch(current, handleChangeSlide)
 }
 
 .vision-mob__list {
-  height: 504px;
+  height: 376px;
   width: 100%;
   position: relative;
 }

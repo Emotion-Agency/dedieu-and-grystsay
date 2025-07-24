@@ -9,14 +9,9 @@ interface IProps {
 const props = defineProps<IProps>()
 
 const { story } = await useGlobalStory()
+const isMobile = useSSRMediaQuery('(max-width: 960px)')
 
 const projects = props.content.projects[0].content.items
-
-const { visibleItems, currentIndex, next } = useInfiniteSlider(
-  projects,
-  4,
-  projects.length
-)
 </script>
 
 <template>
@@ -26,54 +21,12 @@ const { visibleItems, currentIndex, next } = useInfiniteSlider(
     </div>
 
     <div class="current-projects__wrapper container">
-      <ul class="current-projects__list">
-        <li
-          v-for="(project, idx) in visibleItems"
-          :key="idx"
-          class="current-projects__item"
-        >
-          <div v-if="idx !== 3" class="current-projects__item-content">
-            <CustomImage
-              :src="project.asset.filename"
-              :alt="project.asset.alt"
-              class="current-projects__img"
-            />
-
-            <div class="current-projects__info">
-              <h3 class="current-projects__title">{{ project.title }}</h3>
-              <p class="current-projects__text">{{ project.text }}</p>
-              <p class="current-projects__number">
-                {{ ((currentIndex + idx) % projects.length) + 1 }}
-              </p>
-            </div>
-          </div>
-
-          <div
-            v-else
-            class="current-projects__item-content"
-            :class="'current-projects__item-content--last'"
-            @click="next"
-          >
-            <CustomImage
-              :src="project.asset.filename"
-              :alt="project.asset.alt"
-              class="current-projects__img"
-            />
-
-            <div class="current-projects__info">
-              <h3 class="current-projects__title">{{ project.title }}</h3>
-              <p class="current-projects__text">{{ project.text }}</p>
-              <p class="current-projects__number">
-                {{ ((currentIndex + idx) % projects.length) + 1 }}
-              </p>
-            </div>
-
-            <TextButton class="current-projects__btn">
-              {{ story?.content?.slides_next }}
-            </TextButton>
-          </div>
-        </li>
-      </ul>
+      <CurrentProjectsMobile v-if="isMobile" :projects="projects" />
+      <CurrentProjectsDesktop
+        v-else
+        :projects
+        :next-slide-button="story?.content?.slides_next"
+      />
     </div>
   </section>
 </template>

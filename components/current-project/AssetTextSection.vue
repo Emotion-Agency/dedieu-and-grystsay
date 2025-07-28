@@ -41,11 +41,16 @@ defineProps<IProps>()
 }
 
 .asset-text__wrapper {
-  display: flex;
   align-items: flex-start;
   gap: vw(82);
 
+  @media (min-width: $br1) {
+    display: grid;
+    grid-template-columns: 1fr vw(429);
+  }
+
   @media (max-width: $br1) {
+    display: flex;
     flex-direction: column-reverse;
     gap: 50px;
   }
@@ -54,7 +59,7 @@ defineProps<IProps>()
 .asset-text__img {
   display: block;
   height: 100%;
-  width: vw(773);
+  width: 100%;
   object-fit: cover;
 
   @media (max-width: $br1) {
@@ -98,9 +103,15 @@ defineProps<IProps>()
 }
 
 .asset-text__btn {
+  text-transform: uppercase;
+  padding-left: vw(20);
+  padding-right: vw(20);
   margin-top: vw(30);
 
   @media (max-width: $br1) {
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 14px;
     margin-top: 40px;
   }
 }

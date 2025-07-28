@@ -17,7 +17,7 @@ useHead({
     id: 'scroll-container',
   },
 })
-
+const { isMenuOpened } = useAppState()
 const route = useRoute()
 
 const isContactPage = computed(() => route.path.includes('/contact'))
@@ -36,7 +36,7 @@ const isContactPage = computed(() => route.path.includes('/contact'))
     <!-- <Landscape /> -->
     <SmoothScroll>
       <NuxtLayout>
-        <AppHeader :is-contact-page="isContactPage" />
+        <AppHeader :is-contact-page="isContactPage" :is-menu="isMenuOpened" />
         <main class="app__main">
           <NuxtPage />
         </main>
@@ -51,6 +51,7 @@ const isContactPage = computed(() => route.path.includes('/contact'))
 <style scoped lang="scss">
 .app {
   min-height: 100vh;
+  white-space: pre-line;
 }
 
 .app__main {

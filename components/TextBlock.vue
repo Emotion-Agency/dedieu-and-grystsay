@@ -8,6 +8,10 @@ interface IProps {
 const props = defineProps<IProps>()
 
 const size = props.content?.size?.toLowerCase()
+const { path, params } = useRoute()
+
+const isAboutPage = computed(() => path.includes('/about'))
+const isCurrentNewsPage = computed(() => path.includes(`/news/${params?.id}`))
 </script>
 
 <template>
@@ -17,14 +21,20 @@ const size = props.content?.size?.toLowerCase()
       :class="{
         'text-block__title--small': size === 'sm',
         'text-block__title--medium': size === 'md',
+        'text-block__title--news': isCurrentNewsPage,
       }"
     >
       {{ content?.title }}
     </h2>
-    <div class="text-block__line" />
-    <p class="text-block__text">
-      {{ content?.text }}
-    </p>
+    <div
+      v-if="isAboutPage || isCurrentNewsPage"
+      class="text-block__line"
+      :class="{
+        'text-block__line--news': isCurrentNewsPage,
+        'text-block__line--about': isAboutPage,
+      }"
+    />
+    <p class="text-block__text" v-html="content?.text" />
   </div>
 </template>
 
@@ -55,7 +65,14 @@ const size = props.content?.size?.toLowerCase()
   }
 
   @media (max-width: $br1) {
+    text-align: left;
     font-size: 65px;
+  }
+
+  &--news {
+    @media (max-width: $br1) {
+      text-align: center;
+    }
   }
 }
 
@@ -71,6 +88,22 @@ const size = props.content?.size?.toLowerCase()
     width: 38px;
     margin: 0 auto;
     margin-top: 30px;
+  }
+
+  &--news {
+    display: none;
+
+    @media (max-width: $br1) {
+      display: block;
+    }
+  }
+
+  &--about {
+    display: block;
+
+    @media (max-width: $br1) {
+      display: none;
+    }
   }
 }
 

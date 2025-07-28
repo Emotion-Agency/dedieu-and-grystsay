@@ -254,7 +254,6 @@ const handleClose = () => {
   letter-spacing: -0.05em;
   text-transform: uppercase;
   margin-top: vw(10);
-  word-break: break-word;
 
   @media (max-width: $br1) {
     font-size: 65px;

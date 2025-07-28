@@ -51,6 +51,7 @@ const isContactPage = computed(() => route.path.includes('/contact'))
 <style scoped lang="scss">
 .app {
   min-height: 100vh;
+  white-space: pre-line;
 }
 
 .app__main {

@@ -22,9 +22,7 @@ const size = props.content?.size?.toLowerCase()
       {{ content?.title }}
     </h2>
     <div class="text-block__line" />
-    <p class="text-block__text">
-      {{ content?.text }}
-    </p>
+    <p class="text-block__text" v-html="content?.text" />
   </div>
 </template>
 

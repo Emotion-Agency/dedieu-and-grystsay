@@ -3,6 +3,7 @@ import { useMenuStory } from '~/composables/stories/menuStory'
 
 interface iProps {
   isContactPage: boolean
+  isMenu: boolean
 }
 
 defineProps<iProps>()
@@ -32,7 +33,7 @@ onBeforeUnmount(() => {
 <template>
   <header
     class="header container"
-    :class="{ 'header--dark': isContactPage, 'header--menu': isMenuOpened }"
+    :class="{ 'header--dark': isContactPage, 'header--menu': isMenu }"
   >
     <div class="header__wrapper">
       <NuxtLink
@@ -48,7 +49,7 @@ onBeforeUnmount(() => {
         <LanguageSwitcher variant="header" :is-contact-page="isContactPage" />
       </div>
     </div>
-    <BurgerMenu :content="story?.content" />
+    <BurgerMenu :content="story?.content" :is-menu="isMenu" />
   </header>
 </template>
 

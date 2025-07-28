@@ -6,6 +6,7 @@ import type { iMenuContent } from '~/types/menuTypes'
 
 interface iProps {
   content: iMenuContent
+  isMenu: boolean
 }
 
 defineProps<iProps>()
@@ -124,8 +125,8 @@ watch(isMenuOpened, () => {
     <button
       type="button"
       class="burger-menu__btn"
-      :class="{ 'burger-menu__btn--opened': isMenuOpened }"
-      :aria-expanded="isMenuOpened"
+      :class="{ 'burger-menu__btn--opened': isMenu }"
+      :aria-expanded="isMenu"
       aria-label="Toggle menu"
       @click="toggleMenu"
     >
@@ -143,9 +144,9 @@ watch(isMenuOpened, () => {
     <Teleport to="#teleports">
       <Transition v-bind="menuTransition">
         <div
-          v-show="isMenuOpened"
+          v-show="isMenu"
           class="burger-menu__content"
-          :class="isMenuOpened && 'burger-menu__content--opened'"
+          :class="isMenu && 'burger-menu__content--opened'"
         >
           <div class="burger-menu__inner">
             <div class="burger-menu__nav">

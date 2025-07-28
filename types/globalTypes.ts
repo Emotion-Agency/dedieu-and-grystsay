@@ -3,4 +3,5 @@ export interface iGlobalContent {
   slides_prev: string
   slides_next: string
   see_more: string
+  carousel_name: string
 }

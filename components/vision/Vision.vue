@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useGlobalStory } from '~/composables/stories/globalStory'
 import type { iVisionContent } from '~/types/visionTypes'
 
 interface IProps {
@@ -9,6 +10,7 @@ const props = defineProps<IProps>()
 
 const images = props.content.carousel
 
+const { story } = await useGlobalStory()
 const isMobile = useSSRMediaQuery('(max-width: 960px)')
 </script>
 
@@ -23,6 +25,12 @@ const isMobile = useSSRMediaQuery('(max-width: 960px)')
       </p>
     </div>
     <div class="vision__line" />
+    <h3
+      v-if="isMobile && story?.content?.carousel_name"
+      class="vision__carousel-title"
+    >
+      {{ story?.content?.carousel_name }}
+    </h3>
     <VisionMobile v-if="isMobile" :images="images" />
     <VisionDesktop v-else :images="images" />
   </div>
@@ -79,6 +87,17 @@ const isMobile = useSSRMediaQuery('(max-width: 960px)')
 
   @media (max-width: $br1) {
     display: none;
+  }
+}
+
+.vision__carousel-title {
+  @media (max-width: $br1) {
+    @include medium;
+    font-size: 40px;
+    line-height: 1.4em;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    margin-top: 60px;
   }
 }
 </style>

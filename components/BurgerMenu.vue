@@ -144,7 +144,7 @@ watch(isMenuOpened, () => {
     <Teleport to="#teleports">
       <Transition v-bind="menuTransition">
         <div
-          v-show="isMenu"
+          v-if="isMenu"
           class="burger-menu__content"
           :class="isMenu && 'burger-menu__content--opened'"
         >

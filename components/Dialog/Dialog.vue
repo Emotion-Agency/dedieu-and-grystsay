@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { DialogContent, DialogOverlay, DialogRoot, DialogClose } from 'reka-ui'
+import { DialogContent, DialogOverlay, DialogRoot, DialogTitle } from 'reka-ui'
 import type { HtmlHTMLAttributes } from 'vue'
 
 defineProps<{
@@ -29,9 +29,8 @@ watch(isOpen, () => {
             :aria-describedby="undefined"
             v-bind="windowAttrs"
           >
-            <DialogClose @click="isOpen = false">
-              <CloseButton />
-            </DialogClose>
+            <DialogTitle class="dialog__title">Modal window</DialogTitle>
+            <CloseButton @click="isOpen = false" />
             <slot />
           </DialogContent>
         </div>
@@ -68,6 +67,7 @@ watch(isOpen, () => {
 
   @media (min-width: $br1) {
     max-height: 95vh;
+    max-width: 95vw;
     min-width: vw(924);
     padding: vw(145) vw(20);
     border: 1px solid var(--background);
@@ -78,6 +78,18 @@ watch(isOpen, () => {
     height: 100%;
     padding: 25px;
   }
+}
+
+.dialog__title {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
 
 .dialog__close {

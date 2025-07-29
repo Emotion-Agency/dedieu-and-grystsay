@@ -6,15 +6,18 @@ interface IProps {
 }
 
 defineProps<IProps>()
+
+const showModal = ref(false)
 </script>
 
 <template>
   <section class="asset-text container">
     <div class="asset-text__wrapper">
-      <CustomImage
+      <AssetRenderer
         :alt="content?.asset?.alt"
         :src="content?.asset?.filename"
-        class="asset-text__img"
+        :is-playing="true"
+        class="asset-text__asset"
       />
       <div class="asset-text__content">
         <h2 class="asset-text__title">
@@ -23,15 +26,20 @@ defineProps<IProps>()
         <p class="asset-text__description">
           {{ content?.text }}
         </p>
-        <LoFiButton variant="dark" class="asset-text__btn">
+        <LoFiButton
+          variant="dark"
+          class="asset-text__btn"
+          @click="showModal = true"
+        >
           {{ content?.button }}
         </LoFiButton>
       </div>
     </div>
+    <ModalsVideoModal v-model:open="showModal" :video="content?.asset" />
   </section>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
 .asset-text {
   padding-top: vw(60);
 
@@ -56,15 +64,19 @@ defineProps<IProps>()
   }
 }
 
-.asset-text__img {
+.asset-text__asset {
   display: block;
-  height: 100%;
   width: 100%;
+  height: 100%;
   object-fit: cover;
 
   @media (max-width: $br1) {
     width: 100%;
     height: 495px;
+  }
+
+  video {
+    object-fit: cover;
   }
 }
 
@@ -103,16 +115,16 @@ defineProps<IProps>()
 }
 
 .asset-text__btn {
-  text-transform: uppercase;
-  padding-left: vw(20);
-  padding-right: vw(20);
+  text-transform: uppercase !important;
+  padding-left: vw(20) !important;
+  padding-right: vw(20) !important;
   margin-top: vw(30);
 
   @media (max-width: $br1) {
-    padding-left: 20px;
-    padding-right: 20px;
-    font-size: 14px;
-    margin-top: 40px;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    font-size: 14px !important;
+    margin-top: 40px !important;
   }
 }
 </style>

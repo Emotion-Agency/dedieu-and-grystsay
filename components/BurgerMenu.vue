@@ -6,7 +6,6 @@ import type { iMenuContent } from '~/types/menuTypes'
 
 interface iProps {
   content: iMenuContent
-  isMenu: boolean
 }
 
 defineProps<iProps>()
@@ -28,9 +27,6 @@ const menuTransition: TransitionProps = {
   css: false,
   mode: 'out-in',
   onEnter(el, done) {
-    leaveTimeline?.kill()
-    gsap.set(el, { clearProps: 'all' })
-
     const links = el.querySelectorAll('.navigation__link')
     const bottomItems = el.querySelectorAll('.burger-menu__bottom')
     enterTimeline = gsap.timeline({ onComplete: done })
@@ -68,9 +64,6 @@ const menuTransition: TransitionProps = {
   },
 
   onLeave(el, done) {
-    enterTimeline?.kill()
-    gsap.set(el, { clearProps: 'all' })
-
     const links = el.querySelectorAll('.navigation__link')
     const bottomItems = el.querySelectorAll('.burger-menu__bottom')
     leaveTimeline = gsap.timeline({ onComplete: done })
@@ -125,8 +118,8 @@ watch(isMenuOpened, () => {
     <button
       type="button"
       class="burger-menu__btn"
-      :class="{ 'burger-menu__btn--opened': isMenu }"
-      :aria-expanded="isMenu"
+      :class="{ 'burger-menu__btn--opened': isMenuOpened }"
+      :aria-expanded="isMenuOpened"
       aria-label="Toggle menu"
       @click="toggleMenu"
     >
@@ -144,9 +137,9 @@ watch(isMenuOpened, () => {
     <Teleport to="#teleports">
       <Transition v-bind="menuTransition">
         <div
-          v-if="isMenu"
+          v-if="isMenuOpened"
           class="burger-menu__content"
-          :class="isMenu && 'burger-menu__content--opened'"
+          :class="isMenuOpened && 'burger-menu__content--opened'"
         >
           <div class="burger-menu__inner">
             <div class="burger-menu__nav">

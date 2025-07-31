@@ -35,8 +35,8 @@ const isContactPage = computed(() => route.path.includes('/contact'))
     <AppGrid />
     <!-- <Landscape /> -->
     <SmoothScroll>
+      <AppHeader :is-contact-page="isContactPage" />
       <NuxtLayout>
-        <AppHeader :is-contact-page="isContactPage" />
         <main class="app__main">
           <NuxtPage />
         </main>

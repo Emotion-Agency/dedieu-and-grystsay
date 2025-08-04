@@ -3,7 +3,6 @@ import { useMenuStory } from '~/composables/stories/menuStory'
 
 interface iProps {
   isContactPage: boolean
-  isMenu: boolean
 }
 
 defineProps<iProps>()
@@ -20,6 +19,7 @@ const onClick = () => {
 }
 
 onMounted(async () => {
+  console.log('mounted')
   const { default: NavbarPos } = await import('~/utils/navbarPos')
   navbarPos = new NavbarPos()
   navbarPos.init()
@@ -28,12 +28,16 @@ onMounted(async () => {
 onBeforeUnmount(() => {
   navbarPos && navbarPos.destroy()
 })
+
+watch(isMenuOpened, val => {
+  console.log(val)
+})
 </script>
 
 <template>
   <header
     class="header container"
-    :class="{ 'header--dark': isContactPage, 'header--menu': isMenu }"
+    :class="{ 'header--dark': isContactPage, 'header--menu': isMenuOpened }"
   >
     <div class="header__wrapper">
       <NuxtLink
@@ -49,7 +53,7 @@ onBeforeUnmount(() => {
         <LanguageSwitcher variant="header" :is-contact-page="isContactPage" />
       </div>
     </div>
-    <BurgerMenu :content="story?.content" :is-menu="isMenu" />
+    <BurgerMenu :content="story?.content" />
   </header>
 </template>
 

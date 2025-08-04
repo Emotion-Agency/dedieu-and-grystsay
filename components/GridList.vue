@@ -234,6 +234,8 @@ const onGetAll = () => (showAll.value = true)
 }
 
 .grid-list__text-btn {
+  color: inherit;
+
   margin-top: vw(40);
 
   @media (max-width: $br1) {

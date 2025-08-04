@@ -18,7 +18,7 @@ export const basicObject: IBasicObject = {
     document.body.style.pointerEvents = 'auto'
   },
   onLeave() {
-    window.escroll && (window.escroll.disabled = true)
+    window.elenis?.stop()
 
     document.documentElement.style.cursor = 'wait'
     document.body.style.pointerEvents = 'none'

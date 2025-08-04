@@ -53,7 +53,7 @@ export default class NavbarPos {
   }
 
   get isFixed() {
-    return window.escroll ? window.escroll.disabled : false
+    return window.elenis ? window.elenis.isStopped : false
   }
 
   addVisibility() {

@@ -1,9 +1,9 @@
-import type EmotionScroll from '@emotionagency/emotion-scroll'
+import type Lenis from 'lenis'
 
 export {}
 
 declare global {
   interface Window {
-    escroll: typeof EmotionScroll.prototype
+    elenis: typeof Lenis.prototype
   }
 }

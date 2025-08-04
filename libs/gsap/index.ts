@@ -25,33 +25,6 @@ if (globalThis.document) {
   })
 
   gsap.ticker.lagSmoothing(0)
-  // ScrollTrigger.normalizeScroll(true)
 }
 
-const checkPossibilityToRefrech = () => {
-  // @ts-ignore
-  if (window.escroll.state.isScrolling) {
-    setTimeout(() => {
-      checkPossibilityToRefrech()
-    }, 100)
-  } else {
-    ScrollTrigger.refresh()
-  }
-}
-
-const refreshScrollTrigger = () => {
-  if (window.innerWidth < 768) {
-    checkPossibilityToRefrech()
-  } else {
-    ScrollTrigger.refresh()
-  }
-}
-
-export {
-  Flip,
-  ScrollTrigger,
-  DURATION,
-  GOLDEN_RATIO,
-  gsap,
-  refreshScrollTrigger,
-}
+export { Flip, ScrollTrigger, DURATION, GOLDEN_RATIO, gsap }

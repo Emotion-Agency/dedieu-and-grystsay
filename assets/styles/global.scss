@@ -9,8 +9,6 @@
 
 html {
   font-size: clamp(12px, vw($base-rem-unit), vw($base-rem-unit));
-  height: 100vh;
-  height: 100dvh;
   @media (max-width: $br3) {
     font-size: #{$base-rem-unit}px;
   }
@@ -22,7 +20,6 @@ body {
   position: relative;
   font-family: sans-serif;
   overscroll-behavior-y: none;
-  overflow: hidden;
   @include smooth-font;
   @include regular;
 

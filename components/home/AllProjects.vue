@@ -165,6 +165,24 @@ const nextImages = () => {
   text-align: center;
   z-index: 1;
   word-break: break-all;
+  cursor: pointer;
+  position: relative;
+  &::after {
+    content: '';
+    width: 100%;
+    height: 4px;
+    background-color: currentColor;
+    position: absolute;
+    left: 0;
+    bottom: vw(12);
+    transform: scaleX(0);
+    transition: transform 0.6s ease;
+  }
+  &:hover {
+    &::after {
+      transform: scaleX(1);
+    }
+  }
 
   @media (max-width: $br1) {
     font-size: size(160, 110);

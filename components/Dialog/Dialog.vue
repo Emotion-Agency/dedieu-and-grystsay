@@ -10,10 +10,10 @@ const isOpen = defineModel<boolean>('open')
 
 watch(isOpen, () => {
   if (isOpen.value) {
-    window.escroll.disabled = true
+    window.elenis.stop()
     return
   } else {
-    window.escroll.disabled = false
+    window.elenis.start()
   }
 })
 </script>

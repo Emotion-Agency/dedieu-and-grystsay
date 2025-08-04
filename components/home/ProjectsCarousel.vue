@@ -106,6 +106,7 @@ const handleClose = () => {
           @click="handleClose"
         />
         <CustomImage
+          v-if="selectedProject?.content?.body[2]?.assets[0]?.filename"
           class="p-carousel__content-img"
           :src="selectedProject?.content?.body[2]?.assets[0]?.filename"
           :alt="selectedProject?.content?.body[2]?.assets[0]?.alt"

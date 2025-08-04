@@ -10,7 +10,6 @@ if (globalThis.document) {
   gsap.registerPlugin(Flip, ScrollTrigger)
 
   gsap.config({
-    autoSleep: 60,
     nullTargetWarn: false,
   })
 
@@ -20,7 +19,6 @@ if (globalThis.document) {
   })
 
   ScrollTrigger.defaults({
-    scroller: '#scroll-container',
     pinType: 'fixed',
   })
 

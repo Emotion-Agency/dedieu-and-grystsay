@@ -35,17 +35,16 @@ const href = props.tag === 'a' ? props.href : undefined
 
 <style lang="scss">
 .lofi-btn {
-  @include regular;
+  @include medium;
   width: fit-content;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: vw(15) vw(45);
+  padding: vw(15) vw(20);
   border-radius: vw(100);
-  font-size: vw(16);
-  letter-spacing: -0.03em;
+  font-size: vw(14);
   line-height: 1.3em;
-  text-transform: capitalize;
+  text-transform: uppercase;
   transition:
     background-color 0.3s ease,
     opacity 0.3s ease;

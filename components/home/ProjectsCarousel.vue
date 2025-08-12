@@ -284,18 +284,10 @@ const handleClose = () => {
 }
 
 .p-carousel__btn {
-  text-transform: uppercase;
   margin-top: vw(40);
-  font-size: vw(14);
-  padding-left: vw(22);
-  padding-right: vw(22);
-  @include medium;
 
   @media (max-width: $br1) {
     margin-top: 40px;
-    font-size: 16px;
-    padding-left: 25px;
-    padding-right: 25px;
   }
 }
 

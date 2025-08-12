@@ -20,9 +20,7 @@ const showModal = ref(false)
         class="asset-text__asset"
       />
       <div class="asset-text__content">
-        <h2 class="asset-text__title">
-          {{ content?.title }}
-        </h2>
+        <h2 class="asset-text__title" v-html="content?.title" />
         <p class="asset-text__description">
           {{ content?.text }}
         </p>
@@ -44,17 +42,17 @@ const showModal = ref(false)
   padding-top: vw(60);
 
   @media (max-width: $br1) {
-    padding-top: 40px;
+    padding-top: 25px;
   }
 }
 
 .asset-text__wrapper {
   align-items: flex-start;
-  gap: vw(82);
+  gap: vw(248);
 
   @media (min-width: $br1) {
     display: grid;
-    grid-template-columns: 1fr vw(429);
+    grid-template-columns: 1fr vw(465);
   }
 
   @media (max-width: $br1) {
@@ -69,6 +67,7 @@ const showModal = ref(false)
   width: 100%;
   height: 100%;
   object-fit: cover;
+  height: vw(667);
 
   @media (max-width: $br1) {
     width: 100%;
@@ -82,25 +81,24 @@ const showModal = ref(false)
 
 .asset-text__title {
   @include medium;
-  font-size: vw(100);
+  font-size: vw(60);
   line-height: 0.86em;
   letter-spacing: -0.01em;
   text-transform: uppercase;
 
   @media (max-width: $br1) {
-    font-size: size(100, 65);
-    letter-spacing: -0.02em;
+    font-size: size(60, 44);
   }
 
   @media (max-width: $br4) {
-    font-size: 65px;
+    font-size: 44px;
   }
 }
 
 .asset-text__description {
   font-size: vw(16);
   line-height: 1.4em;
-  margin-top: vw(35);
+  margin-top: vw(30);
 
   @media (min-width: $br1) {
     @include medium;
@@ -109,22 +107,16 @@ const showModal = ref(false)
 
   @media (max-width: $br1) {
     @include regular;
-    font-size: 16px;
-    margin-top: 29px;
+    font-size: 18px;
+    margin-top: 20px;
   }
 }
 
 .asset-text__btn {
-  text-transform: uppercase !important;
-  padding-left: vw(20) !important;
-  padding-right: vw(20) !important;
   margin-top: vw(30);
 
   @media (max-width: $br1) {
-    padding-left: 20px !important;
-    padding-right: 20px !important;
-    font-size: 14px !important;
-    margin-top: 40px !important;
+    margin-top: 30px;
   }
 }
 </style>

@@ -33,19 +33,23 @@ const nextImages = () => {
         />
       </div>
 
-      <h2 class="all-projects__title" @mouseenter="nextImages">
+      <NuxtLink
+        to="/projects"
+        class="all-projects__title"
+        @mouseenter="nextImages"
+      >
         {{ content?.label }}
-      </h2>
+      </NuxtLink>
     </div>
   </section>
 </template>
 
 <style scoped lang="scss">
 .all-projects {
-  padding-top: vw(150);
+  padding-top: vw(130);
 
   @media (max-width: $br1) {
-    padding-top: 92px;
+    padding-top: 127px;
   }
 }
 
@@ -54,11 +58,11 @@ const nextImages = () => {
   justify-content: center;
   align-items: center;
   position: relative;
-  min-height: vw(315);
+  min-height: vw(359);
   width: 100%;
 
   @media (max-width: $br1) {
-    min-height: 485px;
+    min-height: 441px;
   }
 }
 
@@ -69,13 +73,13 @@ const nextImages = () => {
   height: vw(106);
 
   @media (max-width: $br1) {
-    width: size(106, 76);
-    height: size(106, 76);
+    width: size(106, 80);
+    height: size(106, 80);
   }
 
   @media (max-width: $br4) {
-    width: 76px;
-    height: 76px;
+    width: 80px;
+    height: 80px;
   }
 
   &:nth-child(1) {
@@ -90,8 +94,8 @@ const nextImages = () => {
     }
 
     @media (max-width: $br1) {
-      top: 140px;
-      left: 0;
+      top: 114px;
+      right: 0;
     }
   }
 
@@ -101,7 +105,7 @@ const nextImages = () => {
       left: vw(544);
     }
     @media (max-width: $br1) {
-      bottom: 76px;
+      bottom: 134px;
       left: 0;
     }
   }
@@ -113,8 +117,8 @@ const nextImages = () => {
     }
 
     @media (max-width: $br1) {
-      top: 0;
-      right: 0;
+      bottom: 0;
+      right: 34px;
     }
   }
 
@@ -124,8 +128,7 @@ const nextImages = () => {
       right: vw(197);
     }
     @media (max-width: $br1) {
-      top: 176px;
-      right: 0;
+      display: none;
     }
   }
 
@@ -136,8 +139,7 @@ const nextImages = () => {
     }
 
     @media (max-width: $br1) {
-      right: 0;
-      bottom: 0;
+      display: none;
     }
   }
 }
@@ -164,9 +166,10 @@ const nextImages = () => {
   text-transform: uppercase;
   text-align: center;
   z-index: 1;
-  word-break: break-all;
+  word-break: break-word;
   cursor: pointer;
   position: relative;
+
   &::after {
     content: '';
     width: 100%;
@@ -177,6 +180,10 @@ const nextImages = () => {
     bottom: vw(12);
     transform: scaleX(0);
     transition: transform 0.6s ease;
+
+    @media (max-width: $br1) {
+      bottom: -10px;
+    }
   }
   &:hover {
     &::after {
@@ -185,12 +192,9 @@ const nextImages = () => {
   }
 
   @media (max-width: $br1) {
-    font-size: size(160, 110);
-    line-height: 0.78em;
-  }
-
-  @media (max-width: $br4) {
-    font-size: 110px;
+    font-size: 100px;
+    line-height: 0.86em;
+    max-width: 243px;
   }
 }
 </style>

@@ -72,13 +72,13 @@ const titleParts = computed(() => {
 
 <style scoped lang="scss">
 .who-are {
-  margin-top: vw(150);
+  margin-top: vw(130);
   padding-top: vw(16);
   padding-bottom: vw(46);
   background-color: var(--foreground-muted);
 
   @media (max-width: $br1) {
-    margin-top: 92px;
+    margin-top: 127px;
     padding-top: 14px;
     padding-bottom: 36px;
   }

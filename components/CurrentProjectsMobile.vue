@@ -56,7 +56,7 @@ defineProps<IProps>()
   object-fit: cover;
   max-width: 100%;
   width: 100%;
-  height: 442px;
+  height: 470px;
 }
 
 .curr-pr-mob__info {

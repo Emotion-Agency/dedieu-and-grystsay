@@ -23,7 +23,7 @@ const emit = defineEmits(['close'])
   </button>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
 .close-button {
   width: vw(34);
   height: vw(34);

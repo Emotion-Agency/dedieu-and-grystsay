@@ -33,7 +33,7 @@ const href = props.tag === 'a' ? props.href : undefined
   </component>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .lofi-btn {
   @include regular;
   width: fit-content;

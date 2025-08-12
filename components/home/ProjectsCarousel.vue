@@ -141,7 +141,7 @@ const handleClose = () => {
   </section>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
 .p-carousel {
   padding-top: vw(40);
 
@@ -206,9 +206,9 @@ const handleClose = () => {
   display: none !important;
   position: relative;
   display: grid;
-  grid-template-columns: vw(840) 1fr;
+  grid-template-columns: vw(740) 1fr;
   width: 100%;
-  gap: vw(58);
+  gap: vw(163);
 
   @media (max-width: $br1) {
     grid-template-columns: 1fr;
@@ -230,10 +230,17 @@ const handleClose = () => {
   @media (max-width: $br1) {
     display: flex;
     position: absolute;
-    top: 12px;
-    left: 12px;
-    width: 20px;
-    height: 20px;
+    top: 16px;
+    right: 16px;
+    width: 30px;
+    height: 30px;
+    background-color: var(--background);
+    border: none;
+  }
+
+  span {
+    height: 1px;
+    width: 50%;
   }
 }
 
@@ -250,14 +257,15 @@ const handleClose = () => {
 
 .p-carousel__title {
   @include medium;
-  font-size: vw(65);
-  line-height: 0.85em;
-  letter-spacing: -0.05em;
+  font-size: vw(60);
+  line-height: 0.92em;
+  letter-spacing: -0.03em;
   text-transform: uppercase;
-  margin-top: vw(10);
+  margin-top: vw(25);
 
   @media (max-width: $br1) {
-    font-size: 65px;
+    font-size: 40px;
+    line-height: 0.86m;
     letter-spacing: -0.02em;
     margin-top: 25px;
   }
@@ -271,16 +279,23 @@ const handleClose = () => {
 
   @media (max-width: $br1) {
     font-size: 16px;
-    margin-top: 30px;
+    margin-top: 20px;
   }
 }
 
 .p-carousel__btn {
   text-transform: uppercase;
   margin-top: vw(40);
+  font-size: vw(14);
+  padding-left: vw(22);
+  padding-right: vw(22);
+  @include medium;
 
   @media (max-width: $br1) {
     margin-top: 40px;
+    font-size: 16px;
+    padding-left: 25px;
+    padding-right: 25px;
   }
 }
 

@@ -64,7 +64,7 @@ defineProps<IProps>()
 }
 
 .curr-pr-mob__title {
-  @include semibold;
+  @include medium;
   font-size: 40px;
   line-height: 0.9em;
   letter-spacing: -0.02em;

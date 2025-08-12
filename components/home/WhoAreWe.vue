@@ -85,7 +85,7 @@ const titleParts = computed(() => {
 }
 
 .who-are__subtitle {
-  @include semibold;
+  @include medium;
   font-size: vw(22);
   line-height: 1.55em;
   letter-spacing: -0.03em;

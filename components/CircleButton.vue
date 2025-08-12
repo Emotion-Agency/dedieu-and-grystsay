@@ -1,27 +1,45 @@
 <script setup lang="ts">
-interface iProps {
-  direction: 'left' | 'right'
-}
+import type { IButton } from '~/types/button'
 
-defineProps<iProps>()
+const props = withDefaults(defineProps<IButton>(), {
+  tag: 'button',
+  type: 'button',
+  variant: 'light',
+  direction: 'left',
+})
 
 const emit = defineEmits(['click'])
+
+const tag = computed(() => {
+  if (props.tag === 'nuxt-link') {
+    return resolveComponent('NuxtLink')
+  } else return props.tag ?? 'button'
+})
+
+const to = props.tag === 'nuxt-link' ? props.href : undefined
+const href = props.tag === 'a' ? props.href : undefined
 </script>
 
 <template>
-  <button
-    type="button"
+  <component
+    :is="tag"
+    :type="type"
+    :to="to"
+    :href="href"
+    :target="props.tag === 'a' ? '_blank' : undefined"
+    :rel="props.tag === 'a' ? 'noreferer noopener' : undefined"
     class="circle-button"
     :class="{
       'circle-button--left': direction === 'left',
       'circle-button--right': direction === 'right',
     }"
     @click="emit('click')"
+    :disabled="props.disabled"
   >
     <span>
       <slot />
     </span>
-  </button>
+  </component>
 </template>
 
 <style scoped lang="scss">
@@ -37,6 +55,8 @@ const emit = defineEmits(['click'])
   text-transform: uppercase;
   @include medium;
   font-size: vw(30);
+  padding: vw(10);
+  text-align: center;
   line-height: 1.13em;
   transition:
     transform 0.3s ease,

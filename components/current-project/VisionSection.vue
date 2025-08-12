@@ -21,7 +21,7 @@ defineProps<IProps>()
   padding-top: vw(60);
 
   @media (max-width: $br1) {
-    padding-top: 30px;
+    padding-top: 60px;
   }
 }
 </style>

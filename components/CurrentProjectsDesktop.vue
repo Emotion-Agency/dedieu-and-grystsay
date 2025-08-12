@@ -196,7 +196,7 @@ const handleSlideNext = () => {
 }
 
 .curr-pr-desk__title {
-  @include semibold;
+  @include medium;
   font-size: vw(36);
   line-height: 0.9em;
   letter-spacing: -0.03em;

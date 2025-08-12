@@ -5,4 +5,5 @@ export interface IButton {
   variant?: 'light' | 'dark'
   disabled?: boolean
   isReversed?: boolean
+  direction?: 'left' | 'right'
 }

@@ -87,7 +87,7 @@ watch(current, handleChangeSlide)
 .vision-mob {
   position: relative;
   width: 100%;
-  padding-top: 50px;
+  padding-top: 40px;
 }
 
 .vision-mob__wrapper {

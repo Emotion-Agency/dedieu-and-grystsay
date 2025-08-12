@@ -56,7 +56,7 @@ const images = props.content.corousel
   @media (max-width: $br1) {
     padding: 40px 0;
     flex-direction: column;
-    gap: 43px;
+    gap: 60px;
   }
 }
 

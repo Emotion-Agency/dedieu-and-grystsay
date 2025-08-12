@@ -65,9 +65,9 @@ defineProps<IProps>()
 
 .curr-pr-mob__title {
   @include semibold;
-  font-size: 36px;
+  font-size: 40px;
   line-height: 0.9em;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
   text-transform: uppercase;
   word-break: break-word;
 }
@@ -77,13 +77,13 @@ defineProps<IProps>()
   font-size: 16px;
   line-height: 1.4em;
   letter-spacing: -0.01em;
-  margin-top: 25px;
+  margin-top: 15px;
 }
 
 .curr-pr-mob__number {
   @include regular;
-  font-size: 100px;
+  font-size: 70px;
   line-height: 1em;
-  margin-top: 25px;
+  margin-top: 30px;
 }
 </style>

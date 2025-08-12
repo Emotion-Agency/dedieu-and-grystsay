@@ -181,7 +181,7 @@ const handleSlideNext = () => {
 .curr-pr-desk__i {
   position: relative;
   overflow: hidden;
-  padding-top: vw(30);
+  padding-top: vw(25);
 }
 
 .curr-pr-desk__i-content {
@@ -208,12 +208,12 @@ const handleSlideNext = () => {
   @include regular;
   font-size: vw(16);
   line-height: 1.4em;
-  margin-top: vw(18);
+  margin-top: vw(15);
 }
 
 .curr-pr-desk__number {
   @include regular;
-  font-size: vw(100);
+  font-size: vw(70);
   line-height: 1em;
   margin-top: vw(30);
 }

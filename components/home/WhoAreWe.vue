@@ -53,7 +53,7 @@ const titleParts = computed(() => {
       </div>
       <div class="who-are__bottom">
         <CustomImage
-          class="who-are__img"
+          class="who-are__img who-are__img--bottom-left"
           :src="content?.assets[2]?.filename"
           :alt="content?.assets[2]?.alt"
         />
@@ -109,6 +109,12 @@ const titleParts = computed(() => {
   width: 100%;
   height: 1px;
   background-color: var(--foreground);
+
+  &:nth-of-type(2) {
+    @media (max-width: $br1) {
+      display: none;
+    }
+  }
 }
 
 .who-are__top-content {
@@ -123,7 +129,7 @@ const titleParts = computed(() => {
   @media (max-width: $br1) {
     display: flex;
     flex-direction: column;
-    margin-top: 28px;
+    margin-top: 25px;
   }
 }
 
@@ -144,7 +150,10 @@ const titleParts = computed(() => {
 
   &--bottom-right {
     justify-self: end;
+  }
 
+  &--bottom-right,
+  &--bottom-left {
     @media (max-width: $br1) {
       display: none;
     }
@@ -184,7 +193,7 @@ const titleParts = computed(() => {
     font-size: size(30, 26);
     line-height: 1.31em;
     gap: 17px;
-    margin-top: 35px;
+    margin-top: 32px;
   }
 
   @media (max-width: $br4) {
@@ -223,7 +232,7 @@ const titleParts = computed(() => {
   margin-top: vw(36);
 
   @media (max-width: $br1) {
-    margin-top: 34px;
+    margin-top: 36px;
   }
 }
 
@@ -235,11 +244,14 @@ const titleParts = computed(() => {
   text-transform: uppercase;
   display: flex;
   flex-direction: column;
-  margin: vw(10) 0;
+
+  @media (min-width: $br1) {
+    margin: vw(10) 0;
+  }
 
   @media (max-width: $br1) {
     display: inline-block;
-    margin: 22px 0;
+    margin-top: 25px;
   }
 
   span {

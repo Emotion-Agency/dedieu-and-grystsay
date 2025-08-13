@@ -14,6 +14,7 @@ defineProps<IProps>()
       <FullImageSlider
         v-if="content?.assets.length > 1"
         :images="content?.assets"
+        class="full-assets__slider"
       />
       <CustomImage
         v-else
@@ -39,5 +40,12 @@ defineProps<IProps>()
   width: 100vw;
   height: 100vh;
   object-fit: cover;
+}
+
+.full-assets__slider,
+.full-assets__img {
+  @media (max-width: $br1) {
+    height: 470px;
+  }
 }
 </style>

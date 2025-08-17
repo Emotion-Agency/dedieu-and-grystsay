@@ -28,7 +28,7 @@ defineProps<IProps>()
 
 <style scoped lang="scss">
 .full-assets {
-  padding-top: vw(40);
+  padding-top: vw(60);
 
   @media (max-width: $br1) {
     padding-top: 30px;

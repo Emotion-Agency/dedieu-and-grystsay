@@ -52,6 +52,7 @@ const isCurrentNewsPage = computed(() => path.includes(`/news/${params?.id}`))
   font-size: vw(65);
   line-height: 0.9em;
   letter-spacing: -0.01em;
+  margin-bottom: vw(30);
 
   &--small {
     font-size: vw(65);
@@ -68,6 +69,7 @@ const isCurrentNewsPage = computed(() => path.includes(`/news/${params?.id}`))
   @media (max-width: $br1) {
     text-align: left;
     font-size: 65px;
+    margin-bottom: 30px;
   }
 
   &--news {
@@ -83,12 +85,10 @@ const isCurrentNewsPage = computed(() => path.includes(`/news/${params?.id}`))
   height: 1px;
   background-color: var(--foreground);
   margin: 0 auto;
-  margin: vw(40) 0;
 
   @media (max-width: $br1) {
     width: 38px;
     margin: 0 auto;
-    margin: 30px 0;
   }
 
   &--news {
@@ -105,6 +105,17 @@ const isCurrentNewsPage = computed(() => path.includes(`/news/${params?.id}`))
     @media (max-width: $br1) {
       display: none;
     }
+  }
+}
+
+.text-block__text {
+  @include medium;
+  line-height: 1.4em;
+  letter-spacing: -0.01em;
+  margin-top: vw(30);
+
+  @media (max-width: $br1) {
+    margin-top: 30px;
   }
 }
 </style>

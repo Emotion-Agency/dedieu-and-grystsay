@@ -11,7 +11,7 @@ defineProps<IProps>()
 <template>
   <section class="news-vision container">
     <div class="news-vision__wrapper">
-      <Vision :content="content" />
+      <Vision :content="content" :is-news="true" />
     </div>
   </section>
 </template>

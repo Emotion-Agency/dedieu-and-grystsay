@@ -3,6 +3,7 @@ import type { iVisionContent } from '~/types/visionTypes'
 
 interface IProps {
   content: iVisionContent
+  isNews?: boolean
 }
 
 const props = defineProps<IProps>()
@@ -39,7 +40,7 @@ const toggleText = () => {
         </button>
       </div>
     </div>
-    <div class="vision__line" />
+    <div class="vision__line" :class="{ 'vision__line--news': isNews }" />
     <VisionMobile v-if="isMobile" :images="images" />
     <VisionDesktop v-else :images="images" />
   </div>
@@ -135,6 +136,12 @@ const toggleText = () => {
 
   @media (max-width: $br1) {
     display: none;
+  }
+
+  &--news {
+    @media (max-width: $br1) {
+      display: block;
+    }
   }
 }
 

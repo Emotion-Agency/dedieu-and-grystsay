@@ -1,11 +1,7 @@
+import type { iDividerContent } from './dividerTypes'
 import type { iImage, iMeta } from './story'
 import type { iTextBlock } from './textBlockTypes'
 import type { iVisionContent } from './visionTypes'
-
-export interface iCurrentProjectDivider {
-  component: string
-  _uid: string
-}
 
 export interface iCurrentProjectConcept {
   corousel: iImage[]
@@ -49,7 +45,7 @@ export type iCurrentProjectBody =
   | iCurrentProjectFullPageAssets
   | iCurrentProjectAssetText
   | iCurrentProjectConcept
-  | iCurrentProjectDivider
+  | iDividerContent
   | iVisionContent
   | iTextBlock
 

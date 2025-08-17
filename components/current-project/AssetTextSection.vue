@@ -40,9 +40,11 @@ const showModal = ref(false)
 <style lang="scss">
 .asset-text {
   padding-top: vw(60);
+  padding-bottom: vw(60);
 
   @media (max-width: $br1) {
     padding-top: 25px;
+    padding-bottom: 0;
   }
 }
 

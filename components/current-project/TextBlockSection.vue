@@ -45,9 +45,11 @@ const toggleText = () => {
 <style scoped lang="scss">
 .pr-text-block {
   padding-top: vw(60);
+  padding-bottom: vw(40);
 
   @media (max-width: $br1) {
-    padding-top: 30px;
+    padding-top: 20px;
+    padding-bottom: 0;
   }
 }
 

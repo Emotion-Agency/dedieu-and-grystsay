@@ -17,6 +17,7 @@ const isCurrentNewsPage = computed(() => path.includes(`/news/${params?.id}`))
 <template>
   <div class="text-block">
     <h2
+      v-if="content?.title"
       class="text-block__title"
       :class="{
         'text-block__title--small': size === 'sm',
@@ -27,7 +28,7 @@ const isCurrentNewsPage = computed(() => path.includes(`/news/${params?.id}`))
       {{ content?.title }}
     </h2>
     <div
-      v-if="isAboutPage || isCurrentNewsPage"
+      v-if="(isAboutPage && content?.title) || isCurrentNewsPage"
       class="text-block__line"
       :class="{
         'text-block__line--news': isCurrentNewsPage,
@@ -82,12 +83,12 @@ const isCurrentNewsPage = computed(() => path.includes(`/news/${params?.id}`))
   height: 1px;
   background-color: var(--foreground);
   margin: 0 auto;
-  margin-top: vw(40);
+  margin: vw(40) 0;
 
   @media (max-width: $br1) {
     width: 38px;
     margin: 0 auto;
-    margin-top: 30px;
+    margin: 30px 0;
   }
 
   &--news {
@@ -104,14 +105,6 @@ const isCurrentNewsPage = computed(() => path.includes(`/news/${params?.id}`))
     @media (max-width: $br1) {
       display: none;
     }
-  }
-}
-
-.text-block__text {
-  margin-top: vw(40);
-
-  @media (max-width: $br1) {
-    margin-top: 30px;
   }
 }
 </style>

@@ -104,6 +104,10 @@ const onGetAll = () => (showAll.value = true)
     &:nth-child(5n + 1) {
       @include col(1, 6);
 
+      .grid-list__img-wrapper {
+        height: vw(431);
+      }
+
       .grid-list__description {
         max-width: 80%;
       }
@@ -179,10 +183,10 @@ const onGetAll = () => (showAll.value = true)
 }
 
 .grid-list__content {
-  margin-top: vw(35);
+  margin-top: vw(20);
 
   @media (max-width: $br1) {
-    margin-top: 35px;
+    margin-top: 20px;
   }
 }
 
@@ -203,7 +207,7 @@ const onGetAll = () => (showAll.value = true)
   transition: transform 0.3s ease-in-out;
 
   @media (max-width: $br1) {
-    height: 504px;
+    height: 470px;
   }
 }
 
@@ -211,35 +215,35 @@ const onGetAll = () => (showAll.value = true)
   @include medium;
   text-transform: uppercase;
   letter-spacing: -0.03em;
-  line-height: 0.83em;
-  font-size: vw(65);
+  line-height: 1.08em;
+  font-size: vw(50);
   word-break: break-word;
 
   @media (max-width: $br1) {
-    font-size: 65px;
+    letter-spacing: -0.02em;
+    font-size: 40px;
   }
 }
 
 .grid-list__description {
   @include regular;
-  font-size: vw(16);
+  font-size: vw(18);
   line-height: 1.4em;
   letter-spacing: -0.01em;
-  margin-top: vw(25);
+  margin-top: vw(15);
 
   @media (max-width: $br1) {
-    font-size: 16px;
-    margin-top: 25px;
+    font-size: 18px;
+    margin-top: 15px;
   }
 }
 
 .grid-list__text-btn {
   color: inherit;
-
   margin-top: vw(40);
 
   @media (max-width: $br1) {
-    margin-top: 40px;
+    margin-top: 30px;
   }
 }
 

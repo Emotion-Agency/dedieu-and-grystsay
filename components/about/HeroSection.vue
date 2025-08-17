@@ -28,13 +28,13 @@ defineProps<IProps>()
 <style scoped lang="scss">
 .about-hero {
   padding-top: vw(120);
-  padding-bottom: vw(40);
+  padding-bottom: vw(30);
   width: 100vw;
   height: 100dvh;
 
   @media (max-width: $br1) {
     padding-top: var(--section-spacing);
-    padding-bottom: 30px;
+    padding-bottom: 20px;
   }
 }
 

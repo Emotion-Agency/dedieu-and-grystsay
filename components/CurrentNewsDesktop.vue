@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { iCurrentProject } from '~/types/projectsTypes'
+import type { iCurrentNews } from '~/types/projectsTypes'
 
 interface IProps {
-  projects: iCurrentProject[]
+  projects: iCurrentNews[]
   nextSlideButton?: string
 }
 const props = defineProps<IProps>()

@@ -6,7 +6,7 @@ import HomeTicker from './HomeTicker.vue'
 import ProjectsCarousel from './ProjectsCarousel.vue'
 import AllProjects from './AllProjects.vue'
 import WhoAreWe from './WhoAreWe.vue'
-import AppCurrentProjects from '../AppCurrentProjects.vue'
+import AppCurrentNews from '../AppCurrentNews.vue'
 
 const { story } = await useHomeStory()
 
@@ -21,7 +21,7 @@ const resolveSectionByName = (name: string) => {
     projects_carousel: ProjectsCarousel,
     all_projects: AllProjects,
     who_are_we: WhoAreWe,
-    current_projects: AppCurrentProjects,
+    current_all_news: AppCurrentNews,
   }
 
   return sections[name]

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useGlobalStory } from '~/composables/stories/globalStory'
 import type { iHomeProjectsCarousel } from '~/types/homeTypes'
 import type { iProjectsContent } from '~/types/projectsTypes'
 import type { iStory } from '~/types/story'
@@ -8,6 +9,8 @@ interface IProps {
 }
 
 defineProps<IProps>()
+
+const { story } = await useGlobalStory()
 
 const isOpenedProject = ref(false)
 const cursorIndicators = ref<(HTMLElement | null)[]>([])
@@ -79,8 +82,8 @@ const handleClose = () => {
         <div class="p-carousel__item-wrapper">
           <CustomImage
             class="p-carousel__img"
-            :src="project?.content?.body[2]?.assets[0]?.filename"
-            :alt="project?.content?.body[2]?.assets[0]?.alt"
+            :src="project?.content?.preview?.filename"
+            :alt="project?.content?.preview?.alt"
           />
         </div>
         <div
@@ -106,10 +109,10 @@ const handleClose = () => {
           @click="handleClose"
         />
         <CustomImage
-          v-if="selectedProject?.content?.body[2]?.assets[0]?.filename"
+          v-if="selectedProject?.content?.preview?.filename"
           class="p-carousel__content-img"
-          :src="selectedProject?.content?.body[2]?.assets[0]?.filename"
-          :alt="selectedProject?.content?.body[2]?.assets[0]?.alt"
+          :src="selectedProject?.content?.preview?.filename"
+          :alt="selectedProject?.content?.preview?.alt"
         />
       </div>
 
@@ -119,7 +122,7 @@ const handleClose = () => {
           is-reversed
           @click="handleClose"
         >
-          {{ content?.back_button_text }}
+          {{ story?.content?.back }}
         </TextButton>
         <h2 class="p-carousel__title">
           {{ selectedProject?.content?.title }}
@@ -134,7 +137,7 @@ const handleClose = () => {
           variant="dark"
           class="p-carousel__btn"
         >
-          {{ content?.button_text }}
+          {{ story?.content?.project_detail }}
         </LoFiButton>
       </div>
     </div>

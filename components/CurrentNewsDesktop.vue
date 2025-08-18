@@ -127,12 +127,12 @@ const handleSlideNext = () => {
     gap: vw(30);
 
     .curr-pr-desk__img-wrapper {
-      border-radius: 100%;
+      border-radius: 0;
     }
 
     &:hover {
       .curr-pr-desk__img-wrapper {
-        border-radius: 0;
+        border-radius: 100%;
       }
 
       .curr-pr-desk__btn {

@@ -31,7 +31,7 @@ const emit = defineEmits(['close'])
   position: absolute;
   top: vw(20);
   right: vw(20);
-  z-index: 120;
+  z-index: 90;
   border-radius: 100%;
   border: 1px solid var(--background);
   transition: transform 0.3s ease;

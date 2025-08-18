@@ -36,7 +36,7 @@ const newsProjects =
 
 <style lang="scss">
 .current-projects {
-  padding-top: vw(80);
+  padding-top: vw(60);
 
   @media (max-width: $br1) {
     padding-top: 40px;
@@ -44,7 +44,7 @@ const newsProjects =
 }
 
 .current-projects__wrapper {
-  padding-top: vw(80);
+  padding-top: vw(60);
 
   @media (max-width: $br1) {
     padding-top: 40px;

@@ -75,6 +75,7 @@ const handleSlideNext = () => {
 <style lang="scss">
 .vision-desk {
   padding-top: vw(40);
+  padding-bottom: vw(40);
 }
 
 .vision-desk__list {

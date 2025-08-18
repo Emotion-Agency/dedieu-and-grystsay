@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useGlobalStory } from '~/composables/stories/globalStory'
 import type { iHomeProjectsCarousel } from '~/types/homeTypes'
 import type { iProjectsContent } from '~/types/projectsTypes'
 import type { iStory } from '~/types/story'
@@ -8,6 +9,8 @@ interface IProps {
 }
 
 defineProps<IProps>()
+
+const { story } = await useGlobalStory()
 
 const isOpenedProject = ref(false)
 const cursorIndicators = ref<(HTMLElement | null)[]>([])
@@ -77,10 +80,11 @@ const handleClose = () => {
         @click="handleOpen(project)"
       >
         <div class="p-carousel__item-wrapper">
-          <CustomImage
+          <AssetRenderer
             class="p-carousel__img"
-            :src="project?.content?.body[2]?.assets[0]?.filename"
-            :alt="project?.content?.body[2]?.assets[0]?.alt"
+            :src="project?.content?.preview?.filename"
+            :alt="project?.content?.preview?.alt"
+            :is-playing="true"
           />
         </div>
         <div
@@ -105,11 +109,12 @@ const handleClose = () => {
           class="p-carousel__close-btn"
           @click="handleClose"
         />
-        <CustomImage
-          v-if="selectedProject?.content?.body[2]?.assets[0]?.filename"
+        <AssetRenderer
+          v-if="selectedProject?.content?.preview?.filename"
           class="p-carousel__content-img"
-          :src="selectedProject?.content?.body[2]?.assets[0]?.filename"
-          :alt="selectedProject?.content?.body[2]?.assets[0]?.alt"
+          :src="selectedProject?.content?.preview?.filename"
+          :alt="selectedProject?.content?.preview?.alt"
+          :is-playing="true"
         />
       </div>
 
@@ -119,7 +124,7 @@ const handleClose = () => {
           is-reversed
           @click="handleClose"
         >
-          {{ content?.back_button_text }}
+          {{ story?.content?.back }}
         </TextButton>
         <h2 class="p-carousel__title">
           {{ selectedProject?.content?.title }}
@@ -134,14 +139,14 @@ const handleClose = () => {
           variant="dark"
           class="p-carousel__btn"
         >
-          {{ content?.button_text }}
+          {{ story?.content?.project_detail }}
         </LoFiButton>
       </div>
     </div>
   </section>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
 .p-carousel {
   padding-top: vw(40);
 
@@ -184,16 +189,12 @@ const handleClose = () => {
 .p-carousel__img {
   display: block;
   width: 100%;
-  height: vw(745);
+  height: 100dvh;
   object-fit: cover;
   filter: gray;
   -webkit-filter: grayscale(100%);
   -webkit-transition: filter 0.6s ease;
   -webkit-backface-visibility: hidden;
-
-  @media (max-width: $br1) {
-    height: 558px;
-  }
 
   &:hover {
     filter: none;
@@ -206,9 +207,9 @@ const handleClose = () => {
   display: none !important;
   position: relative;
   display: grid;
-  grid-template-columns: vw(840) 1fr;
+  grid-template-columns: vw(740) 1fr;
   width: 100%;
-  gap: vw(58);
+  gap: vw(163);
 
   @media (max-width: $br1) {
     grid-template-columns: 1fr;
@@ -230,34 +231,42 @@ const handleClose = () => {
   @media (max-width: $br1) {
     display: flex;
     position: absolute;
-    top: 12px;
-    left: 12px;
-    width: 20px;
-    height: 20px;
+    top: 16px;
+    right: 16px;
+    width: 30px;
+    height: 30px;
+    background-color: var(--background);
+    border: none;
+  }
+
+  span {
+    height: 1px;
+    width: 50%;
   }
 }
 
 .p-carousel__content-img {
   display: block;
   width: 100%;
-  height: vw(740);
+  height: 100dvh;
   object-fit: cover;
 
   @media (max-width: $br1) {
-    height: 558px;
+    height: 90dvh;
   }
 }
 
 .p-carousel__title {
   @include medium;
-  font-size: vw(65);
-  line-height: 0.85em;
-  letter-spacing: -0.05em;
+  font-size: vw(60);
+  line-height: 0.92em;
+  letter-spacing: -0.03em;
   text-transform: uppercase;
-  margin-top: vw(10);
+  margin-top: vw(25);
 
   @media (max-width: $br1) {
-    font-size: 65px;
+    font-size: 40px;
+    line-height: 0.86m;
     letter-spacing: -0.02em;
     margin-top: 25px;
   }
@@ -271,12 +280,11 @@ const handleClose = () => {
 
   @media (max-width: $br1) {
     font-size: 16px;
-    margin-top: 30px;
+    margin-top: 20px;
   }
 }
 
 .p-carousel__btn {
-  text-transform: uppercase;
   margin-top: vw(40);
 
   @media (max-width: $br1) {

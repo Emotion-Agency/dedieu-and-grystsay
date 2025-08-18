@@ -18,10 +18,10 @@ defineProps<IProps>()
 
 <style scoped lang="scss">
 .about-text-block {
-  padding-top: vw(60);
+  padding-top: vw(30);
 
   @media (max-width: $br1) {
-    padding-top: 30px;
+    padding-top: 20px;
   }
 }
 </style>

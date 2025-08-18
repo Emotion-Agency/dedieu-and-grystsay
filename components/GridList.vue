@@ -15,18 +15,20 @@ const { story } = await useGlobalStory()
 const { width } = useWindowSize()
 const isMobile = computed(() => width.value <= 960)
 
-const SHOW_LIMIT = 5
-const showAll = ref(false)
+const SHOW_STEP = 3
 
-const isButtonVisible = computed(
-  () => !showAll.value && props.items.length > SHOW_LIMIT
-)
+const visibleCount = ref(SHOW_STEP)
 
-const filteredItems = computed(() =>
-  showAll.value ? props.items : props.items.slice(0, SHOW_LIMIT)
-)
+const isButtonVisible = computed(() => visibleCount.value < props.items.length)
 
-const onGetAll = () => (showAll.value = true)
+const filteredItems = computed(() => props.items.slice(0, visibleCount.value))
+
+const onGetMore = () => {
+  visibleCount.value = Math.min(
+    visibleCount.value + SHOW_STEP,
+    props.items.length
+  )
+}
 </script>
 
 <template>
@@ -64,7 +66,7 @@ const onGetAll = () => (showAll.value = true)
       v-show="!isMobile"
       direction="left"
       class="grid-list__circle-btn"
-      @click="onGetAll"
+      @click="onGetMore"
     >
       {{ content?.button }}
     </CircleButton>
@@ -73,7 +75,7 @@ const onGetAll = () => (showAll.value = true)
       v-show="isMobile"
       direction="right"
       class="grid-list__circle-btn"
-      @click="onGetAll"
+      @click="onGetMore"
     >
       {{ content?.button }}
     </CircleButton>
@@ -81,6 +83,10 @@ const onGetAll = () => (showAll.value = true)
 </template>
 
 <style lang="scss">
+.grid-list {
+  position: relative;
+}
+
 .grid-list__items {
   position: relative;
 
@@ -101,15 +107,19 @@ const onGetAll = () => (showAll.value = true)
   height: fit-content;
 
   @media (min-width: $br1) {
-    &:nth-child(5n + 1) {
+    &:nth-of-type(5n + 1) {
       @include col(1, 6);
+
+      .grid-list__img-wrapper {
+        height: vw(431);
+      }
 
       .grid-list__description {
         max-width: 80%;
       }
     }
 
-    &:nth-child(5n + 2) {
+    &:nth-of-type(5n + 2) {
       @include col(9, 12);
 
       .grid-list__img-wrapper {
@@ -117,7 +127,7 @@ const onGetAll = () => (showAll.value = true)
       }
     }
 
-    &:nth-child(5n + 3) {
+    &:nth-of-type(5n + 3) {
       @include col(1, 7);
       margin-top: vw(158);
       display: flex;
@@ -137,7 +147,7 @@ const onGetAll = () => (showAll.value = true)
       }
     }
 
-    &:nth-child(5n + 4) {
+    &:nth-of-type(5n + 4) {
       @include col(9, 12);
       margin-top: vw(571);
 
@@ -146,10 +156,9 @@ const onGetAll = () => (showAll.value = true)
       }
     }
 
-    &:nth-child(5n + 5) {
+    &:nth-of-type(5n + 5) {
       @include col(1, 6);
       margin-top: vw(-88);
-      margin-bottom: vw(88);
 
       .grid-list__img-wrapper {
         height: vw(392);
@@ -158,6 +167,10 @@ const onGetAll = () => (showAll.value = true)
       .grid-list__description {
         max-width: 80%;
       }
+    }
+
+    &:nth-of-type(5n + 1):not(:first-of-type) {
+      margin-top: vw(40);
     }
   }
 
@@ -179,10 +192,10 @@ const onGetAll = () => (showAll.value = true)
 }
 
 .grid-list__content {
-  margin-top: vw(35);
+  margin-top: vw(20);
 
   @media (max-width: $br1) {
-    margin-top: 35px;
+    margin-top: 20px;
   }
 }
 
@@ -203,7 +216,7 @@ const onGetAll = () => (showAll.value = true)
   transition: transform 0.3s ease-in-out;
 
   @media (max-width: $br1) {
-    height: 504px;
+    height: 470px;
   }
 }
 
@@ -211,47 +224,49 @@ const onGetAll = () => (showAll.value = true)
   @include medium;
   text-transform: uppercase;
   letter-spacing: -0.03em;
-  line-height: 0.83em;
-  font-size: vw(65);
+  line-height: 1.08em;
+  font-size: vw(50);
   word-break: break-word;
 
   @media (max-width: $br1) {
-    font-size: 65px;
+    letter-spacing: -0.02em;
+    font-size: 40px;
   }
 }
 
 .grid-list__description {
   @include regular;
-  font-size: vw(16);
+  font-size: vw(18);
   line-height: 1.4em;
   letter-spacing: -0.01em;
-  margin-top: vw(25);
+  margin-top: vw(15);
 
   @media (max-width: $br1) {
-    font-size: 16px;
-    margin-top: 25px;
+    font-size: 18px;
+    margin-top: 15px;
   }
 }
 
 .grid-list__text-btn {
   color: inherit;
-
   margin-top: vw(40);
 
   @media (max-width: $br1) {
-    margin-top: 40px;
+    margin-top: 30px;
   }
 }
 
 .grid-list__circle-btn {
   @media (min-width: $br1) {
     margin-left: auto;
-    margin-right: vw(50);
+    margin-top: vw(20);
+    margin-right: vw(60);
   }
 
   @media (max-width: $br1) {
-    margin-left: 50px;
-    margin-top: 50px;
+    margin: 0 auto;
+    margin-top: 60px;
+    margin-bottom: 40px;
   }
 }
 </style>

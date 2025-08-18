@@ -120,7 +120,7 @@ const onSubmit = async (e: Event) => {
   </form>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
 .form {
   width: 100%;
 }
@@ -137,9 +137,15 @@ const onSubmit = async (e: Event) => {
 }
 
 .form__form-btn {
+  @include regular;
+  text-transform: capitalize;
+  padding: vw(14) vw(40);
   margin-top: vw(28);
+  font-size: vw(16);
 
   @media (max-width: $br1) {
+    font-size: 16px;
+    letter-spacing: -0.03em;
     margin-top: 40px;
   }
 }

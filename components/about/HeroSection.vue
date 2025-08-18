@@ -15,26 +15,27 @@ defineProps<IProps>()
         v-if="content?.assets.length > 1"
         :images="content?.assets"
       />
-      <CustomImage
+      <AssetRenderer
         v-else
         :src="content?.assets[0]?.filename"
         :alt="content?.assets[0]?.alt"
+        :is-playing="true"
         class="about-hero__img"
       />
     </div>
   </section>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
 .about-hero {
   padding-top: vw(120);
-  padding-bottom: vw(40);
+  padding-bottom: vw(30);
   width: 100vw;
   height: 100dvh;
 
   @media (max-width: $br1) {
-    padding-top: 80px;
-    padding-bottom: 30px;
+    padding-top: var(--section-spacing);
+    padding-bottom: 20px;
   }
 }
 

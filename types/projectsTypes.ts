@@ -10,28 +10,30 @@ export interface iProjectContent {
 export interface iProjectsContent {
   title: string
   description: string
+  preview: iImage
   body: any
   meta: iMeta[]
   component: string
   _uid: string
 }
 
-export interface iCurrentProjectsContent {
+export interface iCurrentNewsContent {
   marquee_title: string
-  projects: iCurrentProjects[]
+  news?: iCurrentAllNews[]
+  projects?: iCurrentAllNews[]
   component: string
   _uid: string
 }
 
-export interface iCurrentProjects {
+export interface iCurrentAllNews {
   content: {
-    items: iCurrentProject[]
+    items: iCurrentNews[]
     component: string
     _uid: string
   }
 }
 
-export interface iCurrentProject {
+export interface iCurrentNews {
   asset: iImage
   text: string
   title: string
@@ -55,13 +57,6 @@ export interface iProjectsTicker {
 
 export interface iProjectsGrid {
   button: string
-  component: string
-  _uid: string
-}
-
-export interface iProjectsCurrentProjects {
-  marquee_title: string
-  projects: iCurrentProjects
   component: string
   _uid: string
 }

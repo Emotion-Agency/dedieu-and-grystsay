@@ -144,7 +144,7 @@ onMounted(async () => {
 }
 
 .ticker__content {
-  @include semibold;
+  @include medium;
   font-size: vw(23);
   letter-spacing: -0.02em;
   display: flex;

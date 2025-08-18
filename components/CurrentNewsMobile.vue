@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { iCurrentProject } from '~/types/projectsTypes'
+import type { iCurrentNews } from '~/types/projectsTypes'
 
 interface IProps {
-  projects: iCurrentProject[]
+  projects: iCurrentNews[]
 }
 
 defineProps<IProps>()
@@ -37,10 +37,6 @@ defineProps<IProps>()
 </template>
 
 <style lang="scss">
-.curr-pr-mob {
-  padding-top: 40px;
-}
-
 .curr-pr-mob__list {
   display: flex;
   flex-direction: column;
@@ -56,7 +52,7 @@ defineProps<IProps>()
   object-fit: cover;
   max-width: 100%;
   width: 100%;
-  height: 442px;
+  height: 470px;
 }
 
 .curr-pr-mob__info {
@@ -64,10 +60,10 @@ defineProps<IProps>()
 }
 
 .curr-pr-mob__title {
-  @include semibold;
-  font-size: 36px;
+  @include medium;
+  font-size: 40px;
   line-height: 0.9em;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
   text-transform: uppercase;
   word-break: break-word;
 }
@@ -77,13 +73,13 @@ defineProps<IProps>()
   font-size: 16px;
   line-height: 1.4em;
   letter-spacing: -0.01em;
-  margin-top: 25px;
+  margin-top: 15px;
 }
 
 .curr-pr-mob__number {
   @include regular;
-  font-size: 100px;
+  font-size: 70px;
   line-height: 1em;
-  margin-top: 25px;
+  margin-top: 30px;
 }
 </style>

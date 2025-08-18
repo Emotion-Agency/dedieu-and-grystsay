@@ -34,7 +34,7 @@ defineProps<IProps>()
   padding-top: vw(120);
 
   @media (max-width: $br1) {
-    padding-top: 80px;
+    padding-top: var(--section-spacing);
   }
 }
 
@@ -70,12 +70,12 @@ defineProps<IProps>()
   font-size: vw(200);
 
   @media (max-width: $br1) {
-    font-size: size(200, 70);
+    font-size: size(200, 60);
     line-height: 0.89em;
   }
 
   @media (max-width: $br4) {
-    font-size: 70px;
+    font-size: 60px;
   }
 }
 

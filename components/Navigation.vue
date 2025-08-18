@@ -104,7 +104,7 @@ const localePath = useLocalePath()
   }
 
   &--menu {
-    @include semibold;
+    @include medium;
     flex-direction: column;
     align-items: center;
     justify-content: center;

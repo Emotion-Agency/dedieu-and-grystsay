@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import AppCurrentProjects from '~/components/AppCurrentProjects.vue'
+import AppCurrentNews from '~/components/AppCurrentNews.vue'
 import ProjectsGrid from '~/components/projects/ProjectsGrid.vue'
 import ProjectsHero from '~/components/projects/ProjectsHero.vue'
 import ProjectsTicker from '~/components/projects/ProjectsTicker.vue'
@@ -21,7 +21,7 @@ const resolveSectionByName = (name: string) => {
     hero_v3: ProjectsHero,
     marquee: ProjectsTicker,
     projects_grid: ProjectsGrid,
-    current_projects: AppCurrentProjects,
+    current_all_news: AppCurrentNews,
   }
 
   return sections[name]

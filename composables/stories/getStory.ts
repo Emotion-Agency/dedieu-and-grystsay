@@ -31,6 +31,7 @@ export const useGetStory = async (route: string) => {
           resolve_relations: [
             'projects_carousel.projects',
             'current_projects.projects',
+            'current_all_news.news',
           ],
         })
 

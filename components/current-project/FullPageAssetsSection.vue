@@ -14,11 +14,13 @@ defineProps<IProps>()
       <FullImageSlider
         v-if="content?.assets.length > 1"
         :images="content?.assets"
+        class="full-assets__slider"
       />
-      <CustomImage
+      <AssetRenderer
         v-else
         :src="content?.assets[0]?.filename"
         :alt="content?.assets[0]?.alt"
+        :is-playing="true"
         class="full-assets__img"
       />
     </div>
@@ -27,10 +29,10 @@ defineProps<IProps>()
 
 <style scoped lang="scss">
 .full-assets {
-  padding-top: vw(40);
+  padding-top: vw(60);
 
   @media (max-width: $br1) {
-    padding-top: 30px;
+    padding-top: 60px;
   }
 }
 
@@ -39,5 +41,12 @@ defineProps<IProps>()
   width: 100vw;
   height: 100vh;
   object-fit: cover;
+}
+
+.full-assets__slider,
+.full-assets__img {
+  @media (max-width: $br1) {
+    height: 470px;
+  }
 }
 </style>

@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { iCurrentProject } from '~/types/projectsTypes'
+import type { iCurrentNews } from '~/types/projectsTypes'
 
 interface IProps {
-  projects: iCurrentProject[]
+  projects: iCurrentNews[]
   nextSlideButton?: string
 }
 const props = defineProps<IProps>()
@@ -127,12 +127,12 @@ const handleSlideNext = () => {
     gap: vw(30);
 
     .curr-pr-desk__img-wrapper {
-      border-radius: 100%;
+      border-radius: 0;
     }
 
     &:hover {
       .curr-pr-desk__img-wrapper {
-        border-radius: 0;
+        border-radius: 100%;
       }
 
       .curr-pr-desk__btn {
@@ -181,7 +181,7 @@ const handleSlideNext = () => {
 .curr-pr-desk__i {
   position: relative;
   overflow: hidden;
-  padding-top: vw(30);
+  padding-top: vw(25);
 }
 
 .curr-pr-desk__i-content {
@@ -196,7 +196,7 @@ const handleSlideNext = () => {
 }
 
 .curr-pr-desk__title {
-  @include semibold;
+  @include medium;
   font-size: vw(36);
   line-height: 0.9em;
   letter-spacing: -0.03em;
@@ -208,12 +208,12 @@ const handleSlideNext = () => {
   @include regular;
   font-size: vw(16);
   line-height: 1.4em;
-  margin-top: vw(18);
+  margin-top: vw(15);
 }
 
 .curr-pr-desk__number {
   @include regular;
-  font-size: vw(100);
+  font-size: vw(70);
   line-height: 1em;
   margin-top: vw(30);
 }

@@ -24,7 +24,7 @@ const { isShowThankYou } = useThankyouScreen()
 }
 
 .thankyou-modal__text {
-  @include semibold;
+  @include medium;
   font-size: vw(40);
   line-height: 1.15em;
   letter-spacing: -0.05em;

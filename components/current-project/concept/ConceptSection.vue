@@ -38,9 +38,11 @@ const images = props.content.corousel
 <style scoped lang="scss">
 .p-concept {
   padding-top: vw(60);
+  padding-bottom: vw(60);
 
   @media (max-width: $br1) {
-    padding-top: 40px;
+    padding-top: 30px;
+    padding-bottom: 0;
   }
 }
 
@@ -54,9 +56,8 @@ const images = props.content.corousel
   }
 
   @media (max-width: $br1) {
-    padding: 40px 0;
     flex-direction: column;
-    gap: 43px;
+    gap: 60px;
   }
 }
 

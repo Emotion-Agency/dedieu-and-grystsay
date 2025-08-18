@@ -17,6 +17,7 @@ const isCurrentNewsPage = computed(() => path.includes(`/news/${params?.id}`))
 <template>
   <div class="text-block">
     <h2
+      v-if="content?.title"
       class="text-block__title"
       :class="{
         'text-block__title--small': size === 'sm',
@@ -27,7 +28,7 @@ const isCurrentNewsPage = computed(() => path.includes(`/news/${params?.id}`))
       {{ content?.title }}
     </h2>
     <div
-      v-if="isAboutPage || isCurrentNewsPage"
+      v-if="(isAboutPage && content?.title) || isCurrentNewsPage"
       class="text-block__line"
       :class="{
         'text-block__line--news': isCurrentNewsPage,
@@ -51,6 +52,7 @@ const isCurrentNewsPage = computed(() => path.includes(`/news/${params?.id}`))
   font-size: vw(65);
   line-height: 0.9em;
   letter-spacing: -0.01em;
+  margin-bottom: vw(30);
 
   &--small {
     font-size: vw(65);
@@ -67,6 +69,7 @@ const isCurrentNewsPage = computed(() => path.includes(`/news/${params?.id}`))
   @media (max-width: $br1) {
     text-align: left;
     font-size: 65px;
+    margin-bottom: 30px;
   }
 
   &--news {
@@ -82,12 +85,10 @@ const isCurrentNewsPage = computed(() => path.includes(`/news/${params?.id}`))
   height: 1px;
   background-color: var(--foreground);
   margin: 0 auto;
-  margin-top: vw(40);
 
   @media (max-width: $br1) {
     width: 38px;
     margin: 0 auto;
-    margin-top: 30px;
   }
 
   &--news {
@@ -108,7 +109,10 @@ const isCurrentNewsPage = computed(() => path.includes(`/news/${params?.id}`))
 }
 
 .text-block__text {
-  margin-top: vw(40);
+  @include medium;
+  line-height: 1.4em;
+  letter-spacing: -0.01em;
+  margin-top: vw(30);
 
   @media (max-width: $br1) {
     margin-top: 30px;

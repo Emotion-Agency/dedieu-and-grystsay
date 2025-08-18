@@ -75,6 +75,7 @@ const localePath = useLocalePath()
   align-items: flex-start;
   gap: vw(50);
   padding-top: vw(60);
+  color: var(--background);
 
   @media (max-width: $br1) {
     flex-direction: column;

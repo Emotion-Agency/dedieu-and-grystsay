@@ -24,21 +24,26 @@ const titleParts = computed(() => {
       <div class="who-are__top">
         <div class="who-are__line" />
         <div class="who-are__top-content">
-          <CustomImage
+          <AssetRenderer
             class="who-are__img"
             :src="content?.assets[0]?.filename"
             :alt="content?.assets[0]?.alt"
+            :is-playing="true"
           />
-          <CustomImage
+          <AssetRenderer
             class="who-are__img who-are__img--top-right"
             :src="content?.assets[1]?.filename"
             :alt="content?.assets[1]?.alt"
+            :is-playing="true"
           />
           <NuxtLink
             :to="content?.link[0]?.url?.cached_url"
             class="who-are__link"
           >
-            <IconsCirclePlus />
+            <div class="who-are__plus">
+              <div />
+              <div />
+            </div>
             <span>{{ content?.link[0]?.label }}</span>
           </NuxtLink>
         </div>
@@ -52,18 +57,20 @@ const titleParts = computed(() => {
         <div class="who-are__line" />
       </div>
       <div class="who-are__bottom">
-        <CustomImage
-          class="who-are__img"
+        <AssetRenderer
+          class="who-are__img who-are__img--bottom-left"
           :src="content?.assets[2]?.filename"
           :alt="content?.assets[2]?.alt"
+          :is-playing="true"
         />
         <p class="who-are__text">
           {{ content?.text }}
         </p>
-        <CustomImage
+        <AssetRenderer
           class="who-are__img who-are__img--bottom-right"
           :src="content?.assets[3]?.filename"
           :alt="content?.assets[3]?.alt"
+          :is-playing="true"
         />
       </div>
     </div>
@@ -72,20 +79,20 @@ const titleParts = computed(() => {
 
 <style scoped lang="scss">
 .who-are {
-  margin-top: vw(150);
+  margin-top: vw(130);
   padding-top: vw(16);
   padding-bottom: vw(46);
   background-color: var(--foreground-muted);
 
   @media (max-width: $br1) {
-    margin-top: 92px;
+    margin-top: 127px;
     padding-top: 14px;
     padding-bottom: 36px;
   }
 }
 
 .who-are__subtitle {
-  @include semibold;
+  @include medium;
   font-size: vw(22);
   line-height: 1.55em;
   letter-spacing: -0.03em;
@@ -109,6 +116,12 @@ const titleParts = computed(() => {
   width: 100%;
   height: 1px;
   background-color: var(--foreground);
+
+  &:nth-of-type(2) {
+    @media (max-width: $br1) {
+      display: none;
+    }
+  }
 }
 
 .who-are__top-content {
@@ -123,7 +136,7 @@ const titleParts = computed(() => {
   @media (max-width: $br1) {
     display: flex;
     flex-direction: column;
-    margin-top: 28px;
+    margin-top: 25px;
   }
 }
 
@@ -144,7 +157,10 @@ const titleParts = computed(() => {
 
   &--bottom-right {
     justify-self: end;
+  }
 
+  &--bottom-right,
+  &--bottom-left {
     @media (max-width: $br1) {
       display: none;
     }
@@ -184,7 +200,7 @@ const titleParts = computed(() => {
     font-size: size(30, 26);
     line-height: 1.31em;
     gap: 17px;
-    margin-top: 35px;
+    margin-top: 32px;
   }
 
   @media (max-width: $br4) {
@@ -192,10 +208,6 @@ const titleParts = computed(() => {
   }
 
   &:hover {
-    svg {
-      transform: scale(0.9);
-    }
-
     span::before {
       width: 100%;
     }
@@ -219,11 +231,48 @@ const titleParts = computed(() => {
   }
 }
 
+.who-are__plus {
+  position: relative;
+  display: block;
+  width: vw(99);
+  height: vw(99);
+  background-color: transparent;
+  border: vw(2.5) solid black;
+  z-index: 0;
+  border-radius: 100%;
+
+  div {
+    display: block;
+    width: vw(2);
+    height: vw(37);
+    position: absolute;
+    background-color: black;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    &:last-child {
+      transform: translate(-50%, -50%) rotate(90deg);
+    }
+  }
+
+  @media (max-width: $br1) {
+    border-width: 2px;
+    width: 52px;
+    height: 52px;
+
+    div {
+      width: 2px;
+      height: 19px;
+    }
+  }
+}
+
 .who-are__middle {
   margin-top: vw(36);
 
   @media (max-width: $br1) {
-    margin-top: 34px;
+    margin-top: 36px;
   }
 }
 
@@ -235,11 +284,15 @@ const titleParts = computed(() => {
   text-transform: uppercase;
   display: flex;
   flex-direction: column;
-  margin: vw(10) 0;
+
+  @media (min-width: $br1) {
+    margin-top: vw(10);
+    margin-bottom: vw(17);
+  }
 
   @media (max-width: $br1) {
     display: inline-block;
-    margin: 22px 0;
+    margin-top: 25px;
   }
 
   span {

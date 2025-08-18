@@ -38,7 +38,10 @@ const titleParts = computed(() => {
             :to="content?.link[0]?.url?.cached_url"
             class="who-are__link"
           >
-            <IconsCirclePlus />
+            <div class="who-are__plus">
+              <div />
+              <div />
+            </div>
             <span>{{ content?.link[0]?.label }}</span>
           </NuxtLink>
         </div>
@@ -220,6 +223,43 @@ const titleParts = computed(() => {
       background: currentColor;
       transition: width 0.3s ease;
       pointer-events: none;
+    }
+  }
+}
+
+.who-are__plus {
+  position: relative;
+  display: block;
+  width: vw(99);
+  height: vw(99);
+  background-color: transparent;
+  border: vw(2.5) solid black;
+  z-index: 0;
+  border-radius: 100%;
+
+  div {
+    display: block;
+    width: vw(2);
+    height: vw(37);
+    position: absolute;
+    background-color: black;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    &:last-child {
+      transform: translate(-50%, -50%) rotate(90deg);
+    }
+  }
+
+  @media (max-width: $br1) {
+    border-width: 2px;
+    width: 52px;
+    height: 52px;
+
+    div {
+      width: 2px;
+      height: 19px;
     }
   }
 }

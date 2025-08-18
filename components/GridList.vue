@@ -260,6 +260,8 @@ const onGetAll = () => (showAll.value = true)
 
   @media (max-width: $br1) {
     margin: 0 auto;
+    margin-top: 60px;
+    margin-bottom: 40px;
   }
 }
 </style>

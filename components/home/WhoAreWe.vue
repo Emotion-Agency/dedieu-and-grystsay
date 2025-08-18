@@ -201,10 +201,6 @@ const titleParts = computed(() => {
   }
 
   &:hover {
-    svg {
-      transform: scale(0.9);
-    }
-
     span::before {
       width: 100%;
     }

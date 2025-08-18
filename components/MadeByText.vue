@@ -24,12 +24,11 @@ defineProps<iProps>()
   </a>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
 .made-by-text {
   @include medium;
   display: block;
   font-size: vw(16);
-  text-transform: lowercase;
   position: relative;
 
   &--light {

@@ -151,8 +151,12 @@ watch(isMenuOpened, () => {
             </div>
 
             <div class="burger-menu__bottom">
-              <LanguageSwitcher variant="menu" />
-              <MadeByText :content="madeByStory?.content" color="light" />
+              <LanguageSwitcher variant="menu" class="burger-menu__lang" />
+              <MadeByText
+                :content="madeByStory?.content"
+                color="light"
+                class="burger-menu__made-by"
+              />
             </div>
           </div>
         </div>
@@ -307,8 +311,8 @@ watch(isMenuOpened, () => {
 .burger-menu__content {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  justify-content: flex-start;
   z-index: 90;
   position: fixed;
   top: 50%;
@@ -325,21 +329,27 @@ watch(isMenuOpened, () => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: auto;
-}
-
-.burger-menu__nav {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: center;
 }
 
 .burger-menu__bottom {
-  margin-top: auto;
+  position: absolute;
+  bottom: 5vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10vh;
-  margin-top: 20vh;
+  gap: 12vh;
+}
+
+.burger-menu__lang {
+  @media (max-width: $br1) {
+    gap: 14px;
+  }
+}
+
+.burger-menu__made-by {
+  @media (max-width: $br1) {
+    font-size: 18px !important;
+  }
 }
 </style>

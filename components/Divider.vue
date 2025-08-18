@@ -5,9 +5,7 @@ interface iProps {
   content: iDividerContent
 }
 
-const props = defineProps<iProps>()
-
-console.log(props.content)
+defineProps<iProps>()
 </script>
 
 <template>

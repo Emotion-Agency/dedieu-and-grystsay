@@ -246,7 +246,8 @@ const titleParts = computed(() => {
   flex-direction: column;
 
   @media (min-width: $br1) {
-    margin: vw(10) 0;
+    margin-top: vw(10);
+    margin-bottom: vw(17);
   }
 
   @media (max-width: $br1) {

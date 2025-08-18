@@ -81,6 +81,10 @@ const onGetAll = () => (showAll.value = true)
 </template>
 
 <style lang="scss">
+.grid-list {
+  position: relative;
+}
+
 .grid-list__items {
   position: relative;
 
@@ -249,13 +253,13 @@ const onGetAll = () => (showAll.value = true)
 
 .grid-list__circle-btn {
   @media (min-width: $br1) {
-    margin-left: auto;
-    margin-right: vw(50);
+    position: absolute;
+    right: vw(50);
+    bottom: 0;
   }
 
   @media (max-width: $br1) {
-    margin-left: 50px;
-    margin-top: 50px;
+    margin: 0 auto;
   }
 }
 </style>

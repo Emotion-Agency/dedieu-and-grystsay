@@ -22,9 +22,11 @@ const { projects } = await useProjectsStories('projects')
 <style scoped lang="scss">
 .prs-grid {
   padding-top: vw(40);
+  padding-bottom: vw(60);
 
   @media (max-width: $br1) {
     padding-top: 30px;
+    padding-bottom: 0;
   }
 }
 </style>

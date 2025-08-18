@@ -37,10 +37,6 @@ defineProps<IProps>()
 </template>
 
 <style lang="scss">
-.curr-pr-mob {
-  padding-top: 40px;
-}
-
 .curr-pr-mob__list {
   display: flex;
   flex-direction: column;

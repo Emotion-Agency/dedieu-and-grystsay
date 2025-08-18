@@ -15,10 +15,11 @@ defineProps<IProps>()
         v-if="content?.assets.length > 1"
         :images="content?.assets"
       />
-      <CustomImage
+      <AssetRenderer
         v-else
         :src="content?.assets[0]?.filename"
         :alt="content?.assets[0]?.alt"
+        :is-playing="true"
         class="full-assets__img"
       />
     </div>

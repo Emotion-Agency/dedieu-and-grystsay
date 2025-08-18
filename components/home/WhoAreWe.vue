@@ -24,15 +24,17 @@ const titleParts = computed(() => {
       <div class="who-are__top">
         <div class="who-are__line" />
         <div class="who-are__top-content">
-          <CustomImage
+          <AssetRenderer
             class="who-are__img"
             :src="content?.assets[0]?.filename"
             :alt="content?.assets[0]?.alt"
+            :is-playing="true"
           />
-          <CustomImage
+          <AssetRenderer
             class="who-are__img who-are__img--top-right"
             :src="content?.assets[1]?.filename"
             :alt="content?.assets[1]?.alt"
+            :is-playing="true"
           />
           <NuxtLink
             :to="content?.link[0]?.url?.cached_url"
@@ -55,18 +57,20 @@ const titleParts = computed(() => {
         <div class="who-are__line" />
       </div>
       <div class="who-are__bottom">
-        <CustomImage
+        <AssetRenderer
           class="who-are__img who-are__img--bottom-left"
           :src="content?.assets[2]?.filename"
           :alt="content?.assets[2]?.alt"
+          :is-playing="true"
         />
         <p class="who-are__text">
           {{ content?.text }}
         </p>
-        <CustomImage
+        <AssetRenderer
           class="who-are__img who-are__img--bottom-right"
           :src="content?.assets[3]?.filename"
           :alt="content?.assets[3]?.alt"
+          :is-playing="true"
         />
       </div>
     </div>

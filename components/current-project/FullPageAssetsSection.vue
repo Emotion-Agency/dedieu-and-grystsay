@@ -16,10 +16,11 @@ defineProps<IProps>()
         :images="content?.assets"
         class="full-assets__slider"
       />
-      <CustomImage
+      <AssetRenderer
         v-else
         :src="content?.assets[0]?.filename"
         :alt="content?.assets[0]?.alt"
+        :is-playing="true"
         class="full-assets__img"
       />
     </div>

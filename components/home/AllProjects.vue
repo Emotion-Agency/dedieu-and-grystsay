@@ -23,13 +23,14 @@ const nextImages = () => {
         :key="idx"
         class="all-projects__images"
       >
-        <CustomImage
+        <AssetRenderer
           v-for="(img, index) in item.assets"
           :key="index"
           class="all-projects__image"
           :src="img?.filename"
           :alt="img?.alt"
           :class="{ 'all-projects__image--active': activeImageIndex === index }"
+          :is-playing="true"
         />
       </div>
 

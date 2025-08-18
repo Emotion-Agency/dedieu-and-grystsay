@@ -80,10 +80,11 @@ const handleClose = () => {
         @click="handleOpen(project)"
       >
         <div class="p-carousel__item-wrapper">
-          <CustomImage
+          <AssetRenderer
             class="p-carousel__img"
             :src="project?.content?.preview?.filename"
             :alt="project?.content?.preview?.alt"
+            :is-playing="true"
           />
         </div>
         <div
@@ -108,11 +109,12 @@ const handleClose = () => {
           class="p-carousel__close-btn"
           @click="handleClose"
         />
-        <CustomImage
+        <AssetRenderer
           v-if="selectedProject?.content?.preview?.filename"
           class="p-carousel__content-img"
           :src="selectedProject?.content?.preview?.filename"
           :alt="selectedProject?.content?.preview?.alt"
+          :is-playing="true"
         />
       </div>
 

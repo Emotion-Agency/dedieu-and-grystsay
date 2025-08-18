@@ -15,18 +15,20 @@ const { story } = await useGlobalStory()
 const { width } = useWindowSize()
 const isMobile = computed(() => width.value <= 960)
 
-const SHOW_LIMIT = 5
-const showAll = ref(false)
+const SHOW_STEP = 3
 
-const isButtonVisible = computed(
-  () => !showAll.value && props.items.length > SHOW_LIMIT
-)
+const visibleCount = ref(SHOW_STEP)
 
-const filteredItems = computed(() =>
-  showAll.value ? props.items : props.items.slice(0, SHOW_LIMIT)
-)
+const isButtonVisible = computed(() => visibleCount.value < props.items.length)
 
-const onGetAll = () => (showAll.value = true)
+const filteredItems = computed(() => props.items.slice(0, visibleCount.value))
+
+const onGetMore = () => {
+  visibleCount.value = Math.min(
+    visibleCount.value + SHOW_STEP,
+    props.items.length
+  )
+}
 </script>
 
 <template>
@@ -64,7 +66,7 @@ const onGetAll = () => (showAll.value = true)
       v-show="!isMobile"
       direction="left"
       class="grid-list__circle-btn"
-      @click="onGetAll"
+      @click="onGetMore"
     >
       {{ content?.button }}
     </CircleButton>
@@ -73,7 +75,7 @@ const onGetAll = () => (showAll.value = true)
       v-show="isMobile"
       direction="right"
       class="grid-list__circle-btn"
-      @click="onGetAll"
+      @click="onGetMore"
     >
       {{ content?.button }}
     </CircleButton>
@@ -105,7 +107,7 @@ const onGetAll = () => (showAll.value = true)
   height: fit-content;
 
   @media (min-width: $br1) {
-    &:nth-child(5n + 1) {
+    &:nth-of-type(5n + 1) {
       @include col(1, 6);
 
       .grid-list__img-wrapper {
@@ -117,7 +119,7 @@ const onGetAll = () => (showAll.value = true)
       }
     }
 
-    &:nth-child(5n + 2) {
+    &:nth-of-type(5n + 2) {
       @include col(9, 12);
 
       .grid-list__img-wrapper {
@@ -125,7 +127,7 @@ const onGetAll = () => (showAll.value = true)
       }
     }
 
-    &:nth-child(5n + 3) {
+    &:nth-of-type(5n + 3) {
       @include col(1, 7);
       margin-top: vw(158);
       display: flex;
@@ -145,7 +147,7 @@ const onGetAll = () => (showAll.value = true)
       }
     }
 
-    &:nth-child(5n + 4) {
+    &:nth-of-type(5n + 4) {
       @include col(9, 12);
       margin-top: vw(571);
 
@@ -154,10 +156,9 @@ const onGetAll = () => (showAll.value = true)
       }
     }
 
-    &:nth-child(5n + 5) {
+    &:nth-of-type(5n + 5) {
       @include col(1, 6);
       margin-top: vw(-88);
-      margin-bottom: vw(88);
 
       .grid-list__img-wrapper {
         height: vw(392);
@@ -166,6 +167,10 @@ const onGetAll = () => (showAll.value = true)
       .grid-list__description {
         max-width: 80%;
       }
+    }
+
+    &:nth-of-type(5n + 1):not(:first-of-type) {
+      margin-top: vw(40);
     }
   }
 
@@ -253,9 +258,9 @@ const onGetAll = () => (showAll.value = true)
 
 .grid-list__circle-btn {
   @media (min-width: $br1) {
-    position: absolute;
-    right: vw(50);
-    bottom: 0;
+    margin-left: auto;
+    margin-top: vw(20);
+    margin-right: vw(60);
   }
 
   @media (max-width: $br1) {

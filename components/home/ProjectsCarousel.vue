@@ -194,10 +194,6 @@ const handleClose = () => {
   -webkit-transition: filter 0.6s ease;
   -webkit-backface-visibility: hidden;
 
-  @media (max-width: $br1) {
-    height: 558px;
-  }
-
   &:hover {
     filter: none;
     -webkit-filter: grayscale(0%);
@@ -254,7 +250,7 @@ const handleClose = () => {
   object-fit: cover;
 
   @media (max-width: $br1) {
-    height: 558px;
+    height: 90dvh;
   }
 }
 

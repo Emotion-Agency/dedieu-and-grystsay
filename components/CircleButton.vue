@@ -62,10 +62,10 @@ const href = props.tag === 'a' ? props.href : undefined
     transform 0.3s ease,
     box-shadow 0.3s ease;
 
-  &:hover {
-    transform: scale(0.9);
-    box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.5);
-  }
+  // &:hover {
+  //   transform: scale(0.9);
+  //   box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.5);
+  // }
 
   span {
     display: flex;

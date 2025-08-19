@@ -110,12 +110,12 @@ const handleSlideNext = () => {
     gap: vw(30);
 
     .concept-desk__img-wrapper {
-      border-radius: vw(300);
+      border-radius: 0;
     }
 
     &:hover {
       .concept-desk__img-wrapper {
-        border-radius: 0;
+        border-radius: 120px;
       }
 
       .concept-desk__btn {

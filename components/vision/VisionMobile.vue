@@ -99,7 +99,7 @@ watch(current, handleChangeSlide)
 }
 
 .vision-mob__list {
-  height: 376px;
+  aspect-ratio: 325 / 470;
   width: 100%;
   position: relative;
 }

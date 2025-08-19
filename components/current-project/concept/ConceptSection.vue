@@ -68,7 +68,7 @@ const images = props.content.corousel
   flex: 1 0 auto;
 
   @media (max-width: $br1) {
-    gap: 32px;
+    gap: 20px;
   }
 }
 
@@ -82,12 +82,12 @@ const images = props.content.corousel
   max-width: vw(500);
 
   @media (max-width: $br1) {
-    font-size: size(150, 70);
+    font-size: size(120, 40);
     max-width: 100%;
   }
 
   @media (max-width: $br4) {
-    font-size: 70px;
+    font-size: 40px;
   }
 }
 

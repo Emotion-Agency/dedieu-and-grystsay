@@ -189,7 +189,7 @@ const handleClose = () => {
 .p-carousel__img {
   display: block;
   width: 100%;
-  height: 100dvh;
+  height: 100svh;
   object-fit: cover;
   filter: gray;
   -webkit-filter: grayscale(100%);
@@ -248,11 +248,11 @@ const handleClose = () => {
 .p-carousel__content-img {
   display: block;
   width: 100%;
-  height: 100dvh;
+  height: 100svh;
   object-fit: cover;
 
   @media (max-width: $br1) {
-    height: 90dvh;
+    height: 90svh;
   }
 }
 

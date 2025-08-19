@@ -279,7 +279,7 @@ const handleClose = () => {
   margin-top: vw(30);
 
   @media (max-width: $br1) {
-    font-size: 16px;
+    font-size: 18px;
     margin-top: 20px;
   }
 }

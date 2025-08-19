@@ -40,10 +40,10 @@ const href = props.tag === 'a' ? props.href : undefined
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: vw(15) vw(20);
+  padding: vw(8) vw(22.5);
   border-radius: vw(100);
   font-size: vw(14);
-  line-height: 1.3em;
+  line-height: 2.42em;
   text-transform: uppercase;
   transition:
     background-color 0.3s ease,
@@ -73,8 +73,9 @@ const href = props.tag === 'a' ? props.href : undefined
   }
 
   @media (max-width: $br1) {
+    line-height: 2.125em;
     font-size: 16px;
-    padding: 13px 42px;
+    padding: 8px 25px;
     border-radius: 100px;
   }
 }

@@ -142,11 +142,13 @@ const onSubmit = async (e: Event) => {
   padding: vw(14) vw(40);
   margin-top: vw(28);
   font-size: vw(16);
+  line-height: 1.3em;
 
   @media (max-width: $br1) {
     font-size: 16px;
     letter-spacing: -0.03em;
     margin-top: 40px;
+    padding: 14px 40px;
   }
 }
 </style>

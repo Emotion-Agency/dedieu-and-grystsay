@@ -224,7 +224,7 @@ const onGetMore = () => {
   @include medium;
   text-transform: uppercase;
   letter-spacing: -0.03em;
-  line-height: 1.08em;
+  line-height: 0.86em;
   font-size: vw(50);
   word-break: break-word;
 

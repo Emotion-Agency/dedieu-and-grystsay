@@ -196,13 +196,13 @@ const handleClose = () => {
   height: 100svh;
   object-fit: cover;
   filter: gray;
-  -webkit-filter: grayscale(100%);
-  -webkit-transition: filter 0.6s ease;
-  -webkit-backface-visibility: hidden;
+  filter: grayscale(100%);
+  transition: filter 0.6s ease;
+  backface-visibility: hidden;
 
   &:hover {
     filter: none;
-    -webkit-filter: grayscale(0%);
+    filter: grayscale(0%);
     cursor: pointer;
   }
 

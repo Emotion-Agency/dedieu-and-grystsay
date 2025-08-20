@@ -197,6 +197,7 @@ const handleClose = () => {
   object-fit: cover;
   filter: gray;
   filter: grayscale(100%);
+  will-change: filter;
   transition: filter 0.6s ease;
   backface-visibility: hidden;
 

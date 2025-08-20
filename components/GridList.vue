@@ -6,9 +6,12 @@ import type { iStory } from '~/types/story'
 interface IProps {
   content: iGridContent
   items: iStory<iGridItems>[]
+  type?: 'projects' | 'news'
 }
 
-const props = defineProps<IProps>()
+const props = withDefaults(defineProps<IProps>(), {
+  type: 'news',
+})
 
 const { story } = await useGlobalStory()
 
@@ -32,7 +35,7 @@ const onGetMore = () => {
 </script>
 
 <template>
-  <div class="grid-list">
+  <div class="grid-list" :class="{ [`grid-list--${type}`]: type }">
     <div class="grid-list__items">
       <NuxtLink
         v-for="(item, idx) in filteredItems"
@@ -109,9 +112,10 @@ const onGetMore = () => {
   @media (min-width: $br1) {
     &:nth-of-type(5n + 1) {
       @include col(1, 6);
+      width: 85%;
 
       .grid-list__img-wrapper {
-        height: vw(431);
+        aspect-ratio: 531/342;
       }
 
       .grid-list__description {
@@ -186,6 +190,16 @@ const onGetMore = () => {
 
       svg {
         transform: scale(0.8);
+      }
+    }
+  }
+}
+
+.grid-list--projects {
+  @media (min-width: $br1) {
+    &:nth-of-type(5n + 1) {
+      .grid-list__img-wrapper {
+        aspect-ratio: 531/431;
       }
     }
   }

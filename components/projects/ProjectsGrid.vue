@@ -14,7 +14,7 @@ const { projects } = await useProjectsStories('projects')
 <template>
   <section class="prs-grid container">
     <div class="prs-grid__wrapper">
-      <GridList :items="projects" :content="content" />
+      <GridList :items="projects" :content="content" type="projects" />
     </div>
   </section>
 </template>

@@ -177,13 +177,17 @@ const handleClose = () => {
   position: relative;
 
   @media (max-width: $br1) {
-    width: 242px;
+    max-width: 70vw;
+    max-height: 90svh;
+    aspect-ratio: 242/558;
     flex-shrink: 0;
   }
 }
 
 .p-carousel__item-wrapper {
   display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .p-carousel__img {
@@ -200,6 +204,10 @@ const handleClose = () => {
     filter: none;
     -webkit-filter: grayscale(0%);
     cursor: pointer;
+  }
+
+  @media (max-width: $br1) {
+    height: 100%;
   }
 }
 
@@ -252,7 +260,9 @@ const handleClose = () => {
   object-fit: cover;
 
   @media (max-width: $br1) {
-    height: 90svh;
+    max-height: 90svh;
+    max-width: 100%;
+    aspect-ratio: 325/558;
   }
 }
 

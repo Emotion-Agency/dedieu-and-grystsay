@@ -8,27 +8,11 @@ export default class NavbarPos {
   $sc = document.querySelector('#scroll-container')
   hovered = false
 
-  constructor() {
-    this.mouseFunc = e => {
-      this.mouseHandler(e)
-    }
-  }
-
   init() {
     this.scrollPos = 0
     this.scrollNav = this.scrollNav.bind(this)
 
     gsap.ticker.add(this.scrollNav)
-  }
-
-  mouseHandler(e) {
-    if (e.screenY <= 300) {
-      document.body.classList.remove('nav-hidden')
-      this.hovered = true
-    } else {
-      this.hovered = false
-      document.body.classList.add('nav-hidden')
-    }
   }
 
   scrollNav() {
@@ -59,12 +43,10 @@ export default class NavbarPos {
 
   addVisibility() {
     document.body.classList.remove('nav-hidden')
-    document.removeEventListener('mousemove', this.mouseFunc)
   }
 
   removeVisibility() {
     document.body.classList.add('nav-hidden')
-    document.addEventListener('mousemove', this.mouseFunc)
   }
 
   destroy() {

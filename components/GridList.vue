@@ -226,7 +226,7 @@ const onGetMore = () => {
   letter-spacing: -0.03em;
   line-height: 0.86em;
   font-size: vw(50);
-  word-break: break-word;
+  @include line-clamp(2);
 
   @media (max-width: $br1) {
     letter-spacing: -0.02em;
@@ -240,6 +240,7 @@ const onGetMore = () => {
   line-height: 1.4em;
   letter-spacing: -0.01em;
   margin-top: vw(15);
+  @include line-clamp(6);
 
   @media (max-width: $br1) {
     font-size: 18px;

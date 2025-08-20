@@ -50,3 +50,13 @@
 @mixin row($start, $end) {
   grid-row: #{$start}/#{$end + 1};
 }
+
+@mixin line-clamp($lines) {
+  overflow: hidden;
+  display: -webkit-box;
+  display: -moz-box;
+  -webkit-box-orient: vertical;
+  -moz-box-orient: vertical;
+  -webkit-line-clamp: $lines;
+  line-clamp: $lines;
+}

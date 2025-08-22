@@ -209,7 +209,7 @@ const onGetMore = () => {
   margin-top: vw(20);
 
   @media (max-width: $br1) {
-    margin-top: 20px;
+    margin-top: 24px;
   }
 }
 

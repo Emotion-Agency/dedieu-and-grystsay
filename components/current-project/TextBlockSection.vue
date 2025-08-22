@@ -73,6 +73,10 @@ const toggleText = () => {
   letter-spacing: -0.02em;
   text-transform: uppercase;
 
+  @media (min-width: $br1) {
+    line-height: 1em;
+  }
+
   @media (max-width: $br1) {
     font-size: 34px;
   }

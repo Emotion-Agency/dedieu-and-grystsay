@@ -50,11 +50,11 @@ const showModal = ref(false)
 
 .asset-text__wrapper {
   align-items: flex-start;
-  gap: vw(248);
 
   @media (min-width: $br1) {
     display: grid;
-    grid-template-columns: 1fr vw(465);
+    grid-template-columns: repeat(6, 1fr);
+    gap: vw(20);
   }
 
   @media (max-width: $br1) {
@@ -69,15 +69,25 @@ const showModal = ref(false)
   width: 100%;
   height: 100%;
   object-fit: cover;
-  height: vw(667);
+  aspect-ratio: 647/667;
+
+  @media (min-width: $br1) {
+    grid-column: 1/4;
+  }
 
   @media (max-width: $br1) {
     width: 100%;
-    height: 495px;
+    aspect-ratio: 325/470;
   }
 
   video {
     object-fit: cover;
+  }
+}
+
+.asset-text__content {
+  @media (min-width: $br1) {
+    grid-column: 5/-1;
   }
 }
 

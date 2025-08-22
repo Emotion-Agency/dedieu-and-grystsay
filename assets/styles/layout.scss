@@ -30,15 +30,11 @@
   display: grid;
   width: 100%;
   grid-template-columns: repeat(6, 1fr);
-  column-gap: vw(25);
   grid-auto-flow: row;
+  column-gap: vw(20);
 
   @media (max-width: $br1) {
-    column-gap: 30px;
-  }
-
-  @media (max-width: $br4) {
-    column-gap: 20px;
     grid-template-columns: repeat(4, 1fr);
+    column-gap: 20px;
   }
 }

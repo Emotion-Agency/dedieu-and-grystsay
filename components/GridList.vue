@@ -40,6 +40,8 @@ const onGetMore = () => {
       <NuxtLink
         v-for="(item, idx) in filteredItems"
         :key="idx"
+        :data-idx="(idx % 4) + 1"
+        :data-first-circle="idx < 4"
         class="grid-list__item"
         :to="`/${item?.full_slug}`"
       >
@@ -110,7 +112,7 @@ const onGetMore = () => {
   height: fit-content;
 
   @media (min-width: $br1) {
-    &:nth-of-type(5n + 1) {
+    &[data-idx='1'] {
       @include col(1, 6);
       width: 85%;
 
@@ -123,7 +125,7 @@ const onGetMore = () => {
       }
     }
 
-    &:nth-of-type(5n + 2) {
+    &[data-idx='2'] {
       @include col(9, 12);
 
       .grid-list__img-wrapper {
@@ -131,7 +133,7 @@ const onGetMore = () => {
       }
     }
 
-    &:nth-of-type(5n + 3) {
+    &[data-idx='3'] {
       @include col(1, 7);
       margin-top: vw(158);
       display: flex;
@@ -151,7 +153,7 @@ const onGetMore = () => {
       }
     }
 
-    &:nth-of-type(5n + 4) {
+    &[data-idx='4'] {
       @include col(9, 12);
       margin-top: vw(571);
 
@@ -160,21 +162,9 @@ const onGetMore = () => {
       }
     }
 
-    &:nth-of-type(5n + 5) {
-      @include col(1, 6);
-      margin-top: vw(-88);
-
-      .grid-list__img-wrapper {
-        height: vw(392);
-      }
-
-      .grid-list__description {
-        max-width: 80%;
-      }
-    }
-
-    &:nth-of-type(5n + 1):not(:first-of-type) {
-      margin-top: vw(40);
+    &[data-idx='1'][data-first-circle='false'],
+    &[data-idx='2'][data-first-circle='false'] {
+      margin-top: vw(100);
     }
   }
 

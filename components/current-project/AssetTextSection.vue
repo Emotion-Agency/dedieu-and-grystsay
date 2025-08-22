@@ -60,7 +60,7 @@ const showModal = ref(false)
   @media (max-width: $br1) {
     display: flex;
     flex-direction: column-reverse;
-    gap: 50px;
+    gap: 60px;
   }
 }
 

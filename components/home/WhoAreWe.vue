@@ -86,8 +86,8 @@ const titleParts = computed(() => {
 
   @media (max-width: $br1) {
     margin-top: 127px;
-    padding-top: 14px;
-    padding-bottom: 36px;
+    padding-top: 20px;
+    padding-bottom: 40px;
   }
 }
 
@@ -200,10 +200,11 @@ const titleParts = computed(() => {
     font-size: size(30, 26);
     line-height: 1.31em;
     gap: 17px;
-    margin-top: 32px;
+    margin-top: 24px;
   }
 
   @media (max-width: $br4) {
+    padding: 8px 0;
     font-size: 26px;
   }
 
@@ -272,7 +273,7 @@ const titleParts = computed(() => {
   margin-top: vw(36);
 
   @media (max-width: $br1) {
-    margin-top: 36px;
+    margin-top: 30px;
   }
 }
 
@@ -323,7 +324,7 @@ const titleParts = computed(() => {
   @media (max-width: $br1) {
     display: flex;
     flex-direction: column-reverse;
-    margin-top: 28px;
+    margin-top: 20px;
     row-gap: 30px;
   }
 }
@@ -335,7 +336,7 @@ const titleParts = computed(() => {
   letter-spacing: -0.01em;
 
   @media (max-width: $br1) {
-    font-size: 16px;
+    font-size: 18px;
   }
 }
 </style>

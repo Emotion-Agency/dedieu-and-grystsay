@@ -193,7 +193,8 @@ const handleClose = () => {
 .p-carousel__img {
   display: block;
   width: 100%;
-  height: 100svh;
+  max-height: 90svh;
+  aspect-ratio: 200/745;
   object-fit: cover;
   filter: gray;
   filter: grayscale(100%);
@@ -216,7 +217,7 @@ const handleClose = () => {
   display: none !important;
   position: relative;
   display: grid;
-  grid-template-columns: vw(740) 1fr;
+  grid-template-columns: vw(733) 1fr;
   width: 100%;
   gap: vw(163);
 
@@ -257,11 +258,11 @@ const handleClose = () => {
 .p-carousel__content-img {
   display: block;
   width: 100%;
-  height: 100svh;
+  max-height: 90svh;
+  aspect-ratio: 733/740;
   object-fit: cover;
 
   @media (max-width: $br1) {
-    max-height: 90svh;
     max-width: 100%;
     aspect-ratio: 325/558;
   }

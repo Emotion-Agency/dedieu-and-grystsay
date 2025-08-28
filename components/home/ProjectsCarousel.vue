@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useGlobalStory } from '~/composables/stories/globalStory'
+import { gsap, ScrollTrigger } from '~/libs/gsap'
 import type { iHomeProjectsCarousel } from '~/types/homeTypes'
 import type { iProjectsContent } from '~/types/projectsTypes'
 import type { iStory } from '~/types/story'
@@ -14,6 +15,8 @@ const { story } = await useGlobalStory()
 
 const isOpenedProject = ref(false)
 const cursorIndicators = ref<(HTMLElement | null)[]>([])
+const el = useTemplateRef<HTMLElement>('el')
+
 const elRefs = ref<(HTMLElement | null)[]>([])
 const elRefWrappers = ref<(HTMLElement | null)[]>([])
 const selectedProject = ref<iStory<iProjectsContent> | null>(null)
@@ -40,6 +43,46 @@ const hideIndicator = (idx: number) => {
 onMounted(() => {
   elRefs.value = elRefWrappers.value
   isIndicatorVisible.value = new Array(elRefs.value.length).fill(false)
+
+  const $revealers = document.querySelectorAll('.p-carousel__item-revealer')
+  const $items = document.querySelectorAll('.p-carousel__item')
+
+  const tl = gsap.timeline({
+    paused: true,
+    onComplete: () => {
+      $revealers.forEach(el => el.remove())
+      gsap.set($items, { clearProps: 'all' })
+    },
+  })
+  gsap.set($items, { scaleY: 0 })
+
+  tl.to($items, {
+    scaleY: 1,
+    ease: 'power2.out',
+    duration: 1,
+    stagger: 0.05,
+  })
+  tl.to(
+    $revealers,
+    {
+      scaleX: 0,
+      ease: 'power2.out',
+      duration: 1,
+      stagger: 0.03,
+    },
+    '<60%'
+  )
+
+  const st = new ScrollTrigger({
+    trigger: el.value,
+    once: true,
+    start: () => 'top-=20% top',
+    end: () => 'bottom bottom',
+    scrub: true,
+    onEnter: () => {
+      tl.play()
+    },
+  })
 })
 
 useIntersectionObserver(elRefs, entries => {
@@ -61,7 +104,7 @@ const handleClose = () => {
 </script>
 
 <template>
-  <section class="p-carousel container">
+  <section ref="el" class="p-carousel container">
     <div
       class="p-carousel__wrapper"
       :class="{ 'p-carousel__wrapper--opened': isOpenedProject }"
@@ -80,6 +123,7 @@ const handleClose = () => {
         @click="handleOpen(project)"
       >
         <div class="p-carousel__item-wrapper">
+          <div class="p-carousel__item-revealer"></div>
           <AssetRenderer
             class="p-carousel__img"
             :src="project?.content?.preview?.filename"
@@ -175,6 +219,7 @@ const handleClose = () => {
 
 .p-carousel__item {
   position: relative;
+  transform-origin: bottom;
 
   @media (max-width: $br1) {
     max-width: 70vw;
@@ -188,6 +233,17 @@ const handleClose = () => {
   display: block;
   width: 100%;
   height: 100%;
+  position: relative;
+}
+
+.p-carousel__item-revealer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--foreground);
+  z-index: 1;
+  transform-origin: right;
 }
 
 .p-carousel__img {

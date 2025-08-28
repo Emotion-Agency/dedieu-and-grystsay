@@ -18,10 +18,6 @@ if (globalThis.document) {
     ease: 'power2.out',
   })
 
-  ScrollTrigger.defaults({
-    pinType: 'fixed',
-  })
-
   gsap.ticker.lagSmoothing(0)
 }
 

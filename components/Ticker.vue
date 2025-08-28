@@ -153,6 +153,7 @@ onMounted(async () => {
   flex-shrink: 0;
   font-size: 1.5rem;
   gap: vw(15);
+  will-change: transform;
   margin-right: vw(15);
   line-height: 1em;
 

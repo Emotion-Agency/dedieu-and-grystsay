@@ -22,15 +22,16 @@ const newsProjects =
 <template>
   <section class="current-projects">
     <div class="current-projects__ticker">
-      <Ticker is-current-projects :animate="isHome">{{
-        content?.marquee_title
-      }}</Ticker>
+      <Ticker is-current-projects :animate="isHome">
+        {{ content?.marquee_title }}
+      </Ticker>
     </div>
 
     <div class="current-projects__wrapper container">
       <CurrentNewsMobile v-if="isMobile" :projects="newsProjects" />
       <CurrentNewsDesktop
         v-else
+        :animate="isHome"
         :projects="newsProjects"
         :next-slide-button="story?.content?.slides_next"
       />

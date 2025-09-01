@@ -1,9 +1,11 @@
 <script setup lang="ts">
+import { gsap } from '~/libs/gsap'
 import type { iCurrentNews } from '~/types/projectsTypes'
 
 interface IProps {
   projects: iCurrentNews[]
   nextSlideButton?: string
+  animate?: boolean
 }
 const props = defineProps<IProps>()
 
@@ -11,6 +13,7 @@ const { current, handleNext } = useSlider(props.projects.length)
 
 const isSliding = ref(false)
 const isContentVisible = ref(true)
+const $el = ref<HTMLElement | null>(null)
 
 const visibleProjects = computed(() =>
   Array.from({ length: 4 }, (_, i) => {
@@ -36,10 +39,33 @@ const handleSlideNext = () => {
     isSliding.value = false
   }, 500) // Transition duration from CSS
 }
+
+onMounted(() => {
+  if (props.animate && $el.value) {
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: $el.value,
+        start: 'top 80%',
+      },
+    })
+
+    const $items = $el.value.querySelectorAll('.curr-pr-desk__item')
+
+    gsap.set($items, { opacity: 0, translateY: 50 })
+
+    tl.to($items, {
+      opacity: 1,
+      translateY: 0,
+      stagger: 0.1,
+      duration: 2,
+      ease: 'power2.out',
+    })
+  }
+})
 </script>
 
 <template>
-  <div class="curr-pr-desk">
+  <div ref="$el" class="curr-pr-desk">
     <ul class="curr-pr-desk__list">
       <li
         v-for="(

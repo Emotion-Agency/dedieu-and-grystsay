@@ -1,8 +1,15 @@
 <script lang="ts" setup>
+import { gsap } from '~/libs/gsap'
 import { useCompanyContactStory } from '~/composables/stories/companyContactStory'
 import { useFooterStory } from '~/composables/stories/footerStory'
 import { useMadeByStory } from '~/composables/stories/madeByStory'
 import { useMenuStory } from '~/composables/stories/menuStory'
+
+interface iProps {
+  animate?: boolean
+}
+
+const props = defineProps<iProps>()
 
 const { story: footerStory } = await useFooterStory()
 const { story: companyContactStory } = await useCompanyContactStory()
@@ -10,10 +17,65 @@ const { story: menuStory } = await useMenuStory()
 const { story: madeByStory } = await useMadeByStory()
 
 const localePath = useLocalePath()
+
+const $el = ref<HTMLElement | null>(null)
+
+onMounted(() => {
+  if (props.animate && $el.value) {
+    const $form = $el.value.querySelector('.contact-content__about-block')
+    const $line = $el.value.querySelectorAll('.contact-content__line')
+    const $nav = $el.value.querySelector('.contact-content__navigation-content')
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: $el.value,
+        start: 'top 80%',
+      },
+    })
+
+    gsap.set($form, {
+      opacity: 0,
+      translateY: 100,
+    })
+    gsap.set($nav, {
+      opacity: 0,
+      translateY: 20,
+    })
+    gsap.set($line, {
+      width: 0,
+    })
+
+    tl.to($form, {
+      opacity: 1,
+      translateY: 0,
+      duration: 1.8,
+      ease: 'power2.out',
+    })
+    tl.to(
+      $line,
+      {
+        width: '100%',
+        duration: 1.8,
+        ease: 'power2.out',
+      },
+      '<40%'
+    )
+    tl.to(
+      $nav,
+      {
+        opacity: 1,
+        translateY: 0,
+        duration: 1.5,
+        ease: 'power2.out',
+      },
+      '<10%'
+    )
+  }
+})
 </script>
 
 <template>
-  <div class="contact-content">
+  <div ref="$el" class="contact-content">
     <div class="contact-content__about-block">
       <AppForm />
       <div class="contact-content__contacts">

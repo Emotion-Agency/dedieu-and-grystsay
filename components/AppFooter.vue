@@ -1,7 +1,13 @@
 <script lang="ts" setup>
+import { gsap } from '~/libs/gsap'
 import { useFooterStory } from '~/composables/stories/footerStory'
 
 const { story: footerStory } = await useFooterStory()
+
+const $el = ref<HTMLElement | null>(null)
+
+const route = useRoute()
+const isHome = /^\/([a-z]{2})?$/.test(route.path)
 
 const titleParts = computed(() => {
   const title = footerStory.value?.content?.title || ''
@@ -12,10 +18,36 @@ const titleParts = computed(() => {
     rest: rest.join(' '),
   }
 })
+
+onMounted(() => {
+  if (isHome && $el.value) {
+    const $title = $el.value.querySelectorAll('.footer__title')
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: $el.value,
+        start: 'top 80%',
+      },
+    })
+
+    gsap.set($title, {
+      opacity: 0,
+      translateY: 50,
+    })
+
+    tl.to($title, {
+      opacity: 1,
+      translateY: 0,
+      stagger: 0.1,
+      duration: 2.5,
+      ease: 'power2.out',
+    })
+  }
+})
 </script>
 
 <template>
-  <footer class="footer">
+  <footer ref="$el" class="footer">
     <h2 class="footer__title footer__title--first">
       {{ titleParts.first }}
     </h2>
@@ -24,7 +56,7 @@ const titleParts = computed(() => {
         <h2 class="footer__title">
           {{ titleParts.rest }}
         </h2>
-        <ContactContent />
+        <ContactContent :animate="isHome" />
       </div>
     </div>
   </footer>

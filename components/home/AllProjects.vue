@@ -36,7 +36,7 @@ onMounted(() => {
       y: 0,
       stagger: 0.1,
       duration: 1,
-      ease: 'power1.out',
+      ease: 'power2.out',
     })
 
     tl.to(
@@ -44,8 +44,8 @@ onMounted(() => {
       {
         opacity: 1,
         y: 0,
-        duration: 2,
-        ease: 'power1.out',
+        duration: 1.5,
+        ease: 'power2.out',
       },
       '<'
     )

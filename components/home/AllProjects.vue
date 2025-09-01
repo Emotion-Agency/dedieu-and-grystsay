@@ -9,7 +9,7 @@ interface IProps {
 const props = defineProps<IProps>()
 
 const activeImageIndex = ref(0)
-const $section = ref<HTMLElement | null>(null)
+const $el = ref<HTMLElement | null>(null)
 
 const nextImages = () => {
   activeImageIndex.value =
@@ -17,13 +17,13 @@ const nextImages = () => {
 }
 
 onMounted(() => {
-  if ($section.value) {
-    const $items = $section.value.querySelectorAll('.all-projects__images')
-    const $link = $section.value.querySelector('.all-projects__title')
+  if ($el.value) {
+    const $items = $el.value.querySelectorAll('.all-projects__images')
+    const $link = $el.value.querySelector('.all-projects__title')
 
     const tl = gsap.timeline({
       scrollTrigger: {
-        trigger: $section.value,
+        trigger: $el.value,
         start: 'top 80%',
       },
     })
@@ -54,7 +54,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <section ref="$section" class="all-projects container">
+  <section ref="$el" class="all-projects container">
     <div class="all-projects__wrapper">
       <div
         v-for="(item, idx) in content?.assets"

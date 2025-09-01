@@ -9,16 +9,16 @@ interface IProps {
   content: iHomeProjectsCarousel
 }
 
-defineProps<IProps>()
+const props = defineProps<IProps>()
 
 const { story } = await useGlobalStory()
 
-const isOpenedProject = ref(false)
 const cursorIndicators = ref<(HTMLElement | null)[]>([])
 const el = useTemplateRef<HTMLElement>('el')
 
 const elRefs = ref<(HTMLElement | null)[]>([])
 const elRefWrappers = ref<(HTMLElement | null)[]>([])
+
 const selectedProject = ref<iStory<iProjectsContent> | null>(null)
 
 const isIndicatorActive = ref(false)
@@ -44,8 +44,8 @@ onMounted(() => {
   elRefs.value = elRefWrappers.value
   isIndicatorVisible.value = new Array(elRefs.value.length).fill(false)
 
-  const $revealers = document.querySelectorAll('.p-carousel__item-revealer')
-  const $items = document.querySelectorAll('.p-carousel__item')
+  const $revealers = document.querySelectorAll('.p-carousel-item__revealer')
+  const $items = document.querySelectorAll('.p-carousel-item__asset')
 
   const tl = gsap.timeline({
     paused: true,
@@ -76,7 +76,7 @@ onMounted(() => {
   new ScrollTrigger({
     trigger: el.value,
     once: true,
-    start: () => 'top-=20% top',
+    start: () => 'top-=30% top',
     end: () => 'bottom bottom',
     scrub: true,
     onEnter: () => {
@@ -95,59 +95,56 @@ useIntersectionObserver(elRefs, entries => {
 
 const handleOpen = (project: iStory<iProjectsContent>) => {
   selectedProject.value = project
-  isOpenedProject.value = true
 }
 
 const handleClose = () => {
-  isOpenedProject.value = false
   selectedProject.value = null
-
-  console.log(selectedProject.value, isOpenedProject.value)
 }
 </script>
 
 <template>
   <section ref="el" class="p-carousel container">
-    <div class="p-carousel__wrapper">
-      <div
-        v-for="(project, idx) in content?.projects?.slice(0, 6)"
-        :key="idx"
-        ref="elRefWrappers"
-        class="p-carousel__item"
+    <ul
+      class="p-carousel__grid"
+      :class="{
+        'p-carousel__grid--active': !!selectedProject,
+      }"
+    >
+      <li
+        v-for="project in content.projects.slice(0, 6)"
+        :key="project.id"
+        class="p-carousel__item p-carousel-item grid"
         :class="{
-          'cursor-none': isIndicatorVisible[idx],
-          'p-carousel__item--hided':
-            isOpenedProject && selectedProject?.id !== project.id,
-          'p-carousel__item--active': selectedProject?.id === project.id,
+          'p-carousel-item--active': selectedProject?.id === project.id,
         }"
-        @mousemove="e => setIndicator(e, idx)"
-        @mouseenter="e => setIndicator(e, idx)"
-        @mouseleave="() => hideIndicator(idx)"
-        @mousedown="isIndicatorActive = true"
-        @mouseup="isIndicatorActive = false"
         @click="handleOpen(project)"
       >
+        <CloseButton
+          v-if="!!selectedProject"
+          color="dark"
+          class="p-carousel__close-btn"
+          @click.stop="handleClose"
+        />
         <div
-          class="p-carousel__item-wrapper"
+          class="p-carousel-item__asset"
           :class="{
-            'is-active': selectedProject?.id === project.id,
+            'p-carousel-item__asset--active':
+              selectedProject?.id === project.id,
           }"
         >
-          <div class="p-carousel__item-revealer" />
-          <CloseButton
-            v-if="isOpenedProject"
-            color="dark"
-            class="p-carousel__close-btn"
-            @click.stop="handleClose"
-          />
           <AssetRenderer
-            class="p-carousel__img"
-            :src="project?.content?.preview?.filename"
-            :alt="project?.content?.preview?.alt"
-            :is-playing="true"
+            :src="project.content?.preview?.filename"
+            class="p-carousel-item__img"
           />
+          <div class="p-carousel-item__revealer" />
         </div>
-        <div v-if="isOpenedProject" class="p-carousel__content-wrapper">
+        <div
+          class="p-carousel-item__content"
+          :class="{
+            'p-carousel-item__content--active':
+              selectedProject?.id === project.id,
+          }"
+        >
           <TextButton
             class="p-carousel__back-btn"
             is-reversed
@@ -155,13 +152,10 @@ const handleClose = () => {
           >
             {{ story?.content?.back }}
           </TextButton>
-          <h2 class="p-carousel__title">
-            {{ project?.content?.title }}
-          </h2>
-          <p class="p-carousel__text">
-            {{ project?.content?.description }}
+          <h2 class="p-carousel-item__title">{{ project.content?.title }}</h2>
+          <p class="p-carousel-item__text">
+            {{ project.content?.description }}
           </p>
-
           <LoFiButton
             tag="nuxt-link"
             :to="project?.full_slug"
@@ -171,19 +165,8 @@ const handleClose = () => {
             {{ story?.content?.project_detail }}
           </LoFiButton>
         </div>
-        <div
-          v-if="!isOpenedProject"
-          ref="cursorIndicators"
-          class="p-carousel__cursor"
-          :class="{
-            active: isIndicatorActive,
-            visible: isIndicatorVisible[idx],
-          }"
-        >
-          {{ content?.hover_text }}
-        </div>
-      </div>
-    </div>
+      </li>
+    </ul>
   </section>
 </template>
 
@@ -197,55 +180,94 @@ const handleClose = () => {
   }
 }
 
-.p-carousel__wrapper {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
+.p-carousel__grid {
+  display: flex;
+  width: 100%;
+  height: 90svh;
   gap: vw(24);
+  overflow: hidden;
 
   @media (max-width: $br1) {
-    display: flex;
     flex-wrap: nowrap;
     gap: 17px;
-    width: max-content;
+    height: auto;
+    overflow: auto;
   }
 }
 
-.p-carousel__item {
+.p-carousel-item {
   position: relative;
-  transform-origin: bottom;
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: vw(20);
-
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  flex: 1 0 vw(200);
+  transition: all 0.5s ease;
   &--active {
-    grid-column: 1 / -1;
-  }
-
-  &--hided {
-    display: none;
+    flex: 1 0 100%;
   }
 
   @media (max-width: $br1) {
+    flex: 1 0 200px;
     max-width: 70vw;
-    max-height: 90svh;
-    aspect-ratio: 242/558;
     flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    &--active {
+      max-width: 100%;
+      width: 100%;
+      flex: 1 0 100%;
+    }
   }
 }
 
-.p-carousel__item-wrapper {
-  display: block;
+.p-carousel-item__asset {
   width: 100%;
   height: 100%;
-  position: relative;
-  grid-column: 1 / -1;
-  &.is-active {
-    width: rem(733);
-    grid-column: 1 / 5;
+  transform-origin: bottom;
+  max-height: 90svh;
+  grid-column: 1/-1;
+
+  filter: grayscale(100%);
+  will-change: filter;
+  transition: filter 0.4s ease;
+  &:hover:not(&--active) {
+    filter: grayscale(0%);
+  }
+
+  &--active {
+    grid-column: 1/5;
+    aspect-ratio: 733/740;
+    width: vw(733);
+    filter: grayscale(0%);
+  }
+
+  @media (max-width: $br1) {
+    aspect-ratio: 240/558;
+
+    &--active {
+      grid-column: 1/-1;
+      aspect-ratio: 325/558;
+      width: 100%;
+    }
   }
 }
 
-.p-carousel__item-revealer {
+.p-carousel-item__content {
+  grid-column: 5/-1;
+  display: none;
+  &--active {
+    display: block;
+  }
+}
+
+.p-carousel-item__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.p-carousel-item__revealer {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -253,43 +275,6 @@ const handleClose = () => {
   background-color: var(--foreground);
   z-index: 1;
   transform-origin: right;
-}
-
-.p-carousel__img {
-  display: block;
-  width: 100%;
-  max-height: 90svh;
-  aspect-ratio: 200/745;
-  object-fit: cover;
-  filter: gray;
-  filter: grayscale(100%);
-  will-change: filter;
-  transition: filter 0.6s ease;
-  backface-visibility: hidden;
-
-  &:hover {
-    filter: none;
-    filter: grayscale(0%);
-    cursor: pointer;
-  }
-
-  @media (max-width: $br1) {
-    height: 100%;
-  }
-
-  &--opened {
-    aspect-ratio: 733/740;
-    object-fit: cover;
-
-    @media (max-width: $br1) {
-      max-width: 100%;
-      aspect-ratio: 325/558;
-    }
-  }
-}
-
-.p-carousel__content-wrapper {
-  grid-column: 5/-1;
 }
 
 .p-carousel__close-btn {
@@ -312,7 +297,7 @@ const handleClose = () => {
   }
 }
 
-.p-carousel__title {
+.p-carousel-item__title {
   @include medium;
   font-size: vw(60);
   line-height: 0.92em;
@@ -328,7 +313,7 @@ const handleClose = () => {
   }
 }
 
-.p-carousel__text {
+.p-carousel-item__text {
   @include regular;
   font-size: vw(16);
   line-height: 1.4em;

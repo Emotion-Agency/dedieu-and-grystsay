@@ -81,7 +81,7 @@ onMounted(async () => {
     tl.to($lines, {
       width: '100%',
       stagger: 0.1,
-      duration: 1,
+      duration: 1.8,
       ease: 'power2.out',
     })
 
@@ -90,7 +90,7 @@ onMounted(async () => {
       {
         opacity: 1,
         translateX: 0,
-        duration: 1.6,
+        duration: 2.2,
         ease: 'power2.out',
       },
       '<'

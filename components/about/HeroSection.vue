@@ -1,15 +1,36 @@
 <script setup lang="ts">
 import type { iAboutHero } from '~/types/aboutTypes'
+import { gsap } from '~/libs/gsap'
 
 interface IProps {
   content: iAboutHero
 }
 
 defineProps<IProps>()
+
+const $el = ref<HTMLElement | null>(null)
+
+onMounted(() => {
+  if ($el.value) {
+    const tl = gsap.timeline()
+
+    gsap.set($el.value, {
+      opacity: 0,
+      translateY: 50,
+    })
+
+    tl.to($el.value, {
+      opacity: 1,
+      translateY: 0,
+      duration: 2,
+      ease: 'power2.out',
+    })
+  }
+})
 </script>
 
 <template>
-  <section class="about-hero">
+  <section ref="$el" class="about-hero">
     <div class="about-hero__wrapper container">
       <FullImageSlider
         v-if="content?.assets.length > 1"

@@ -5,7 +5,6 @@ import DownArrow from './icons/DownArrow.vue'
 interface iProps {
   speed?: number
   isCurrentProjects?: boolean
-  animate?: boolean
 }
 
 const props = defineProps<iProps>()
@@ -59,7 +58,7 @@ const observeVisibility = () => {
 }
 
 onMounted(async () => {
-  if (props.animate && containerRef.value) {
+  if (containerRef.value) {
     const $lines = containerRef.value.querySelectorAll('.ticker__line')
     const $content = containerRef.value.querySelector('.ticker__wrapper')
 

@@ -9,9 +9,7 @@ interface IProps {
 const props = defineProps<IProps>()
 
 const { story } = await useGlobalStory()
-const route = useRoute()
 const isMobile = useSSRMediaQuery('(max-width: 960px)')
-const isHome = /^\/([a-z]{2})?$/.test(route.path)
 
 const newsProjects =
   props.content?.news?.[0]?.content?.items ??
@@ -22,7 +20,7 @@ const newsProjects =
 <template>
   <section class="current-projects">
     <div class="current-projects__ticker">
-      <Ticker is-current-projects :animate="isHome">
+      <Ticker is-current-projects>
         {{ content?.marquee_title }}
       </Ticker>
     </div>
@@ -31,7 +29,6 @@ const newsProjects =
       <CurrentNewsMobile v-if="isMobile" :projects="newsProjects" />
       <CurrentNewsDesktop
         v-else
-        :animate="isHome"
         :projects="newsProjects"
         :next-slide-button="story?.content?.slides_next"
       />

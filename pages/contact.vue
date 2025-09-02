@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { useContactStory } from '~/composables/stories/contactStory'
 import { pageTransition } from '~/transitions/base'
+import { gsap } from '~/libs/gsap'
 
 definePageMeta({
   pageTransition,
@@ -21,12 +22,34 @@ const meta = computed(() => {
     ogImage: data?.image?.filename,
   }
 })
+
+const $el = ref<HTMLElement | null>(null)
+
+onMounted(() => {
+  if ($el.value) {
+    const $title = $el.value.querySelectorAll('.contact__title')
+
+    const tl = gsap.timeline()
+
+    gsap.set($title, {
+      opacity: 0,
+      translateY: 100,
+    })
+
+    tl.to($title, {
+      opacity: 1,
+      translateY: 0,
+      duration: 1.8,
+      ease: 'power2.out',
+    })
+  }
+})
 </script>
 
 <template>
   <div>
     <PageMeta v-if="meta" v-bind="meta" />
-    <section class="contact container">
+    <section ref="$el" class="contact container">
       <h1 class="contact__title">{{ story?.content?.title }}</h1>
       <ContactContent />
     </section>
@@ -42,8 +65,10 @@ const meta = computed(() => {
   background-color: var(--foreground);
   padding-top: vw(165);
   padding-bottom: vw(35);
+  gap: vw(40);
 
   @media (max-width: $br1) {
+    gap: 40px;
     padding-top: 85px;
     padding-bottom: 30px;
   }

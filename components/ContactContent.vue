@@ -5,12 +5,6 @@ import { useFooterStory } from '~/composables/stories/footerStory'
 import { useMadeByStory } from '~/composables/stories/madeByStory'
 import { useMenuStory } from '~/composables/stories/menuStory'
 
-interface iProps {
-  animate?: boolean
-}
-
-const props = defineProps<iProps>()
-
 const { story: footerStory } = await useFooterStory()
 const { story: companyContactStory } = await useCompanyContactStory()
 const { story: menuStory } = await useMenuStory()
@@ -21,7 +15,7 @@ const localePath = useLocalePath()
 const $el = ref<HTMLElement | null>(null)
 
 onMounted(() => {
-  if (props.animate && $el.value) {
+  if ($el.value) {
     const $form = $el.value.querySelector('.contact-content__about-block')
     const $line = $el.value.querySelectorAll('.contact-content__line')
     const $nav = $el.value.querySelector('.contact-content__navigation-content')
@@ -136,12 +130,10 @@ onMounted(() => {
   display: flex;
   align-items: flex-start;
   gap: vw(50);
-  padding-top: vw(60);
   color: var(--background);
 
   @media (max-width: $br1) {
     flex-direction: column;
-    padding-top: 40px;
     gap: 85px;
   }
 }

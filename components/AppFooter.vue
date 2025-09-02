@@ -6,9 +6,6 @@ const { story: footerStory } = await useFooterStory()
 
 const $el = ref<HTMLElement | null>(null)
 
-const route = useRoute()
-const isHome = /^\/([a-z]{2})?$/.test(route.path)
-
 const titleParts = computed(() => {
   const title = footerStory.value?.content?.title || ''
   const [first = '', ...rest] = title.split(' ')
@@ -20,7 +17,7 @@ const titleParts = computed(() => {
 })
 
 onMounted(() => {
-  if (isHome && $el.value) {
+  if ($el.value) {
     const $title = $el.value.querySelectorAll('.footer__title')
 
     const tl = gsap.timeline({
@@ -51,12 +48,13 @@ onMounted(() => {
     <h2 class="footer__title footer__title--first">
       {{ titleParts.first }}
     </h2>
-    <div class="footer__main-wrapper">
-      <div class="footer__wrapper container">
-        <h2 class="footer__title">
-          {{ titleParts.rest }}
-        </h2>
-        <ContactContent :animate="isHome" />
+
+    <div class="footer__wrapper container">
+      <h2 class="footer__title">
+        {{ titleParts.rest }}
+      </h2>
+      <div class="footer__contact">
+        <ContactContent />
       </div>
     </div>
   </footer>
@@ -64,7 +62,6 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .footer {
-  color: var(--background);
   padding-top: vw(100);
 
   @media (max-width: $br1) {
@@ -73,6 +70,7 @@ onMounted(() => {
 }
 
 .footer__wrapper {
+  color: var(--background);
   background-color: var(--foreground);
 
   padding-bottom: vw(40);
@@ -122,6 +120,14 @@ onMounted(() => {
     @media (max-width: $br4) {
       font-size: 60px;
     }
+  }
+}
+
+.footer__contact {
+  padding-top: vw(60);
+
+  @media (max-width: $br1) {
+    padding-top: 40px;
   }
 }
 </style>

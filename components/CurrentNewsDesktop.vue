@@ -5,7 +5,6 @@ import type { iCurrentNews } from '~/types/projectsTypes'
 interface IProps {
   projects: iCurrentNews[]
   nextSlideButton?: string
-  animate?: boolean
 }
 const props = defineProps<IProps>()
 
@@ -41,7 +40,7 @@ const handleSlideNext = () => {
 }
 
 onMounted(() => {
-  if (props.animate && $el.value) {
+  if ($el.value) {
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: $el.value,

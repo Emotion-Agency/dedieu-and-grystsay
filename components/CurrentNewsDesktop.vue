@@ -51,13 +51,13 @@ onMounted(() => {
 
     const $items = $el.value.querySelectorAll('.curr-pr-desk__item')
 
-    gsap.set($items, { opacity: 0, translateY: 50 })
+    gsap.set($items, { opacity: 0, translateY: 100 })
 
     tl.to($items, {
       opacity: 1,
       translateY: 0,
-      stagger: 0.1,
-      duration: 2,
+      stagger: 0.3,
+      duration: 2.5,
       ease: 'power2.out',
     })
   }

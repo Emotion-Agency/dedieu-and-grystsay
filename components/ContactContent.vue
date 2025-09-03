@@ -93,7 +93,7 @@ onMounted(() => {
         duration: 1.8,
         ease: 'power2.out',
       },
-      '<40%'
+      '<20%'
     )
     tl.to(
       $nav,
@@ -103,7 +103,7 @@ onMounted(() => {
         duration: 1.5,
         ease: 'power2.out',
       },
-      '<10%'
+      '<25%'
     )
   }
 })

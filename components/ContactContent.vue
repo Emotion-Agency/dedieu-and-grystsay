@@ -69,7 +69,7 @@ onMounted(() => {
         duration: 1.8,
         ease: 'power2.out',
       },
-      '<'
+      '<5%'
     )
     tl.to(
       $mail,
@@ -79,12 +79,12 @@ onMounted(() => {
         duration: 1.8,
         ease: 'power2.out',
       },
-      '<'
+      '<10%'
     )
     tl.to(
       textSplit.lines,
       { opacity: 1, y: 0, duration: 2.5, ease: 'expo.out', stagger: 0.1 },
-      '<10%'
+      '<15%'
     )
     tl.to(
       $line,

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { useContactStory } from '~/composables/stories/contactStory'
 import { pageTransition } from '~/transitions/base'
-import { gsap } from '~/libs/gsap'
+import { gsap, SplitText } from '~/libs/gsap'
 
 definePageMeta({
   pageTransition,
@@ -27,20 +27,25 @@ const $el = ref<HTMLElement | null>(null)
 
 onMounted(() => {
   if ($el.value) {
-    const $title = $el.value.querySelectorAll('.contact__title')
+    const $title = $el.value.querySelector('.contact__title')
+
+    const titleSplit = new SplitText($title, {
+      type: 'lines',
+    })
 
     const tl = gsap.timeline()
 
-    gsap.set($title, {
+    gsap.set(titleSplit.lines, {
       opacity: 0,
-      translateY: 100,
+      translateY: 40,
     })
 
-    tl.to($title, {
+    tl.to(titleSplit.lines, {
       opacity: 1,
-      translateY: 0,
-      duration: 1.8,
-      ease: 'power2.out',
+      y: 0,
+      duration: 2,
+      ease: 'expo.out',
+      stagger: 0.2,
     })
   }
 })

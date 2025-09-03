@@ -12,16 +12,21 @@ const $el = ref<HTMLElement | null>(null)
 
 onMounted(() => {
   if ($el.value) {
-    const tl = gsap.timeline()
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: $el.value,
+        start: 'top 80%',
+      },
+    })
 
     gsap.set($el.value, {
       opacity: 0,
-      translateY: 50,
+      scale: 0.9,
     })
 
     tl.to($el.value, {
       opacity: 1,
-      translateY: 0,
+      scale: 1,
       duration: 2,
       ease: 'power2.out',
     })

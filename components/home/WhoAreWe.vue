@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { gsap } from '~/libs/gsap'
-import { SplitText } from 'gsap/SplitText'
+import { gsap, SplitText } from '~/libs/gsap'
 import type { iHomeWhoAreWe } from '~/types/homeTypes'
 
 interface IProps {

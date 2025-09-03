@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { gsap } from '~/libs/gsap'
+import { gsap, SplitText } from '~/libs/gsap'
 import { useCompanyContactStory } from '~/composables/stories/companyContactStory'
 import { useFooterStory } from '~/composables/stories/footerStory'
 import { useMadeByStory } from '~/composables/stories/madeByStory'
@@ -16,9 +16,16 @@ const $el = ref<HTMLElement | null>(null)
 
 onMounted(() => {
   if ($el.value) {
-    const $form = $el.value.querySelector('.contact-content__about-block')
+    const $form = $el.value.querySelector('.contact-content__form')
+    const $inst = $el.value.querySelector('.contact-content__inst')
+    const $mail = $el.value.querySelector('.contact-content__mail')
+    const $text = $el.value.querySelector('.contact-content__text')
     const $line = $el.value.querySelectorAll('.contact-content__line')
     const $nav = $el.value.querySelector('.contact-content__navigation-content')
+
+    const textSplit = new SplitText($text, {
+      type: 'lines',
+    })
 
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -29,11 +36,20 @@ onMounted(() => {
 
     gsap.set($form, {
       opacity: 0,
-      translateY: 100,
+      translateY: 40,
     })
+    gsap.set($inst, {
+      opacity: 0,
+      translateY: 40,
+    })
+    gsap.set($mail, {
+      opacity: 0,
+      translateY: 40,
+    })
+    gsap.set(textSplit.lines, { opacity: 0, translateY: 40 })
     gsap.set($nav, {
       opacity: 0,
-      translateY: 20,
+      translateY: 40,
     })
     gsap.set($line, {
       width: 0,
@@ -45,6 +61,31 @@ onMounted(() => {
       duration: 1.8,
       ease: 'power2.out',
     })
+    tl.to(
+      $inst,
+      {
+        opacity: 1,
+        translateY: 0,
+        duration: 1.8,
+        ease: 'power2.out',
+      },
+      '<'
+    )
+    tl.to(
+      $mail,
+      {
+        opacity: 1,
+        translateY: 0,
+        duration: 1.8,
+        ease: 'power2.out',
+      },
+      '<'
+    )
+    tl.to(
+      textSplit.lines,
+      { opacity: 1, y: 0, duration: 2.5, ease: 'expo.out', stagger: 0.1 },
+      '<10%'
+    )
     tl.to(
       $line,
       {
@@ -71,7 +112,9 @@ onMounted(() => {
 <template>
   <div ref="$el" class="contact-content">
     <div class="contact-content__about-block">
-      <AppForm />
+      <div class="contact-content__form">
+        <AppForm />
+      </div>
       <div class="contact-content__contacts">
         <a
           :href="companyContactStory?.content?.links[0]?.url?.cached_url"
@@ -131,10 +174,19 @@ onMounted(() => {
   align-items: flex-start;
   gap: vw(50);
   color: var(--background);
+  width: 100%;
 
   @media (max-width: $br1) {
     flex-direction: column;
     gap: 85px;
+  }
+}
+
+.contact-content__form {
+  width: 100%;
+
+  @media (min-width: $br1) {
+    max-width: vw(868);
   }
 }
 

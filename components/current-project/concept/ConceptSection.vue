@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { gsap, SplitText } from '~/libs/gsap'
 import { useGlobalStory } from '~/composables/stories/globalStory'
 import type { iCurrentProjectConcept } from '~/types/currentProjectTypes'
 
@@ -12,10 +13,61 @@ const { story } = await useGlobalStory()
 const isMobile = useSSRMediaQuery('(max-width: 960px)')
 
 const images = props.content.corousel
+
+const $el = ref<HTMLElement | null>(null)
+
+onMounted(() => {
+  if ($el.value) {
+    const $title = $el.value.querySelector('.p-concept__title')
+    const $text = $el.value.querySelector('.p-concept__text')
+
+    const titleSplit = new SplitText($title, {
+      type: 'lines',
+    })
+    const textSplit = new SplitText($text, {
+      type: 'lines',
+    })
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: $el.value,
+        start: 'top 80%',
+      },
+    })
+
+    gsap.set([titleSplit.lines, textSplit.lines], {
+      opacity: 0,
+      translateY: 20,
+    })
+
+    tl.to(
+      titleSplit.lines,
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1.5,
+        ease: 'expo.out',
+        stagger: 0.1,
+      },
+      '<'
+    )
+    tl.to(
+      textSplit.lines,
+      {
+        opacity: 1,
+        y: 0,
+        duration: 2,
+        ease: 'expo.out',
+        stagger: 0.1,
+      },
+      '<20%'
+    )
+  }
+})
 </script>
 
 <template>
-  <section class="p-concept container">
+  <section ref="$el" class="p-concept container">
     <div class="p-concept__wrapper">
       <div class="p-concept__content">
         <h2 class="p-concept__title">

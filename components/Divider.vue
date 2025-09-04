@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { gsap } from '~/libs/gsap'
 import type { iDividerContent } from '~/types/dividerTypes'
 
 interface iProps {
@@ -6,10 +7,38 @@ interface iProps {
 }
 
 defineProps<iProps>()
+
+const $el = ref<HTMLElement | null>(null)
+
+onMounted(() => {
+  if ($el.value) {
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: $el.value,
+        start: 'top 80%',
+      },
+    })
+
+    gsap.set($el.value, {
+      width: 0,
+    })
+
+    tl.to(
+      $el.value,
+      {
+        width: '100%',
+        duration: 1.8,
+        ease: 'power2.out',
+      },
+      '20%'
+    )
+  }
+})
 </script>
 
 <template>
   <div
+    ref="$el"
     v-if="content?.show_on_mobile || content?.show_on_desktop"
     class="divider container"
     :class="{

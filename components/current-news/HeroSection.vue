@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { gsap, SplitText } from '~/libs/gsap'
 import type { iCurrentNewsHero } from '~/types/currentNewsTypes'
 
 interface IProps {
@@ -6,10 +7,68 @@ interface IProps {
 }
 
 defineProps<IProps>()
+
+const $el = ref<HTMLElement | null>(null)
+
+onMounted(() => {
+  if ($el.value) {
+    const $title = $el.value.querySelector('.curr-news-hero__title')
+    const $text = $el.value.querySelector('.curr-news-hero__text')
+    const $img = $el.value.querySelectorAll('.curr-news-hero__img')
+
+    const titleSplit = new SplitText($title, {
+      type: 'lines',
+    })
+    const textSplit = new SplitText($text, {
+      type: 'lines',
+    })
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: $el.value,
+        start: 'top 80%',
+      },
+    })
+
+    gsap.set(titleSplit.lines, { opacity: 0, translateY: 40 })
+    gsap.set(textSplit.lines, { opacity: 0, translateY: 40 })
+    gsap.set($img, { opacity: 0, scale: 0.8 })
+
+    tl.to(titleSplit.lines, {
+      opacity: 1,
+      y: 0,
+      duration: 2.5,
+      ease: 'expo.out',
+      stagger: 0.2,
+    })
+
+    tl.to(
+      textSplit.lines,
+      {
+        opacity: 1,
+        y: 0,
+        duration: 2.5,
+        ease: 'expo.out',
+        stagger: 0.2,
+      },
+      '<20%'
+    )
+    tl.to(
+      $img,
+      {
+        opacity: 1,
+        scale: 1,
+        duration: 2,
+        ease: 'power2.out',
+      },
+      '<'
+    )
+  }
+})
 </script>
 
 <template>
-  <section class="curr-news-hero container">
+  <section ref="$el" class="curr-news-hero container">
     <div class="curr-news-hero__wrapper">
       <div class="curr-news-hero__content">
         <h1 class="curr-news-hero__title">{{ content?.title }}</h1>

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { gsap, SplitText } from '~/libs/gsap'
 import type { iCurrentProjectHero } from '~/types/currentProjectTypes'
 
 interface IProps {
@@ -6,17 +7,61 @@ interface IProps {
 }
 
 defineProps<IProps>()
+
+const $el = ref<HTMLElement | null>(null)
+
+onMounted(() => {
+  if ($el.value) {
+    const $title = $el.value.querySelector('.curr-pr__title')
+    const $btn = $el.value.querySelector('.curr-pr__btn-wrapper')
+
+    const titleSplit = new SplitText($title, {
+      type: 'lines',
+    })
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: $el.value,
+        start: 'top 80%',
+      },
+    })
+
+    gsap.set(titleSplit.lines, { opacity: 0, translateY: 40 })
+    gsap.set($btn, { opacity: 0, scale: 0.6 })
+
+    tl.to(titleSplit.lines, {
+      opacity: 1,
+      y: 0,
+      duration: 2.5,
+      ease: 'expo.out',
+      stagger: 0.2,
+    })
+
+    tl.to(
+      $btn,
+      {
+        opacity: 1,
+        scale: 1,
+        duration: 2,
+        ease: 'power2.out',
+      },
+      '<'
+    )
+  }
+})
 </script>
 
 <template>
-  <section class="curr-pr container">
+  <section ref="$el" class="curr-pr container">
     <div class="curr-pr__wrapper">
       <h1 class="curr-pr__title">
         {{ content?.title }}
       </h1>
-      <CircleButton direction="left" class="curr-pr__btn">
-        {{ content?.rotating_text }}
-      </CircleButton>
+      <div class="curr-pr__btn-wrapper">
+        <CircleButton direction="left" class="curr-pr__btn">
+          {{ content?.rotating_text }}
+        </CircleButton>
+      </div>
     </div>
   </section>
 </template>
@@ -56,16 +101,19 @@ defineProps<IProps>()
   }
 }
 
-.curr-pr__btn {
+.curr-pr__btn-wrapper {
   position: absolute;
   right: 0;
   bottom: 0;
-  font-size: vw(15);
-  line-height: 1.67em;
-  padding: vw(45);
 
   @media (max-width: $br1) {
     display: none;
   }
+}
+
+.curr-pr__btn {
+  font-size: vw(15);
+  line-height: 1.67em;
+  padding: vw(45);
 }
 </style>

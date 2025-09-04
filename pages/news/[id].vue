@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import FullPageAssetsSection from '~/components/current-news/FullPageAssetsSection.vue'
 import HeroSection from '~/components/current-news/HeroSection.vue'
 import NewsTicker from '~/components/current-news/NewsTicker.vue'
 import TextBlockSection from '~/components/current-news/TextBlockSection.vue'
 import VisionSection from '~/components/current-news/VisionSection.vue'
+import FullPageAssets from '~/components/FullPageAssets.vue'
 import { useCurrentNewsStory } from '~/composables/stories/news/currentNewsStory'
 
 const { params } = useRoute()
@@ -24,7 +24,7 @@ const resolveSectionByName = (name: string) => {
   const sections = {
     hero_v5: HeroSection,
     marquee: NewsTicker,
-    full_page_assets: FullPageAssetsSection,
+    full_page_assets: FullPageAssets,
     vision: VisionSection,
     text_block: TextBlockSection,
   }

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { gsap } from '~/libs/gsap'
 import { useGlobalStory } from '~/composables/stories/globalStory'
 import type { iProjectsContent } from '~/types/projectsTypes'
 import type { iStory } from '~/types/story'
@@ -10,17 +11,41 @@ interface iProps {
 defineProps<iProps>()
 
 const { story } = await useGlobalStory()
+
+const $el = ref<HTMLElement | null>(null)
+
+onMounted(() => {
+  if ($el.value) {
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: $el.value,
+        start: 'top 80%',
+      },
+    })
+
+    gsap.set($el.value, { opacity: 0, scale: 0.6 })
+
+    tl.to($el.value, {
+      opacity: 1,
+      scale: 1,
+      duration: 2,
+      ease: 'power2.out',
+    })
+  }
+})
 </script>
 
 <template>
-  <CircleButton
-    :to="project?.slug"
-    tag="nuxt-link"
-    direction="left"
-    class="next-btn"
-  >
-    {{ story?.content?.next_project }}
-  </CircleButton>
+  <div ref="$el">
+    <CircleButton
+      :to="project?.slug"
+      tag="nuxt-link"
+      direction="left"
+      class="next-btn"
+    >
+      {{ story?.content?.next_project }}
+    </CircleButton>
+  </div>
 </template>
 
 <style lang="scss">

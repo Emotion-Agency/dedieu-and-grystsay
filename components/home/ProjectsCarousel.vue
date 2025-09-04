@@ -9,15 +9,14 @@ interface IProps {
   content: iHomeProjectsCarousel
 }
 
-const props = defineProps<IProps>()
+defineProps<IProps>()
 
 const { story } = await useGlobalStory()
 
 const cursorIndicators = ref<(HTMLElement | null)[]>([])
 const el = useTemplateRef<HTMLElement>('el')
 
-const elRefs = ref<(HTMLElement | null)[]>([])
-const elRefWrappers = ref<(HTMLElement | null)[]>([])
+const $items = useTemplateRef<HTMLElement[]>('items')
 
 const selectedProject = ref<iStory<iProjectsContent> | null>(null)
 
@@ -41,22 +40,21 @@ const hideIndicator = (idx: number) => {
 }
 
 onMounted(() => {
-  elRefs.value = elRefWrappers.value
-  isIndicatorVisible.value = new Array(elRefs.value.length).fill(false)
+  isIndicatorVisible.value = new Array($items.value.length).fill(false)
 
   const $revealers = document.querySelectorAll('.p-carousel-item__revealer')
-  const $items = document.querySelectorAll('.p-carousel-item__asset')
+  const $assets = document.querySelectorAll('.p-carousel-item__asset')
 
   const tl = gsap.timeline({
     paused: true,
     onComplete: () => {
       $revealers.forEach(el => el.remove())
-      gsap.set($items, { clearProps: 'all' })
+      gsap.set($assets, { clearProps: 'all' })
     },
   })
-  gsap.set($items, { scaleY: 0, pointerEvents: 'none' })
+  gsap.set($assets, { scaleY: 0, pointerEvents: 'none' })
 
-  tl.to($items, {
+  tl.to($assets, {
     scaleY: 1,
     ease: 'power3.out',
     duration: 1,
@@ -85,7 +83,7 @@ onMounted(() => {
   })
 })
 
-useIntersectionObserver(elRefs, entries => {
+useIntersectionObserver($items, entries => {
   entries.forEach((entry, idx) => {
     if (!entry.isIntersecting && isIndicatorVisible.value[idx] !== undefined) {
       isIndicatorVisible.value[idx] = false
@@ -93,38 +91,123 @@ useIntersectionObserver(elRefs, entries => {
   })
 })
 
-const handleOpen = (project: iStory<iProjectsContent>) => {
+let tl: GSAPTimeline
+
+const handleOpen = async (project: iStory<iProjectsContent>, idx: number) => {
   selectedProject.value = project
+  const item = $items.value[idx] as HTMLElement
+
+  await nextTick()
+
+  const clone = el.value.querySelector('.p-carousel-clone') as HTMLElement
+
+  clone.style.left = item.getBoundingClientRect().left + 'px'
+  clone.style.top = item.offsetTop + 'px'
+  clone.style.width = item.getBoundingClientRect().width + 'px'
+
+  const prevItems = prevAll(item)
+  const nextItems = nextAll(item)
+
+  const parent = item.parentElement as HTMLElement
+
+  const asset = clone.querySelector('.p-carousel-clone__asset') as HTMLElement
+  const content = clone.querySelector(
+    '.p-carousel-clone__content'
+  ) as HTMLElement
+
+  const itemLeftOffset = item.offsetLeft
+
+  await nextTick()
+  gsap.set(item, { visibility: 'hidden' })
+
+  tl = gsap.timeline({
+    defaults: {
+      ease: 'power3.out',
+    },
+  })
+
+  tl.to(clone, {
+    x: -itemLeftOffset,
+    width: parent.getBoundingClientRect().width,
+    duration: 1,
+  })
+
+  const assetWidth = window
+    .getComputedStyle(asset)
+    .getPropertyValue('--full-width')
+
+  tl.to(
+    asset,
+    {
+      width: assetWidth,
+      duration: 1,
+    },
+    0
+  )
+
+  const prevOffsets = prevItems.map(i => i.offsetLeft + i.offsetWidth + 10)
+
+  const nextOffsets = nextItems.map(
+    i =>
+      parent.offsetWidth -
+      i.getBoundingClientRect().left +
+      parent.offsetLeft +
+      10
+  )
+
+  tl.to(
+    prevItems,
+    {
+      duration: 1,
+      x: (index: number) => {
+        return -prevOffsets[index]
+      },
+    },
+    0
+  )
+
+  tl.to(
+    nextItems,
+    {
+      duration: 1,
+      x: (index: number) => {
+        return nextOffsets[index]
+      },
+    },
+    0
+  )
+
+  window.innerWidth < 960 &&
+    tl.to(el.value, { height: clone.scrollHeight, duration: 1 })
+  tl.to(content, { duration: 1, opacity: 1 }, '<100%')
 }
 
 const handleClose = () => {
-  selectedProject.value = null
+  const clone = el.value.querySelector('.p-carousel-clone') as HTMLElement
+
+  tl.vars.onReverseComplete = () => {
+    selectedProject.value = null
+    gsap.set(clone, { clearProps: 'all' })
+    gsap.set($items.value, { clearProps: 'all' })
+  }
+
+  tl.reverse()
 }
 </script>
 
 <template>
   <section ref="el" class="p-carousel container">
-    <ul
-      class="p-carousel__grid"
-      :class="{
-        'p-carousel__grid--active': !!selectedProject,
-      }"
-    >
+    <ul class="p-carousel__grid">
       <li
-        v-for="project in content.projects.slice(0, 6)"
+        v-for="(project, idx) in content.projects.slice(0, 6)"
         :key="project.id"
-        class="p-carousel__item p-carousel-item grid"
-        :class="{
-          'p-carousel-item--active': selectedProject?.id === project.id,
-        }"
-        @click="handleOpen(project)"
+        ref="items"
+        :data-idx="idx"
+        class="p-carousel__item p-carousel-item"
+        @click="handleOpen(project, idx)"
+        @mousemove="setIndicator($event, idx)"
+        @mouseleave="hideIndicator(idx)"
       >
-        <CloseButton
-          v-if="!!selectedProject"
-          color="dark"
-          class="p-carousel__close-btn"
-          @click.stop="handleClose"
-        />
         <div
           class="p-carousel-item__asset"
           :class="{
@@ -139,43 +222,63 @@ const handleClose = () => {
           <div class="p-carousel-item__revealer" />
         </div>
         <div
-          class="p-carousel-item__content"
+          ref="cursorIndicators"
+          class="p-carousel__cursor"
           :class="{
-            'p-carousel-item__content--active':
-              selectedProject?.id === project.id,
+            active: isIndicatorActive,
+            visible: isIndicatorVisible[idx],
           }"
         >
-          <TextButton
-            class="p-carousel__back-btn"
-            is-reversed
-            @click.stop="handleClose"
-          >
-            {{ story?.content?.back }}
-          </TextButton>
-          <h2 class="p-carousel-item__title">{{ project.content?.title }}</h2>
-          <p class="p-carousel-item__text">
-            {{ project.content?.description }}
-          </p>
-          <LoFiButton
-            tag="nuxt-link"
-            :to="project?.full_slug"
-            variant="dark"
-            class="p-carousel__btn"
-          >
-            {{ story?.content?.project_detail }}
-          </LoFiButton>
+          {{ content?.hover_text }}
         </div>
       </li>
     </ul>
+    <div v-if="!!selectedProject" class="p-carousel-clone">
+      <CloseButton
+        color="dark"
+        class="p-carousel-clone__close-btn"
+        @click.stop="handleClose"
+      />
+      <div class="p-carousel-clone__asset">
+        <AssetRenderer
+          :src="selectedProject.content?.preview?.filename"
+          class="p-carousel-clone__img"
+        />
+      </div>
+      <div class="p-carousel-clone__content">
+        <TextButton
+          class="p-carousel-clone__back-btn"
+          is-reversed
+          @click.stop="handleClose"
+        >
+          {{ story?.content?.back }}
+        </TextButton>
+        <h2 class="p-carousel-clone__title">
+          {{ selectedProject.content?.title }}
+        </h2>
+        <p class="p-carousel-clone__text">
+          {{ selectedProject.content?.description }}
+        </p>
+        <LoFiButton
+          tag="nuxt-link"
+          :to="selectedProject?.full_slug"
+          variant="dark"
+          class="p-carousel-clone__btn"
+        >
+          {{ story?.content?.project_detail }}
+        </LoFiButton>
+      </div>
+    </div>
   </section>
 </template>
 
 <style lang="scss">
 .p-carousel {
-  padding-top: vw(40);
+  margin-top: vw(40);
+  position: relative;
 
   @media (max-width: $br1) {
-    padding-top: 30px;
+    margin-top: 30px;
     overflow-x: auto;
   }
 }
@@ -184,13 +287,14 @@ const handleClose = () => {
   display: flex;
   width: 100%;
   height: 90svh;
+  position: relative;
   gap: vw(24);
   overflow: hidden;
 
   @media (max-width: $br1) {
     flex-wrap: nowrap;
     gap: 17px;
-    height: auto;
+    // height: auto;
     overflow: auto;
   }
 }
@@ -198,31 +302,23 @@ const handleClose = () => {
 .p-carousel-item {
   position: relative;
   overflow: hidden;
-  width: 100%;
+  width: vw(200);
   height: 100%;
-  flex: 1 0 vw(200);
-  transition: all 0.5s ease;
-  &--active {
-    flex: 1 0 100%;
-  }
+  flex-shrink: 0;
+  flex-grow: 0;
+  cursor: none;
 
   @media (max-width: $br1) {
-    flex: 1 0 200px;
     max-width: 70vw;
-    flex-shrink: 0;
+    width: 200px;
     display: flex;
     flex-direction: column;
     gap: 30px;
-    &--active {
-      max-width: 100%;
-      width: 100%;
-      flex: 1 0 100%;
-    }
   }
 }
 
 .p-carousel-item__asset {
-  width: 100%;
+  width: vw(200);
   height: 100%;
   transform-origin: bottom;
   max-height: 90svh;
@@ -235,33 +331,14 @@ const handleClose = () => {
     filter: grayscale(0%);
   }
 
-  &--active {
-    grid-column: 1/5;
-    aspect-ratio: 733/740;
-    width: vw(733);
-    filter: grayscale(0%);
-  }
-
   @media (max-width: $br1) {
     aspect-ratio: 240/558;
-
-    &--active {
-      grid-column: 1/-1;
-      aspect-ratio: 325/558;
-      width: 100%;
-    }
+    width: 200px;
   }
 }
 
-.p-carousel-item__content {
-  grid-column: 5/-1;
-  display: none;
-  &--active {
-    display: block;
-  }
-}
-
-.p-carousel-item__img {
+.p-carousel-item__img,
+.p-carousel-clone__img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -277,9 +354,52 @@ const handleClose = () => {
   transform-origin: right;
 }
 
-.p-carousel__close-btn {
-  display: none;
+.p-carousel-clone {
+  display: flex;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 90svh;
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  left: 0;
 
+  @media (max-width: $br1) {
+    flex-direction: column;
+    height: auto;
+    gap: 30px;
+  }
+}
+
+.p-carousel-clone__asset {
+  --width: #{vw(200)};
+  --full-width: #{vw(737)};
+  width: var(--width);
+  flex-shrink: 0;
+  height: 100%;
+  transform-origin: bottom;
+  max-height: 90svh;
+
+  @media (max-width: $br1) {
+    aspect-ratio: 325/558;
+    --width: 100%;
+    --full-width: 100%;
+  }
+}
+
+.p-carousel-clone__content {
+  width: vw(424);
+  margin-left: vw(163);
+  opacity: 0;
+
+  @media (max-width: $br1) {
+    width: 100%;
+    margin-left: 0;
+  }
+}
+.p-carousel-clone__close-btn {
+  display: none;
   @media (max-width: $br1) {
     display: flex;
     position: absolute;
@@ -297,7 +417,7 @@ const handleClose = () => {
   }
 }
 
-.p-carousel-item__title {
+.p-carousel-clone__title {
   @include medium;
   font-size: vw(60);
   line-height: 0.92em;
@@ -313,7 +433,7 @@ const handleClose = () => {
   }
 }
 
-.p-carousel-item__text {
+.p-carousel-clone__text {
   @include regular;
   font-size: vw(16);
   line-height: 1.4em;
@@ -325,7 +445,7 @@ const handleClose = () => {
   }
 }
 
-.p-carousel__btn {
+.p-carousel-clone__btn {
   margin-top: vw(40);
 
   @media (max-width: $br1) {

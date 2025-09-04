@@ -8,6 +8,7 @@ interface IProps {
 
 const props = defineProps<IProps>()
 
+const $el = ref<HTMLElement | null>(null)
 const $items = ref<HTMLElement[]>([])
 
 const { prev, current, direction, throttledNavigate } = useSlider(
@@ -52,10 +53,30 @@ const handleChangeSlide = async () => {
 }
 
 watch(current, handleChangeSlide)
+
+onMounted(() => {
+  if ($el.value) {
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: $el.value,
+        start: 'top 80%',
+      },
+    })
+
+    gsap.set($el.value, { opacity: 0, translateY: 20 })
+
+    tl.to($el.value, {
+      opacity: 1,
+      translateY: 0,
+      duration: 1.8,
+      ease: 'power2.out',
+    })
+  }
+})
 </script>
 
 <template>
-  <div class="vision-mob">
+  <div ref="$el" class="vision-mob">
     <div class="vision-mob__wrapper">
       <ul class="vision-mob__list">
         <li

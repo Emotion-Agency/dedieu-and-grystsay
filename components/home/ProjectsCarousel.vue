@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useGlobalStory } from '~/composables/stories/globalStory'
-import { gsap, ScrollTrigger } from '~/libs/gsap'
+import { gsap, ScrollTrigger, SplitText } from '~/libs/gsap'
 import type { iHomeProjectsCarousel } from '~/types/homeTypes'
 import type { iProjectsContent } from '~/types/projectsTypes'
 import type { iStory } from '~/types/story'
@@ -9,7 +9,7 @@ interface IProps {
   content: iHomeProjectsCarousel
 }
 
-defineProps<IProps>()
+const props = defineProps<IProps>()
 
 const { story } = await useGlobalStory()
 
@@ -91,53 +91,90 @@ useIntersectionObserver($items, entries => {
   })
 })
 
-let tl: GSAPTimeline
+function getCloneRefs() {
+  const $clone = el.value.querySelector<HTMLElement>('.p-carousel-clone')
+  if (!$clone) return null
 
-const handleOpen = async (project: iStory<iProjectsContent>, idx: number) => {
-  selectedProject.value = project
-  const item = $items.value[idx] as HTMLElement
+  const $title = $clone.querySelector<HTMLElement>('.p-carousel-clone__title')
+  const $text = $clone.querySelector<HTMLElement>('.p-carousel-clone__text')
 
-  await nextTick()
-
-  const clone = el.value.querySelector('.p-carousel-clone') as HTMLElement
-
-  clone.style.left = item.getBoundingClientRect().left + 'px'
-  clone.style.top = item.offsetTop + 'px'
-  clone.style.width = item.getBoundingClientRect().width + 'px'
-
-  const prevItems = prevAll(item)
-  const nextItems = nextAll(item)
-
-  const parent = item.parentElement as HTMLElement
-
-  const asset = clone.querySelector('.p-carousel-clone__asset') as HTMLElement
-  const content = clone.querySelector(
-    '.p-carousel-clone__content'
-  ) as HTMLElement
-
-  const itemLeftOffset = item.offsetLeft
-
-  await nextTick()
-  gsap.set(item, { visibility: 'hidden' })
-
-  tl = gsap.timeline({
-    defaults: {
-      ease: 'power3.out',
+  const titleSplit = SplitText.create($title, {
+    type: 'lines',
+    mask: 'lines',
+    onSplit: self => {
+      gsap.set(self.lines, { y: '110%' })
+    },
+  })
+  const textSplit = SplitText.create($text, {
+    type: 'lines',
+    mask: 'lines',
+    onSplit: self => {
+      gsap.set(self.lines, { y: '110%' })
     },
   })
 
-  tl.to(clone, {
+  return {
+    $clone,
+    $asset: $clone.querySelector<HTMLElement>('.p-carousel-clone__asset'),
+    $content: $clone.querySelector<HTMLElement>('.p-carousel-clone__content'),
+    $title,
+    $text,
+    titleSplit,
+    textSplit,
+    $backBtn: $clone.querySelector<HTMLElement>('.p-carousel-clone__back-btn'),
+    $btn: $clone.querySelector<HTMLElement>('.p-carousel-clone__btn-wrapper'),
+  }
+}
+
+let refs: ReturnType<typeof getCloneRefs> | null = null
+
+const handleOpen = async (project: iStory<iProjectsContent>, idx: number) => {
+  selectedProject.value = project
+  const $item = $items.value[idx]
+
+  await nextTick()
+  el.value.scrollIntoView({ behavior: 'smooth', block: 'center' })
+
+  refs = getCloneRefs()
+  if (!refs) return
+
+  const { $clone, $asset, $backBtn, $btn, $content, titleSplit, textSplit } =
+    refs
+
+  const $parent = $item.parentElement
+
+  $clone.style.left = $item.getBoundingClientRect().left + 'px'
+  $clone.style.top = $item.offsetTop + 'px'
+  $clone.style.width = $item.getBoundingClientRect().width + 'px'
+
+  const $prevItems = prevAll($item)
+  const $nextItems = nextAll($item)
+
+  gsap.set([$backBtn, $btn], { opacity: 0, y: 20 })
+
+  const itemLeftOffset = $item.offsetLeft
+
+  await nextTick()
+  gsap.set($item, { visibility: 'hidden' })
+
+  const tl = gsap.timeline({
+    defaults: {
+      ease: 'sine.inOut',
+    },
+  })
+
+  tl.to($clone, {
     x: -itemLeftOffset,
-    width: parent.getBoundingClientRect().width,
+    width: $parent.getBoundingClientRect().width,
     duration: 1,
   })
 
   const assetWidth = window
-    .getComputedStyle(asset)
+    .getComputedStyle($asset)
     .getPropertyValue('--full-width')
 
   tl.to(
-    asset,
+    $asset,
     {
       width: assetWidth,
       duration: 1,
@@ -145,18 +182,18 @@ const handleOpen = async (project: iStory<iProjectsContent>, idx: number) => {
     0
   )
 
-  const prevOffsets = prevItems.map(i => i.offsetLeft + i.offsetWidth + 10)
+  const prevOffsets = $prevItems.map(i => i.offsetLeft + i.offsetWidth + 10)
 
-  const nextOffsets = nextItems.map(
+  const nextOffsets = $nextItems.map(
     i =>
-      parent.offsetWidth -
+      $parent.offsetWidth -
       i.getBoundingClientRect().left +
-      parent.offsetLeft +
+      $parent.offsetLeft +
       10
   )
 
   tl.to(
-    prevItems,
+    $prevItems,
     {
       duration: 1,
       x: (index: number) => {
@@ -167,7 +204,7 @@ const handleOpen = async (project: iStory<iProjectsContent>, idx: number) => {
   )
 
   tl.to(
-    nextItems,
+    $nextItems,
     {
       duration: 1,
       x: (index: number) => {
@@ -177,21 +214,87 @@ const handleOpen = async (project: iStory<iProjectsContent>, idx: number) => {
     0
   )
 
-  window.innerWidth < 960 &&
-    tl.to(el.value, { height: clone.scrollHeight, duration: 1 })
-  tl.to(content, { duration: 1, opacity: 1 }, '<100%')
+  // window.innerWidth < 960 &&
+  //   tl.to(el.value, { height: $clone.scrollHeight, duration: 1 })
+
+  tl.to($content, { duration: 0, opacity: 1 }, '<65%')
+  tl.to($backBtn, { duration: 1, opacity: 1, y: 0, ease: 'expo.out' }, '<')
+  tl.to(
+    titleSplit.lines,
+    { duration: 1.2, y: 0, stagger: 0.1, ease: 'expo.out' },
+    '<'
+  )
+  tl.to(
+    textSplit.lines,
+    { duration: 1.2, y: 0, stagger: 0.07, ease: 'expo.out' },
+    '<30%'
+  )
+  tl.to($btn, { duration: 1, y: 0, opacity: 1, ease: 'expo.out' }, '<55%')
 }
 
 const handleClose = () => {
-  const clone = el.value.querySelector('.p-carousel-clone') as HTMLElement
-
-  tl.vars.onReverseComplete = () => {
-    selectedProject.value = null
-    gsap.set(clone, { clearProps: 'all' })
-    gsap.set($items.value, { clearProps: 'all' })
+  if (!refs) {
+    return
   }
 
-  tl.reverse()
+  const { $clone, $asset, $backBtn, $btn, $content, titleSplit, textSplit } =
+    refs
+
+  const idx = props.content?.projects?.findIndex(
+    item => item.id === selectedProject.value.id
+  )
+
+  const $item = $items.value[idx]
+
+  const tl = gsap.timeline({
+    defaults: {
+      ease: 'power3.in',
+      overwrite: true,
+    },
+    onComplete: () => {
+      gsap.set([$clone, $asset, $backBtn, $btn, $content, $items.value], {
+        clearProps: 'all',
+      })
+
+      titleSplit.revert()
+      textSplit.revert()
+      selectedProject.value = null
+    },
+  })
+
+  gsap.set($btn, { transition: 'unset' })
+
+  tl.to($btn, { duration: 0.5, y: -20, opacity: 0 }, 0)
+
+  tl.to(textSplit.lines, { duration: 0.5, y: '-110%' }, 0.1)
+  tl.to(titleSplit.lines, { duration: 0.5, y: '-110%' }, '<')
+  tl.to($backBtn, { duration: 0.5, y: -20, opacity: 0 }, '<')
+
+  const assetWidth = window.getComputedStyle($asset).getPropertyValue('--width')
+
+  tl.to(
+    $asset,
+    {
+      width: assetWidth,
+      duration: 1,
+      ease: 'sine.inOut',
+    },
+    '<70%'
+  )
+
+  tl.to(
+    $clone,
+    {
+      left: $item.getBoundingClientRect().left + 'px',
+      x: 0,
+      width: assetWidth,
+      duration: 1,
+      ease: 'sine.inOut',
+    },
+    '<'
+  )
+
+  tl.to($items.value, { duration: 1, x: 0, ease: 'sine.inOut' }, '<')
 }
 </script>
 
@@ -259,14 +362,16 @@ const handleClose = () => {
         <p class="p-carousel-clone__text">
           {{ selectedProject.content?.description }}
         </p>
-        <LoFiButton
-          tag="nuxt-link"
-          :to="selectedProject?.full_slug"
-          variant="dark"
-          class="p-carousel-clone__btn"
-        >
-          {{ story?.content?.project_detail }}
-        </LoFiButton>
+        <div class="p-carousel-clone__btn-wrapper">
+          <LoFiButton
+            tag="nuxt-link"
+            :to="selectedProject?.full_slug"
+            variant="dark"
+            class="p-carousel-clone__btn"
+          >
+            {{ story?.content?.project_detail }}
+          </LoFiButton>
+        </div>
       </div>
     </div>
   </section>
@@ -392,6 +497,7 @@ const handleClose = () => {
   width: vw(424);
   margin-left: vw(163);
   opacity: 0;
+  flex-shrink: 0;
 
   @media (max-width: $br1) {
     width: 100%;

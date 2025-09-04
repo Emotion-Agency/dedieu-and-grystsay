@@ -133,7 +133,7 @@ const handleOpen = async (project: iStory<iProjectsContent>, idx: number) => {
   const $item = $items.value[idx]
 
   await nextTick()
-  el.value.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  // el.value.scrollIntoView({ behavior: 'smooth', block: 'center' })
 
   refs = getCloneRefs()
   if (!refs) return
@@ -172,6 +172,10 @@ const handleOpen = async (project: iStory<iProjectsContent>, idx: number) => {
   const assetWidth = window
     .getComputedStyle($asset)
     .getPropertyValue('--full-width')
+
+  const assetHeight = $item.getBoundingClientRect().height
+
+  gsap.set($asset, { height: assetHeight })
 
   tl.to(
     $asset,
@@ -214,8 +218,8 @@ const handleOpen = async (project: iStory<iProjectsContent>, idx: number) => {
     0
   )
 
-  // window.innerWidth < 960 &&
-  //   tl.to(el.value, { height: $clone.scrollHeight, duration: 1 })
+  window.innerWidth < 960 &&
+    tl.to(el.value, { height: $clone.scrollHeight, duration: 1 })
 
   tl.to($content, { duration: 0, opacity: 1 }, '<65%')
   tl.to($backBtn, { duration: 1, opacity: 1, y: 0, ease: 'expo.out' }, '<')
@@ -277,6 +281,7 @@ const handleClose = () => {
     {
       width: assetWidth,
       duration: 1,
+      filter: 'grayscale(100%)',
       ease: 'sine.inOut',
     },
     '<70%'
@@ -487,8 +492,7 @@ const handleClose = () => {
   max-height: 90svh;
 
   @media (max-width: $br1) {
-    aspect-ratio: 325/558;
-    --width: 100%;
+    --width: 200px;
     --full-width: 100%;
   }
 }

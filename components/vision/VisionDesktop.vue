@@ -7,36 +7,14 @@ interface IProps {
 }
 const props = defineProps<IProps>()
 
-const { current, handleNext } = useSlider(props.images.length)
+const images = computed(() => {
+  return props.images
+})
 
-const isSliding = ref(false)
-const isContentVisible = ref(true)
 const $el = ref<HTMLElement | null>(null)
 
-const visibleImages = computed(() =>
-  Array.from({ length: 3 }, (_, i) => {
-    const currentIndex = (current.value + i) % props.images.length
-    const nextIndex = (currentIndex + 1) % props.images.length
-
-    return {
-      current: props.images[currentIndex],
-      next: props.images[nextIndex],
-    }
-  })
-)
-
-const handleSlideNext = () => {
-  if (isSliding.value) return
-
-  isSliding.value = true
-  isContentVisible.value = false
-
-  setTimeout(() => {
-    handleNext()
-    isContentVisible.value = true
-    isSliding.value = false
-  }, 500) // Transition duration from CSS
-}
+const { isSliding, visibleSlides, handleSlideNext, current } =
+  useMultiSliderAnimation($el, images, 3)
 
 onMounted(() => {
   if ($el.value) {
@@ -63,8 +41,9 @@ onMounted(() => {
   <div ref="$el" class="vision-desk">
     <ul class="vision-desk__list">
       <li
-        v-for="({ current: img, next: nextImg }, idx) in visibleImages"
+        v-for="({ current: img, next: nextImg }, idx) in visibleSlides"
         :key="idx"
+        data-msa-item
         class="vision-desk__item"
       >
         <div class="vision-desk__img-wrapper">
@@ -72,16 +51,22 @@ onMounted(() => {
             class="vision-desk__img-track"
             :class="{ 'is-sliding': isSliding }"
           >
-            <CustomImage
-              :src="img.filename"
-              :alt="img.alt"
-              class="vision-desk__img"
-            />
-            <CustomImage
-              :src="nextImg.filename"
-              :alt="nextImg.alt"
-              class="vision-desk__img"
-            />
+            <div class="vision-desk__img-container">
+              <CustomImage
+                data-msa-img
+                :src="img.filename"
+                :alt="img.alt"
+                class="vision-desk__img"
+              />
+            </div>
+            <div aria-hidden class="vision-desk__img-container">
+              <CustomImage
+                data-msa-img
+                :src="nextImg.filename"
+                :alt="nextImg.alt"
+                class="vision-desk__img"
+              />
+            </div>
           </div>
         </div>
       </li>
@@ -122,10 +107,21 @@ onMounted(() => {
   display: flex;
   height: 100%;
   width: 100%;
+}
 
-  &.is-sliding {
-    transition: transform 0.5s ease;
-    transform: translateX(-100%);
+.vision-desk__img-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+
+  &:nth-child(2) {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 0;
   }
 }
 

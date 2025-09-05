@@ -123,6 +123,7 @@ function getCloneRefs() {
     textSplit,
     $backBtn: $clone.querySelector<HTMLElement>('.p-carousel-clone__back-btn'),
     $btn: $clone.querySelector<HTMLElement>('.p-carousel-clone__btn-wrapper'),
+    $mobileBtn: $clone.querySelector('.p-carousel-clone__close-btn'),
   }
 }
 
@@ -133,13 +134,20 @@ const handleOpen = async (project: iStory<iProjectsContent>, idx: number) => {
   const $item = $items.value[idx]
 
   await nextTick()
-  // el.value.scrollIntoView({ behavior: 'smooth', block: 'center' })
 
   refs = getCloneRefs()
   if (!refs) return
 
-  const { $clone, $asset, $backBtn, $btn, $content, titleSplit, textSplit } =
-    refs
+  const {
+    $clone,
+    $asset,
+    $backBtn,
+    $btn,
+    $content,
+    titleSplit,
+    textSplit,
+    $mobileBtn,
+  } = refs
 
   const $parent = $item.parentElement
 
@@ -222,6 +230,12 @@ const handleOpen = async (project: iStory<iProjectsContent>, idx: number) => {
     0
   )
 
+  tl.to(
+    $mobileBtn,
+    { duration: 1, y: 0, opacity: 1, scale: 1, ease: 'expo.out' },
+    0
+  )
+
   window.innerWidth < 960 && gsap.set(el.value, { height: $clone.scrollHeight })
 
   tl.to($content, { duration: 0, opacity: 1 }, '<65%')
@@ -244,8 +258,16 @@ const handleClose = () => {
     return
   }
 
-  const { $clone, $asset, $backBtn, $btn, $content, titleSplit, textSplit } =
-    refs
+  const {
+    $clone,
+    $asset,
+    $backBtn,
+    $btn,
+    $content,
+    titleSplit,
+    textSplit,
+    $mobileBtn,
+  } = refs
 
   const idx = props.content?.projects?.findIndex(
     item => item.id === selectedProject.value.id
@@ -261,9 +283,12 @@ const handleClose = () => {
       overwrite: true,
     },
     onComplete: () => {
-      gsap.set([$clone, $asset, $backBtn, $btn, $content, $items.value], {
-        clearProps: 'all',
-      })
+      gsap.set(
+        [$clone, $asset, $backBtn, $btn, $content, $items.value, $mobileBtn],
+        {
+          clearProps: 'all',
+        }
+      )
 
       gsap.set(el.value, { clearProps: 'pointer-events' })
 
@@ -274,6 +299,8 @@ const handleClose = () => {
   })
 
   gsap.set($btn, { transition: 'unset' })
+
+  tl.to($mobileBtn, { duration: 1, y: 0, opacity: 0, scale: 0.8 }, 0)
 
   tl.to($btn, { duration: 0.5, y: -20, opacity: 0 }, 0)
 
@@ -530,6 +557,8 @@ const handleClose = () => {
     display: flex;
     position: absolute;
     top: 16px;
+    opacity: 0;
+    transform: scale(0.8);
     right: 16px;
     width: 30px;
     height: 30px;

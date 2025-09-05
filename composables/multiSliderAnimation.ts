@@ -107,5 +107,6 @@ export const useMultiSliderAnimation = <T>(
     isSliding,
     visibleSlides,
     handleSlideNext,
+    current,
   }
 }

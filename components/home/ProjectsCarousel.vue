@@ -395,7 +395,7 @@ const handleClose = () => {
 .p-carousel__grid {
   display: flex;
   width: 100%;
-  height: 90svh;
+  max-height: 90svh;
   position: relative;
   gap: vw(24);
   overflow: hidden;
@@ -403,7 +403,8 @@ const handleClose = () => {
   @media (max-width: $br1) {
     flex-wrap: nowrap;
     gap: 17px;
-    // height: auto;
+    max-height: none;
+    height: 90svh;
     overflow: auto;
   }
 }
@@ -413,6 +414,7 @@ const handleClose = () => {
   overflow: hidden;
   width: vw(200);
   height: 100%;
+  aspect-ratio: 200/745;
   flex-shrink: 0;
   flex-grow: 0;
   cursor: none;
@@ -421,6 +423,8 @@ const handleClose = () => {
     max-width: 70vw;
     width: 200px;
     display: flex;
+    aspect-ratio: 242/558;
+
     flex-direction: column;
     gap: 30px;
   }

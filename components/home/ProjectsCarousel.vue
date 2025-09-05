@@ -102,14 +102,14 @@ function getCloneRefs() {
     type: 'lines',
     mask: 'lines',
     onSplit: self => {
-      gsap.set(self.lines, { y: '110%' })
+      return gsap.set(self.lines, { y: '110%' })
     },
   })
   const textSplit = SplitText.create($text, {
     type: 'lines',
     mask: 'lines',
     onSplit: self => {
-      gsap.set(self.lines, { y: '110%' })
+      return gsap.set(self.lines, { y: '110%' })
     },
   })
 
@@ -145,7 +145,6 @@ const handleOpen = async (project: iStory<iProjectsContent>, idx: number) => {
 
   $clone.style.left = $item.getBoundingClientRect().left + 'px'
   $clone.style.top = $item.offsetTop + 'px'
-  $clone.style.width = $item.getBoundingClientRect().width + 'px'
 
   const $prevItems = prevAll($item)
   const $nextItems = nextAll($item)
@@ -153,6 +152,7 @@ const handleOpen = async (project: iStory<iProjectsContent>, idx: number) => {
   gsap.set([$backBtn, $btn], { opacity: 0, y: 20 })
 
   const itemLeftOffset = $item.offsetLeft
+  const parentScrollLeft = $parent.scrollLeft
 
   await nextTick()
   gsap.set($item, { visibility: 'hidden' })
@@ -164,8 +164,7 @@ const handleOpen = async (project: iStory<iProjectsContent>, idx: number) => {
   })
 
   tl.to($clone, {
-    x: -itemLeftOffset,
-    width: $parent.getBoundingClientRect().width,
+    x: -itemLeftOffset + parentScrollLeft,
     duration: 1,
   })
 
@@ -218,8 +217,7 @@ const handleOpen = async (project: iStory<iProjectsContent>, idx: number) => {
     0
   )
 
-  window.innerWidth < 960 &&
-    tl.to(el.value, { height: $clone.scrollHeight, duration: 1 })
+  window.innerWidth < 960 && gsap.set(el.value, { height: $clone.scrollHeight })
 
   tl.to($content, { duration: 0, opacity: 1 }, '<65%')
   tl.to($backBtn, { duration: 1, opacity: 1, y: 0, ease: 'expo.out' }, '<')
@@ -292,7 +290,6 @@ const handleClose = () => {
     {
       left: $item.getBoundingClientRect().left + 'px',
       x: 0,
-      width: assetWidth,
       duration: 1,
       ease: 'sine.inOut',
     },
@@ -300,6 +297,8 @@ const handleClose = () => {
   )
 
   tl.to($items.value, { duration: 1, x: 0, ease: 'sine.inOut' }, '<')
+
+  window.innerWidth < 960 && tl.to(el.value, { height: '100%', duration: 1 })
 }
 </script>
 
@@ -477,8 +476,12 @@ const handleClose = () => {
 
   @media (max-width: $br1) {
     flex-direction: column;
+    width: calc(100% - (#{$g-sm} * 2));
     height: auto;
     gap: 30px;
+  }
+  @media (max-width: $br3) {
+    width: calc(100% - (#{$g-s} * 2));
   }
 }
 

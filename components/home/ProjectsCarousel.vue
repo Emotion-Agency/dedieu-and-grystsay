@@ -155,11 +155,16 @@ const handleOpen = async (project: iStory<iProjectsContent>, idx: number) => {
   const parentScrollLeft = $parent.scrollLeft
 
   await nextTick()
+
   gsap.set($item, { visibility: 'hidden' })
+  gsap.set(el.value, { pointerEvents: 'none' })
 
   const tl = gsap.timeline({
     defaults: {
       ease: 'sine.inOut',
+    },
+    onComplete: () => {
+      gsap.set(el.value, { clearProps: 'pointer-events' })
     },
   })
 
@@ -248,6 +253,8 @@ const handleClose = () => {
 
   const $item = $items.value[idx]
 
+  gsap.set(el.value, { pointerEvents: 'none' })
+
   const tl = gsap.timeline({
     defaults: {
       ease: 'power3.in',
@@ -257,6 +264,8 @@ const handleClose = () => {
       gsap.set([$clone, $asset, $backBtn, $btn, $content, $items.value], {
         clearProps: 'all',
       })
+
+      gsap.set(el.value, { clearProps: 'pointer-events' })
 
       titleSplit.revert()
       textSplit.revert()

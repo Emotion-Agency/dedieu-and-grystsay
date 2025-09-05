@@ -74,7 +74,7 @@ onMounted(() => {
   new ScrollTrigger({
     trigger: el.value,
     once: true,
-    start: () => 'top-=30% top',
+    start: () => 'top-=40% top',
     end: () => 'bottom bottom',
     scrub: true,
     onEnter: () => {

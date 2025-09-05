@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { gsap, SplitText } from '~/libs/gsap'
+import { gsap } from '~/libs/gsap'
 import type { iCurrentNews } from '~/types/projectsTypes'
 
 interface IProps {
@@ -8,162 +8,16 @@ interface IProps {
 }
 const props = defineProps<IProps>()
 
-const { current, handleNext } = useSlider(props.projects.length)
-
-const isSliding = ref(false)
+const projects = computed(() => {
+  return props.projects
+})
 
 const $el = ref<HTMLElement | null>(null)
 
-const visibleProjects = computed(() =>
-  Array.from({ length: 4 }, (_, i) => {
-    const currentIndex = (current.value + i) % props.projects.length
-    const nextIndex = (currentIndex + 1) % props.projects.length
-
-    return {
-      current: props.projects[currentIndex],
-      next: props.projects[nextIndex],
-    }
-  })
+const { isSliding, visibleSlides, handleSlideNext } = useMultiSliderAnimation(
+  $el,
+  projects
 )
-
-const handleSlideNext = () => {
-  if (isSliding.value) return
-
-  isSliding.value = true
-
-  const $items = $el.value.querySelectorAll('.curr-pr-desk__item')
-
-  const tl = gsap.timeline({
-    onComplete: async () => {
-      isSliding.value = false
-      tl.revert()
-      handleNext()
-
-      await nextTick()
-
-      const tl2 = gsap.timeline()
-
-      const $items = $el.value.querySelectorAll('.curr-pr-desk__item')
-
-      $items.forEach(item => {
-        const $title = item.querySelector('.curr-pr-desk__title')
-        const $text = item.querySelector('.curr-pr-desk__desc')
-        const $number = item.querySelector('.curr-pr-desk__number')
-
-        const titleSplit = new SplitText($title, {
-          type: 'lines',
-          mask: 'lines',
-        })
-
-        const textSplit = new SplitText($text, {
-          type: 'lines',
-          mask: 'lines',
-        })
-
-        tl2.from(
-          titleSplit.lines,
-          {
-            duration: 1,
-            y: '110%',
-            stagger: 0.07,
-          },
-          '<'
-        )
-
-        tl2.from(
-          textSplit.lines,
-          {
-            duration: 1,
-            y: '110%',
-            stagger: 0.07,
-          },
-          '<'
-        )
-
-        tl2.from(
-          $number,
-          {
-            duration: 1,
-            y: 20,
-            opacity: 0,
-          },
-          '<'
-        )
-      })
-    },
-  })
-
-  $items.forEach(item => {
-    const [$current, $next] = item.querySelectorAll('.curr-pr-desk__img')
-
-    const $title = item.querySelector('.curr-pr-desk__title')
-    const $text = item.querySelector('.curr-pr-desk__desc')
-    const $number = item.querySelector('.curr-pr-desk__number')
-
-    const titleSplit = new SplitText($title, {
-      type: 'lines',
-      mask: 'lines',
-    })
-
-    const textSplit = new SplitText($text, {
-      type: 'lines',
-      mask: 'lines',
-    })
-
-    tl.to(
-      $current,
-      {
-        duration: 1,
-        clipPath: ' inset(0 100% 0 0)',
-      },
-      '<'
-    )
-
-    tl.from(
-      $next,
-      {
-        duration: 1,
-        clipPath: ' inset(0 0 0 100%)',
-      },
-      '<'
-    )
-
-    tl.to(
-      titleSplit.lines,
-      {
-        duration: 1,
-        y: '-130%',
-        stagger: 0.07,
-      },
-      '<'
-    )
-
-    tl.to(
-      textSplit.lines,
-      {
-        duration: 1,
-        y: '-110%',
-        stagger: 0.07,
-      },
-      '<'
-    )
-
-    tl.to(
-      $number,
-      {
-        duration: 1,
-        y: -20,
-        opacity: 0,
-      },
-      '<'
-    )
-  })
-
-  // isSliding.value = true
-  // isContentVisible.value = false
-
-  console.log(visibleProjects.value)
-}
 
 onMounted(() => {
   if ($el.value) {
@@ -194,9 +48,10 @@ onMounted(() => {
     <ul class="curr-pr-desk__list">
       <li
         v-for="(
-          { current: project, next: nextProject }, idx
-        ) in visibleProjects"
+          { current: project, next: nextProject, currentIndex, nextIndex }, idx
+        ) in visibleSlides"
         :key="idx"
+        data-msa-item
         class="curr-pr-desk__item"
         @click="idx === 3 && handleSlideNext()"
       >
@@ -205,29 +60,45 @@ onMounted(() => {
             class="curr-pr-desk__img-track"
             :class="{ 'is-sliding': isSliding }"
           >
-            <CustomImage
-              :src="project.asset.filename"
-              :alt="project.asset.alt"
-              class="curr-pr-desk__img"
-            />
-            <CustomImage
-              aria-hidden
-              :src="nextProject.asset.filename"
-              :alt="nextProject.asset.alt"
-              class="curr-pr-desk__img"
-            />
+            <div class="curr-pr-desk__img-container">
+              <CustomImage
+                :src="project.asset.filename"
+                :alt="project.asset.alt"
+                class="curr-pr-desk__img"
+                data-msa-img
+              />
+            </div>
+            <div aria-hidden class="curr-pr-desk__img-container">
+              <CustomImage
+                :src="nextProject.asset.filename"
+                :alt="nextProject.asset.alt"
+                class="curr-pr-desk__img"
+                data-msa-img
+              />
+            </div>
           </div>
         </div>
 
         <template v-if="idx !== 3">
-          <div class="curr-pr-desk__i">
-            <div class="curr-pr-desk__i-content">
-              <h3 class="curr-pr-desk__title">{{ project.title }}</h3>
-
-              <p class="curr-pr-desk__desc">{{ project.text }}</p>
-
-              <p class="curr-pr-desk__number">
-                {{ ((current + idx) % props.projects.length) + 1 }}
+          <div class="curr-pr-desk__i-content">
+            <div class="curr-pr-desk__i">
+              <h3 data-msa-title class="curr-pr-desk__title">
+                {{ project.title }}
+              </h3>
+              <p data-msa-text class="curr-pr-desk__desc">{{ project.text }}</p>
+              <p data-msa-number class="curr-pr-desk__number">
+                {{ currentIndex + 1 }}
+              </p>
+            </div>
+            <div aria-hidden class="curr-pr-desk__i">
+              <h3 data-msa-title class="curr-pr-desk__title">
+                {{ nextProject.title }}
+              </h3>
+              <p data-msa-text class="curr-pr-desk__desc">
+                {{ nextProject.text }}
+              </p>
+              <p data-msa-number class="curr-pr-desk__number">
+                {{ nextIndex + 1 }}
               </p>
             </div>
           </div>
@@ -326,13 +197,12 @@ onMounted(() => {
   // }
 }
 
-.curr-pr-desk__img {
-  display: block;
-  height: 100%;
-  min-width: 100%;
-  object-fit: cover;
+.curr-pr-desk__img-container {
   position: relative;
+  width: 100%;
+  height: 100%;
   z-index: 1;
+
   &:nth-child(2) {
     position: absolute;
     width: 100%;
@@ -343,10 +213,29 @@ onMounted(() => {
   }
 }
 
+.curr-pr-desk__img {
+  display: block;
+  height: 100%;
+  min-width: 100%;
+  object-fit: cover;
+  position: relative;
+}
+
+.curr-pr-desk__i-content {
+  position: relative;
+}
 .curr-pr-desk__i {
   position: relative;
-  overflow: hidden;
   padding-top: vw(25);
+  &:nth-child(2) {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    visibility: hidden;
+  }
 }
 
 .curr-pr-desk__title {

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { delayPromise } from '@emotionagency/utils'
 import { gsap, SplitText } from '~/libs/gsap'
 import type { iCurrentProjectHero } from '~/types/currentProjectTypes'
 

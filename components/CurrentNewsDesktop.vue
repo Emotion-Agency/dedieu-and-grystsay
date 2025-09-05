@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { gsap } from '~/libs/gsap'
+import { gsap, SplitText } from '~/libs/gsap'
 import type { iCurrentNews } from '~/types/projectsTypes'
 
 interface IProps {
@@ -11,7 +11,7 @@ const props = defineProps<IProps>()
 const { current, handleNext } = useSlider(props.projects.length)
 
 const isSliding = ref(false)
-const isContentVisible = ref(true)
+
 const $el = ref<HTMLElement | null>(null)
 
 const visibleProjects = computed(() =>
@@ -30,13 +30,139 @@ const handleSlideNext = () => {
   if (isSliding.value) return
 
   isSliding.value = true
-  isContentVisible.value = false
 
-  setTimeout(() => {
-    handleNext()
-    isContentVisible.value = true
-    isSliding.value = false
-  }, 500) // Transition duration from CSS
+  const $items = $el.value.querySelectorAll('.curr-pr-desk__item')
+
+  const tl = gsap.timeline({
+    onComplete: async () => {
+      isSliding.value = false
+      tl.revert()
+      handleNext()
+
+      await nextTick()
+
+      const tl2 = gsap.timeline()
+
+      const $items = $el.value.querySelectorAll('.curr-pr-desk__item')
+
+      $items.forEach(item => {
+        const $title = item.querySelector('.curr-pr-desk__title')
+        const $text = item.querySelector('.curr-pr-desk__desc')
+        const $number = item.querySelector('.curr-pr-desk__number')
+
+        const titleSplit = new SplitText($title, {
+          type: 'lines',
+          mask: 'lines',
+        })
+
+        const textSplit = new SplitText($text, {
+          type: 'lines',
+          mask: 'lines',
+        })
+
+        tl2.from(
+          titleSplit.lines,
+          {
+            duration: 1,
+            y: '110%',
+            stagger: 0.07,
+          },
+          '<'
+        )
+
+        tl2.from(
+          textSplit.lines,
+          {
+            duration: 1,
+            y: '110%',
+            stagger: 0.07,
+          },
+          '<'
+        )
+
+        tl2.from(
+          $number,
+          {
+            duration: 1,
+            y: 20,
+            opacity: 0,
+          },
+          '<'
+        )
+      })
+    },
+  })
+
+  $items.forEach(item => {
+    const [$current, $next] = item.querySelectorAll('.curr-pr-desk__img')
+
+    const $title = item.querySelector('.curr-pr-desk__title')
+    const $text = item.querySelector('.curr-pr-desk__desc')
+    const $number = item.querySelector('.curr-pr-desk__number')
+
+    const titleSplit = new SplitText($title, {
+      type: 'lines',
+      mask: 'lines',
+    })
+
+    const textSplit = new SplitText($text, {
+      type: 'lines',
+      mask: 'lines',
+    })
+
+    tl.to(
+      $current,
+      {
+        duration: 1,
+        clipPath: ' inset(0 100% 0 0)',
+      },
+      '<'
+    )
+
+    tl.from(
+      $next,
+      {
+        duration: 1,
+        clipPath: ' inset(0 0 0 100%)',
+      },
+      '<'
+    )
+
+    tl.to(
+      titleSplit.lines,
+      {
+        duration: 1,
+        y: '-130%',
+        stagger: 0.07,
+      },
+      '<'
+    )
+
+    tl.to(
+      textSplit.lines,
+      {
+        duration: 1,
+        y: '-110%',
+        stagger: 0.07,
+      },
+      '<'
+    )
+
+    tl.to(
+      $number,
+      {
+        duration: 1,
+        y: -20,
+        opacity: 0,
+      },
+      '<'
+    )
+  })
+
+  // isSliding.value = true
+  // isContentVisible.value = false
+
+  console.log(visibleProjects.value)
 }
 
 onMounted(() => {
@@ -85,6 +211,7 @@ onMounted(() => {
               class="curr-pr-desk__img"
             />
             <CustomImage
+              aria-hidden
               :src="nextProject.asset.filename"
               :alt="nextProject.asset.alt"
               class="curr-pr-desk__img"
@@ -94,12 +221,11 @@ onMounted(() => {
 
         <template v-if="idx !== 3">
           <div class="curr-pr-desk__i">
-            <div
-              class="curr-pr-desk__i-content"
-              :class="{ 'is-hidden': !isContentVisible }"
-            >
+            <div class="curr-pr-desk__i-content">
               <h3 class="curr-pr-desk__title">{{ project.title }}</h3>
+
               <p class="curr-pr-desk__desc">{{ project.text }}</p>
+
               <p class="curr-pr-desk__number">
                 {{ ((current + idx) % props.projects.length) + 1 }}
               </p>
@@ -141,6 +267,10 @@ onMounted(() => {
     .curr-pr-desk__img-wrapper {
       height: vw(380);
     }
+
+    .curr-pr-desk__i {
+      width: 110%;
+    }
   }
 
   &:nth-of-type(4) {
@@ -157,7 +287,7 @@ onMounted(() => {
 
     &:hover {
       .curr-pr-desk__img-wrapper {
-        border-radius: 100%;
+        border-radius: 50%;
       }
 
       .curr-pr-desk__btn {
@@ -182,18 +312,18 @@ onMounted(() => {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  transition: border-radius 0.5s ease;
+  transition: border-radius 0.3s ease-out;
 }
 
 .curr-pr-desk__img-track {
-  display: flex;
   height: 100%;
   width: 100%;
+  position: relative;
 
-  &.is-sliding {
-    transition: transform 0.5s ease;
-    transform: translateX(-100%);
-  }
+  // &.is-sliding {
+  //   transition: transform 0.5s ease;
+  //   transform: translateX(-100%);
+  // }
 }
 
 .curr-pr-desk__img {
@@ -201,23 +331,22 @@ onMounted(() => {
   height: 100%;
   min-width: 100%;
   object-fit: cover;
+  position: relative;
+  z-index: 1;
+  &:nth-child(2) {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 0;
+  }
 }
 
 .curr-pr-desk__i {
   position: relative;
   overflow: hidden;
   padding-top: vw(25);
-}
-
-.curr-pr-desk__i-content {
-  transition:
-    opacity 0.5s ease,
-    transform 0.5s ease;
-
-  &.is-hidden {
-    opacity: 0;
-    transform: translateY(vw(-10));
-  }
 }
 
 .curr-pr-desk__title {

@@ -1,7 +1,10 @@
 <script setup lang="ts">
+import imagesLoaded from 'imagesloaded'
 import { useFonts } from '~/composables/fonts'
 
 useFonts()
+
+const isLoaded = ref(false)
 
 onMounted(async () => {
   const { detectOrientationChanges } = await import(
@@ -9,6 +12,16 @@ onMounted(async () => {
   )
 
   detectOrientationChanges()
+
+  const ilInstance = imagesLoaded(document.body, { background: true })
+
+  ilInstance.on('done', () => {
+    isLoaded.value = true
+  })
+
+  ilInstance.on('fail', () => {
+    isLoaded.value = true
+  })
 })
 
 useHead({
@@ -43,6 +56,7 @@ const isContactPage = computed(() => route.path.includes('/contact'))
           </KeepAlive>
         </main>
         <Revealer />
+        <Preloader v-if="!isLoaded" />
         <AppFooter v-if="!isContactPage" />
       </NuxtLayout>
     </SmoothScroll>

@@ -38,7 +38,9 @@ const isContactPage = computed(() => route.path.includes('/contact'))
       <AppHeader :is-contact-page="isContactPage" />
       <NuxtLayout>
         <main class="app__main">
-          <NuxtPage />
+          <KeepAlive>
+            <NuxtPage />
+          </KeepAlive>
         </main>
         <Revealer />
         <AppFooter v-if="!isContactPage" />

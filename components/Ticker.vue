@@ -58,6 +58,44 @@ const observeVisibility = () => {
 }
 
 onMounted(async () => {
+  if (containerRef.value) {
+    const $lines = containerRef.value.querySelectorAll('.ticker__line')
+    const $content = containerRef.value.querySelector('.ticker__wrapper')
+
+    gsap.set($lines, {
+      width: 0,
+    })
+    gsap.set($content, {
+      opacity: 0,
+      translateX: 100,
+    })
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: containerRef.value,
+        start: 'top 80%',
+      },
+    })
+
+    tl.to($lines, {
+      width: '100%',
+      stagger: 0.1,
+      duration: 1.8,
+      ease: 'power2.out',
+    })
+
+    tl.to(
+      $content,
+      {
+        opacity: 1,
+        translateX: 0,
+        duration: 2.2,
+        ease: 'power2.out',
+      },
+      '<'
+    )
+  }
+
   await generateRepeatCount()
   startAnimation()
   observeVisibility()
@@ -70,6 +108,7 @@ onMounted(async () => {
     class="ticker"
     :class="{ 'ticker--projects': isCurrentProjects }"
   >
+    <div class="ticker__line" :class="'ticker__line--top'" />
     <div class="ticker__wrapper">
       <div ref="tickerRef1" class="ticker__content">
         <template v-for="i in repeatCount" :key="'slot1-' + i">
@@ -84,6 +123,7 @@ onMounted(async () => {
         </template>
       </div>
     </div>
+    <div class="ticker__line" :class="'ticker__line--bottom'" />
   </section>
 </template>
 
@@ -97,24 +137,6 @@ onMounted(async () => {
 
   @media (max-width: $br1) {
     padding: 15px 0;
-  }
-
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    background-color: var(--foreground);
-  }
-
-  &::before {
-    top: 0;
-  }
-
-  &::after {
-    bottom: 0;
   }
 
   &--projects {
@@ -136,6 +158,22 @@ onMounted(async () => {
         margin-right: 25px;
       }
     }
+  }
+}
+
+.ticker__line {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: var(--foreground);
+
+  &--top {
+    top: 0;
+  }
+
+  &--bottom {
+    bottom: 0;
   }
 }
 

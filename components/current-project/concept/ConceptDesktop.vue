@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { gsap } from '~/libs/gsap'
 import type { iImage } from '~/types/story'
 
 interface IProps {
@@ -11,6 +12,7 @@ const props = defineProps<IProps>()
 const { current, handleNext } = useSlider(props.images.length)
 
 const isSliding = ref(false)
+const $el = ref<HTMLElement | null>(null)
 
 const visibleImages = computed(() =>
   Array.from({ length: 3 }, (_, i) => {
@@ -34,10 +36,36 @@ const handleSlideNext = () => {
     isSliding.value = false
   }, 500) // Transition duration from CSS
 }
+
+onMounted(() => {
+  if ($el.value) {
+    const $images = $el.value.querySelectorAll('.concept-desk__item')
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: $el.value,
+        start: 'top 80%',
+      },
+    })
+
+    gsap.set($images, {
+      opacity: 0,
+      scale: 0.9,
+    })
+
+    tl.to($images, {
+      opacity: 1,
+      duration: 2.4,
+      scale: 1,
+      stagger: 0.2,
+      ease: 'power2.out',
+    })
+  }
+})
 </script>
 
 <template>
-  <div class="concept-desk">
+  <div ref="$el" class="concept-desk">
     <ul class="concept-desk__list">
       <li
         v-for="({ current: image, next: nextImage }, idx) in visibleImages"

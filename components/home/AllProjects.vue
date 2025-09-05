@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { iHomeAllProjects } from '~/types/homeTypes'
+import { gsap } from '~/libs/gsap'
 
 interface IProps {
   content: iHomeAllProjects
@@ -8,15 +9,52 @@ interface IProps {
 const props = defineProps<IProps>()
 
 const activeImageIndex = ref(0)
+const $el = ref<HTMLElement | null>(null)
 
 const nextImages = () => {
   activeImageIndex.value =
     (activeImageIndex.value + 1) % props.content.assets[0].assets.length
 }
+
+onMounted(() => {
+  if ($el.value) {
+    const $items = $el.value.querySelectorAll('.all-projects__images')
+    const $link = $el.value.querySelector('.all-projects__title')
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: $el.value,
+        start: 'top 80%',
+      },
+    })
+
+    gsap.set($link, { opacity: 0, y: 100 })
+    gsap.set($items, { opacity: 0, y: 50 })
+
+    tl.to($items, {
+      opacity: 1,
+      y: 0,
+      stagger: 0.1,
+      duration: 1,
+      ease: 'power2.out',
+    })
+
+    tl.to(
+      $link,
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1.5,
+        ease: 'power2.out',
+      },
+      '<'
+    )
+  }
+})
 </script>
 
 <template>
-  <section class="all-projects container">
+  <section ref="$el" class="all-projects container">
     <div class="all-projects__wrapper">
       <div
         v-for="(item, idx) in content?.assets"

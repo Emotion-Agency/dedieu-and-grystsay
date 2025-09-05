@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { gsap } from '~/libs/gsap'
 import { useGlobalStory } from '~/composables/stories/globalStory'
 import type { iGridContent, iGridItems } from '~/types/gridTypes'
 import type { iStory } from '~/types/story'
@@ -17,6 +18,7 @@ const { story } = await useGlobalStory()
 
 const { width } = useWindowSize()
 const isMobile = computed(() => width.value <= 960)
+const $el = ref<HTMLElement | null>(null)
 
 const SHOW_STEP = 3
 
@@ -32,10 +34,30 @@ const onGetMore = () => {
     props.items.length
   )
 }
+
+onMounted(() => {
+  if ($el.value) {
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: $el.value,
+        start: 'top 90%',
+      },
+    })
+
+    gsap.set($el.value, { opacity: 0, translateY: 100 })
+
+    tl.to($el.value, {
+      opacity: 1,
+      translateY: 0,
+      duration: 3,
+      ease: 'power2.out',
+    })
+  }
+})
 </script>
 
 <template>
-  <div class="grid-list" :class="{ [`grid-list--${type}`]: type }">
+  <div ref="$el" class="grid-list" :class="{ [`grid-list--${type}`]: type }">
     <div class="grid-list__items">
       <NuxtLink
         v-for="(item, idx) in filteredItems"

@@ -20,7 +20,9 @@ const newsProjects =
 <template>
   <section class="current-projects">
     <div class="current-projects__ticker">
-      <Ticker is-current-projects>{{ content?.marquee_title }}</Ticker>
+      <Ticker is-current-projects>
+        {{ content?.marquee_title }}
+      </Ticker>
     </div>
 
     <div class="current-projects__wrapper container">

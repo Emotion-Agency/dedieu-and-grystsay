@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { gsap } from '~/libs/gsap'
 import type { iCurrentNews } from '~/types/projectsTypes'
 
 interface IProps {
@@ -6,10 +7,32 @@ interface IProps {
 }
 
 defineProps<IProps>()
+
+const $el = ref<HTMLElement | null>(null)
+
+onMounted(() => {
+  if ($el.value) {
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: $el.value,
+        start: 'top 80%',
+      },
+    })
+
+    gsap.set($el.value, { opacity: 0, translateY: 50 })
+
+    tl.to($el.value, {
+      opacity: 1,
+      translateY: 0,
+      duration: 2,
+      ease: 'power2.out',
+    })
+  }
+})
 </script>
 
 <template>
-  <div class="curr-pr-mob">
+  <div ref="$el" class="curr-pr-mob">
     <ul class="curr-pr-mob__list">
       <li
         v-for="(project, idx) in projects"

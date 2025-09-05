@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { gsap, SplitText } from '~/libs/gsap'
 import type { iNewsHero } from '~/types/newsTypes'
 
 interface IProps {
@@ -6,10 +7,52 @@ interface IProps {
 }
 
 defineProps<IProps>()
+
+const $el = ref<HTMLElement | null>(null)
+
+onMounted(() => {
+  if ($el.value) {
+    const $title = $el.value.querySelector('.news-hero__title')
+    const $img = $el.value.querySelector('.news-hero__img')
+
+    const titleSplit = new SplitText($title, {
+      type: 'lines',
+    })
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: $el.value,
+        start: 'top 80%',
+      },
+    })
+
+    gsap.set(titleSplit.lines, { opacity: 0, translateY: 40 })
+    gsap.set($img, { opacity: 0, scale: 0.8 })
+
+    tl.to(titleSplit.lines, {
+      opacity: 1,
+      y: 0,
+      duration: 2.5,
+      ease: 'expo.out',
+      stagger: 0.2,
+    })
+
+    tl.to(
+      $img,
+      {
+        opacity: 1,
+        scale: 1,
+        duration: 2,
+        ease: 'power2.out',
+      },
+      '<'
+    )
+  }
+})
 </script>
 
 <template>
-  <section class="news-hero container">
+  <section ref="$el" class="news-hero container">
     <div class="news-hero__wrapper">
       <h1 class="news-hero__title">{{ content?.title }}</h1>
       <CustomImage

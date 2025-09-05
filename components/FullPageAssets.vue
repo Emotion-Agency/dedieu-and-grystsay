@@ -1,20 +1,46 @@
 <script setup lang="ts">
-import type { iCurrentProjectFullPageAssets } from '~/types/currentProjectTypes'
+import { gsap } from '~/libs/gsap'
+import type { iFullPageAssets } from '~/types/fullAssetsTypes'
 
 interface IProps {
-  content: iCurrentProjectFullPageAssets
+  content: iFullPageAssets
 }
 
 defineProps<IProps>()
+
+const $el = ref<HTMLElement | null>(null)
+
+onMounted(() => {
+  if ($el.value) {
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: $el.value,
+        start: 'top 90%',
+      },
+    })
+
+    gsap.set($el.value, { opacity: 0, scale: 0.8 })
+
+    tl.to(
+      $el.value,
+      {
+        opacity: 1,
+        scale: 1,
+        duration: 2,
+        ease: 'power2.out',
+      },
+      '<'
+    )
+  }
+})
 </script>
 
 <template>
-  <section class="full-assets container">
+  <section ref="$el" class="full-assets container">
     <div class="full-assets__wrapper">
       <FullImageSlider
         v-if="content?.assets.length > 1"
         :images="content?.assets"
-        class="full-assets__slider"
       />
       <AssetRenderer
         v-else
@@ -32,7 +58,7 @@ defineProps<IProps>()
   padding-top: vw(40);
 
   @media (max-width: $br1) {
-    padding-top: 20px;
+    padding-top: 30px;
   }
 }
 
@@ -41,12 +67,5 @@ defineProps<IProps>()
   width: 100vw;
   height: 100vh;
   object-fit: cover;
-}
-
-.full-assets__slider,
-.full-assets__img {
-  @media (max-width: $br1) {
-    height: 470px;
-  }
 }
 </style>

@@ -16,7 +16,7 @@ export default class NavbarPos {
   }
 
   scrollNav() {
-    this.top = -this.$sc.scrollTop
+    this.top = -this.$sc?.scrollTop
 
     if (this.hovered) {
       return
@@ -26,7 +26,7 @@ export default class NavbarPos {
 
     this.isHidden && this.removeVisibility()
 
-    this.scrollPos = -this.$sc.scrollTop
+    this.scrollPos = -this.$sc?.scrollTop
   }
 
   get isHidden() {

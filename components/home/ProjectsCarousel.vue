@@ -397,7 +397,7 @@ const handleClose = () => {
           {{ story?.content?.back }}
         </TextButton>
         <h2 class="p-carousel-clone__title">
-          {{ selectedProject.content?.title }}
+          {{ selectedProject.content?.body?.[0]?.title }}
         </h2>
         <p class="p-carousel-clone__text">
           {{ selectedProject.content?.description }}

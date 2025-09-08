@@ -18,11 +18,17 @@ const onClick = () => {
   isMenuOpened.value = false
 }
 
+const elRef = useTemplateRef('el')
+
+const { init } = useHeaderAnimation()
+
 onMounted(async () => {
   console.log('mounted')
   const { default: NavbarPos } = await import('~/utils/navbarPos')
   navbarPos = new NavbarPos()
   navbarPos.init()
+
+  init(elRef.value)
 })
 
 onBeforeUnmount(() => {
@@ -36,6 +42,7 @@ watch(isMenuOpened, val => {
 
 <template>
   <header
+    ref="el"
     class="header container"
     :class="{ 'header--dark': isContactPage, 'header--menu': isMenuOpened }"
   >
@@ -54,6 +61,7 @@ watch(isMenuOpened, val => {
       </div>
     </div>
     <BurgerMenu :content="story?.content" />
+    <div class="header__line" />
   </header>
 </template>
 
@@ -72,25 +80,6 @@ watch(isMenuOpened, val => {
     opacity 1s ease,
     background-color 0.6s ease;
   background-color: var(--background);
-
-  &::before {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: calc(100% - ($g-offset * 2));
-    height: 1px;
-    background-color: var(--foreground);
-
-    @media (max-width: $br1) {
-      width: calc(100% - ($g-sm * 2));
-    }
-
-    @media (max-width: $br3) {
-      width: calc(100% - ($g-s * 2));
-    }
-  }
 
   @media (max-width: $br1) {
     padding-top: 16px;
@@ -156,5 +145,24 @@ watch(isMenuOpened, val => {
 .header__navigation {
   display: flex;
   align-items: center;
+}
+
+.header__line {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - ($g-offset * 2));
+  height: 1px;
+  background-color: var(--foreground);
+
+  @media (max-width: $br1) {
+    width: calc(100% - ($g-sm * 2));
+  }
+
+  @media (max-width: $br3) {
+    width: calc(100% - ($g-s * 2));
+  }
 }
 </style>

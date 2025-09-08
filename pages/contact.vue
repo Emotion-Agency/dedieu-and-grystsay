@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { useContactStory } from '~/composables/stories/contactStory'
 import { pageTransition } from '~/transitions/base'
-import { gsap, SplitText } from '~/libs/gsap'
 
 definePageMeta({
   pageTransition,
@@ -22,40 +21,13 @@ const meta = computed(() => {
     ogImage: data?.image?.filename,
   }
 })
-
-const $el = ref<HTMLElement | null>(null)
-
-onMounted(() => {
-  if ($el.value) {
-    const $title = $el.value.querySelector('.contact__title')
-
-    const titleSplit = new SplitText($title, {
-      type: 'lines',
-    })
-
-    const tl = gsap.timeline()
-
-    gsap.set(titleSplit.lines, {
-      opacity: 0,
-      translateY: 40,
-    })
-
-    tl.to(titleSplit.lines, {
-      opacity: 1,
-      y: 0,
-      duration: 2,
-      ease: 'expo.out',
-      stagger: 0.2,
-    })
-  }
-})
 </script>
 
 <template>
   <div>
     <PageMeta v-if="meta" v-bind="meta" />
     <section ref="$el" class="contact container">
-      <h1 class="contact__title">{{ story?.content?.title }}</h1>
+      <h1 data-split class="contact__title">{{ story?.content?.title }}</h1>
       <ContactContent />
     </section>
   </div>

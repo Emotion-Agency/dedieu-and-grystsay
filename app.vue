@@ -4,7 +4,12 @@ import { useFonts } from '~/composables/fonts'
 
 useFonts()
 
-const isLoaded = ref(false)
+const { isFirstLoad, init } = useLoadingAnimation()
+
+const loadingAnimation = async () => {
+  window.elenis.stop()
+  await init()
+}
 
 onMounted(async () => {
   const { detectOrientationChanges } = await import(
@@ -16,11 +21,11 @@ onMounted(async () => {
   const ilInstance = imagesLoaded(document.body, { background: true })
 
   ilInstance.on('done', () => {
-    isLoaded.value = true
+    loadingAnimation()
   })
 
   ilInstance.on('fail', () => {
-    isLoaded.value = true
+    loadingAnimation()
   })
 })
 
@@ -56,7 +61,7 @@ const isContactPage = computed(() => route.path.includes('/contact'))
           </KeepAlive>
         </main>
         <Revealer />
-        <Preloader v-if="!isLoaded" />
+        <Preloader v-if="isFirstLoad" />
         <AppFooter v-if="!isContactPage" />
       </NuxtLayout>
     </SmoothScroll>

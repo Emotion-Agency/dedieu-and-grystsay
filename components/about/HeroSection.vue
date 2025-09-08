@@ -1,37 +1,11 @@
 <script setup lang="ts">
 import type { iAboutHero } from '~/types/aboutTypes'
-import { gsap } from '~/libs/gsap'
 
 interface IProps {
   content: iAboutHero
 }
 
 defineProps<IProps>()
-
-const $el = ref<HTMLElement | null>(null)
-
-onMounted(() => {
-  if ($el.value) {
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: $el.value,
-        start: 'top 80%',
-      },
-    })
-
-    gsap.set($el.value, {
-      opacity: 0,
-      scale: 0.9,
-    })
-
-    tl.to($el.value, {
-      opacity: 1,
-      scale: 1,
-      duration: 2,
-      ease: 'power2.out',
-    })
-  }
-})
 </script>
 
 <template>
@@ -39,10 +13,12 @@ onMounted(() => {
     <div class="about-hero__wrapper container">
       <FullImageSlider
         v-if="content?.assets.length > 1"
+        data-preload
         :images="content?.assets"
       />
       <AssetRenderer
         v-else
+        data-preload
         :src="content?.assets[0]?.filename"
         :alt="content?.assets[0]?.alt"
         :is-playing="true"

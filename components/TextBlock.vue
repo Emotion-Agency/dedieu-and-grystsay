@@ -16,7 +16,7 @@ const { path, params } = useRoute()
 const isAboutPage = computed(() => path.includes('/about'))
 const isCurrentNewsPage = computed(() => path.includes(`/news/${params?.id}`))
 
-const tl = ref<GSAPTimeline>(null)
+let tl: GSAPTimeline
 
 onMounted(() => {
   if ($el.value) {
@@ -24,7 +24,7 @@ onMounted(() => {
     const $line = $el.value.querySelector('.text-block__line')
     const $text = $el.value.querySelector('.text-block__text')
 
-    tl.value = gsap.timeline({
+    tl = gsap.timeline({
       scrollTrigger: {
         trigger: $el.value,
         start: 'top 80%',
@@ -43,13 +43,13 @@ onMounted(() => {
       width: 0,
     })
 
-    tl.value.to($title, {
+    tl.to($title, {
       opacity: 1,
       translateY: 0,
       duration: 1.8,
       ease: 'power2.out',
     })
-    tl.value.to(
+    tl.to(
       $line,
       {
         width: '100%',
@@ -58,7 +58,7 @@ onMounted(() => {
       },
       '<10%'
     )
-    tl.value.to(
+    tl.to(
       $text,
       {
         opacity: 1,
@@ -72,7 +72,7 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
-  tl.value?.kill()
+  tl?.kill()
 })
 </script>
 

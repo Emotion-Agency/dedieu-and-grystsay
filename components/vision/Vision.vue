@@ -24,7 +24,7 @@ const toggleText = () => {
   isExpanded.value = !isExpanded.value
 }
 
-const tl = ref<GSAPTimeline>(null)
+let tl: GSAPTimeline
 
 onMounted(async () => {
   await document.fonts.ready
@@ -37,7 +37,7 @@ onMounted(async () => {
       type: 'lines',
     })
 
-    tl.value = gsap.timeline({
+    tl = gsap.timeline({
       scrollTrigger: {
         trigger: $el.value,
         start: 'top 80%',
@@ -56,12 +56,12 @@ onMounted(async () => {
       translateY: 20,
     })
 
-    tl.value.to($line, {
+    tl.to($line, {
       width: '100%',
       duration: 1.8,
       ease: 'power2.out',
     })
-    tl.value.to(
+    tl.to(
       $title,
       {
         opacity: 1,
@@ -71,7 +71,7 @@ onMounted(async () => {
       },
       '<'
     )
-    tl.value.to(
+    tl.to(
       textSplit.lines,
       {
         opacity: 1,
@@ -86,7 +86,7 @@ onMounted(async () => {
 })
 
 onBeforeUnmount(() => {
-  tl.value?.kill()
+  tl?.kill()
 })
 </script>
 

@@ -10,11 +10,11 @@ defineProps<iProps>()
 
 const $el = ref<HTMLElement | null>(null)
 
-const tl = ref<GSAPTimeline>(null)
+let tl: GSAPTimeline
 
 onMounted(() => {
   if ($el.value) {
-    tl.value = gsap.timeline({
+    tl = gsap.timeline({
       scrollTrigger: {
         trigger: $el.value,
         start: 'top 80%',
@@ -25,7 +25,7 @@ onMounted(() => {
       width: 0,
     })
 
-    tl.value.to(
+    tl.to(
       $el.value,
       {
         width: '100%',
@@ -38,14 +38,14 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
-  tl.value?.kill()
+  tl?.kill()
 })
 </script>
 
 <template>
   <div
-    ref="$el"
     v-if="content?.show_on_mobile || content?.show_on_desktop"
+    ref="$el"
     class="divider container"
     :class="{
       'divider--mob': content?.show_on_mobile && !content?.show_on_desktop,

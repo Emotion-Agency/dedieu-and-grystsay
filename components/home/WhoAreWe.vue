@@ -17,7 +17,7 @@ const titleParts = computed(() => {
   return [`${before.trim()} &`, after?.trim() ?? '']
 })
 
-const tl = ref<GSAPTimeline>(null)
+let tl: GSAPTimeline
 
 onMounted(async () => {
   await document.fonts.ready
@@ -36,7 +36,7 @@ onMounted(async () => {
       type: 'lines',
     })
 
-    tl.value = gsap.timeline({
+    tl = gsap.timeline({
       scrollTrigger: {
         trigger: $el.value,
         start: 'top 80%',
@@ -58,13 +58,13 @@ onMounted(async () => {
     })
     gsap.set($title, { opacity: 0, translateY: 20 })
 
-    tl.value.to($subtitle, {
+    tl.to($subtitle, {
       opacity: 1,
       y: 0,
       duration: 1.5,
       ease: 'power2.out',
     })
-    tl.value.to(
+    tl.to(
       $lines,
       {
         width: '100%',
@@ -74,7 +74,7 @@ onMounted(async () => {
       },
       '<20%'
     )
-    tl.value.to(
+    tl.to(
       $top,
       {
         opacity: 1,
@@ -84,7 +84,7 @@ onMounted(async () => {
       },
       '<10%'
     )
-    tl.value.to(
+    tl.to(
       $title,
       {
         opacity: 1,
@@ -95,7 +95,7 @@ onMounted(async () => {
       },
       '<20%'
     )
-    tl.value.to(
+    tl.to(
       [$bottomLeftImg, $bottomRightImg],
       {
         opacity: 1,
@@ -105,7 +105,7 @@ onMounted(async () => {
       },
       '<20%'
     )
-    tl.value.to(
+    tl.to(
       textSplit.lines,
       { opacity: 1, y: 0, duration: 1.5, ease: 'expo.out', stagger: 0.1 },
       '<'
@@ -114,7 +114,7 @@ onMounted(async () => {
 })
 
 onBeforeUnmount(() => {
-  tl.value?.kill()
+  tl?.kill()
 })
 </script>
 

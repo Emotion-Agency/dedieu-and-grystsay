@@ -108,7 +108,7 @@ export const useHeaderAnimation = () => {
       navbarTl.to($logoText, { opacity: 1, duration: 1, stagger: 0.03 })
       navbarTl.to(
         $headerLine,
-        { scaleX: 1, duration: 1, ease: 'power2.inOut' },
+        { scaleX: 1, duration: 1, ease: 'sine.inOut' },
         '<'
       )
       window.innerWidth > 960 &&

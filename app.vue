@@ -9,6 +9,7 @@ const { isFirstLoad, init } = useLoadingAnimation()
 const loadingAnimation = async () => {
   window.elenis.stop()
   await init()
+  window.elenis.start()
 }
 
 onMounted(async () => {

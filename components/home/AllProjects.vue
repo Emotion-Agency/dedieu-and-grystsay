@@ -16,14 +16,14 @@ const nextImages = () => {
     (activeImageIndex.value + 1) % props.content.assets[0].assets.length
 }
 
-const tl = ref<GSAPTimeline>(null)
+let tl: GSAPTimeline
 
 onMounted(() => {
   if ($el.value) {
     const $items = $el.value.querySelectorAll('.all-projects__images')
     const $link = $el.value.querySelector('.all-projects__title')
 
-    tl.value = gsap.timeline({
+    tl = gsap.timeline({
       scrollTrigger: {
         trigger: $el.value,
         start: 'top 80%',
@@ -33,7 +33,7 @@ onMounted(() => {
     gsap.set($link, { opacity: 0, y: 100 })
     gsap.set($items, { opacity: 0, y: 50 })
 
-    tl.value.to($items, {
+    tl.to($items, {
       opacity: 1,
       y: 0,
       stagger: 0.1,
@@ -41,7 +41,7 @@ onMounted(() => {
       ease: 'power2.out',
     })
 
-    tl.value.to(
+    tl.to(
       $link,
       {
         opacity: 1,
@@ -55,7 +55,7 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
-  tl.value?.kill()
+  tl?.kill()
 })
 </script>
 

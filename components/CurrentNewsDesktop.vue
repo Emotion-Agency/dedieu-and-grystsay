@@ -19,11 +19,11 @@ const { isSliding, visibleSlides, handleSlideNext } = useMultiSliderAnimation(
   projects
 )
 
-const tl = ref<GSAPTimeline>(null)
+let tl: GSAPTimeline
 
 onMounted(() => {
   if ($el.value) {
-    tl.value = gsap.timeline({
+    tl = gsap.timeline({
       scrollTrigger: {
         trigger: $el.value,
         start: 'top 80%',
@@ -34,7 +34,7 @@ onMounted(() => {
 
     gsap.set($items, { opacity: 0, translateY: 100 })
 
-    tl.value.to($items, {
+    tl.to($items, {
       opacity: 1,
       translateY: 0,
       stagger: 0.3,
@@ -45,7 +45,7 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
-  tl.value?.kill()
+  tl?.kill()
 })
 </script>
 

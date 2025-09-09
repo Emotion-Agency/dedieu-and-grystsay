@@ -59,8 +59,8 @@ export const pageTransition: TransitionProps = {
 
     const tl = gsap.timeline({
       onComplete: () => {
-        resetScroll()
         done()
+        resetScroll()
       },
       defaults: {
         duration,

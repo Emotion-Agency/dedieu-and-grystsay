@@ -16,7 +16,7 @@ const images = props.content.corousel
 
 const $el = ref<HTMLElement | null>(null)
 
-const tl = ref<GSAPTimeline>(null)
+let tl: GSAPTimeline
 
 onMounted(async () => {
   await document.fonts.ready
@@ -32,7 +32,7 @@ onMounted(async () => {
       type: 'lines',
     })
 
-    tl.value = gsap.timeline({
+    tl = gsap.timeline({
       scrollTrigger: {
         trigger: $el.value,
         start: 'top 80%',
@@ -44,7 +44,7 @@ onMounted(async () => {
       translateY: 20,
     })
 
-    tl.value.to(
+    tl.to(
       titleSplit.lines,
       {
         opacity: 1,
@@ -55,7 +55,7 @@ onMounted(async () => {
       },
       '<'
     )
-    tl.value.to(
+    tl.to(
       textSplit.lines,
       {
         opacity: 1,
@@ -70,7 +70,7 @@ onMounted(async () => {
 })
 
 onBeforeUnmount(() => {
-  tl.value?.kill()
+  tl?.kill()
 })
 </script>
 

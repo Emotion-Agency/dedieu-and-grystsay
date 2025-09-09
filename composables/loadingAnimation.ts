@@ -18,129 +18,133 @@ export const useLoadingAnimation = () => {
   }
 
   const animate = async (parent?: HTMLElement, wait = 0.2) => {
-    document.documentElement.style.cursor = 'wait'
-    document.body.style.pointerEvents = 'none'
+    return new Promise<void>(resolve => {
+      ;(async () => {
+        document.documentElement.style.cursor = 'wait'
+        document.body.style.pointerEvents = 'none'
 
-    const { $image, $split, $logo, $t, $o, $scale } = getElements(parent)
-    await delayPromise(200)
+        const { $image, $split, $logo, $t, $o, $scale } = getElements(parent)
+        await delayPromise(200)
 
-    if (isFirstLoad.value && $logo) {
-      appear()
-    }
+        if (isFirstLoad.value && $logo) {
+          appear()
+        }
 
-    const delay = isFirstLoad.value ? 3.2 : wait
+        const delay = isFirstLoad.value ? 3.2 : wait
 
-    const onComplete = () => {
-      window.elenis.start()
-      titleSplitter?.revert()
-      tl.revert()
+        const onComplete = () => {
+          titleSplitter?.revert()
+          tl.revert()
 
-      document.documentElement.style.cursor = 'auto'
-      document.body.style.pointerEvents = 'auto'
-    }
+          document.documentElement.style.cursor = 'auto'
+          document.body.style.pointerEvents = 'auto'
+        }
 
-    const tl = gsap.timeline()
+        const tl = gsap.timeline()
 
-    if ($image) {
-      tl.set($image, {
-        opacity: 0,
-        clipPath: 'inset(10%)',
-      })
-    }
+        if ($image) {
+          tl.set($image, {
+            opacity: 0,
+            clipPath: 'inset(10%)',
+          })
+        }
 
-    tl.set($t, { opacity: 0, y: 50 })
-    tl.set($o, { opacity: 0 })
-    tl.set($scale, { opacity: 0, scale: 0.6 })
+        tl.set($t, { opacity: 0, y: 50 })
+        tl.set($o, { opacity: 0 })
+        tl.set($scale, { opacity: 0, scale: 0.6 })
 
-    // Animate image resize
-    if ($image?.length) {
-      tl.to(
-        $image,
-        {
-          duration: 1.6,
-          opacity: 1,
-          clipPath: 'inset(0%)',
-          stagger: 0.1,
-          ease: 'power2.out',
-        },
-        delay
-      )
-    }
-
-    let titleSplitter: SplitText
-
-    if ($split) {
-      titleSplitter = new SplitText($split, {
-        type: 'lines',
-        mask: 'lines',
-        onSplit: target => {
-          gsap.set(target.lines, { yPercent: 110 })
-
+        // Animate image resize
+        if ($image?.length) {
           tl.to(
-            target.lines,
+            $image,
             {
-              duration: 1.5,
-              yPercent: 0,
-              stagger: 0.1,
+              duration: 1.6,
               opacity: 1,
+              clipPath: 'inset(0%)',
+              stagger: 0.1,
               ease: 'power2.out',
-              // overwrite: true,
             },
             delay
           )
-        },
-      })
-    }
+        }
 
-    if ($t.length) {
-      tl.to(
-        $t,
-        {
-          duration: 1.3,
-          opacity: 1,
-          y: 0,
-          stagger: 0.2,
-          ease: 'power2.out',
-        },
-        '<0.2'
-      )
-    }
+        let titleSplitter: SplitText
 
-    if ($scale.length) {
-      tl.to(
-        $scale,
-        {
-          opacity: 1,
-          scale: 1,
-          duration: 2,
-          ease: 'power2.out',
-        },
-        '<0.5'
-      )
-    }
+        if ($split) {
+          titleSplitter = new SplitText($split, {
+            type: 'lines',
+            mask: 'lines',
+            onSplit: target => {
+              gsap.set(target.lines, { yPercent: 110 })
 
-    if ($o.length) {
-      tl.to(
-        $o,
-        {
-          duration: 1.6,
-          opacity: 1,
-          stagger: 0.2,
-          ease: 'power2.out',
-        },
-        '<1'
-      )
-    }
+              tl.to(
+                target.lines,
+                {
+                  duration: 1.5,
+                  yPercent: 0,
+                  stagger: 0.1,
+                  opacity: 1,
+                  ease: 'power2.out',
+                  // overwrite: true,
+                },
+                delay
+              )
+            },
+          })
+        }
 
-    isFirstLoad.value = false
+        if ($t.length) {
+          tl.to(
+            $t,
+            {
+              duration: 1.3,
+              opacity: 1,
+              y: 0,
+              stagger: 0.2,
+              ease: 'power2.out',
+            },
+            '<0.2'
+          )
+        }
 
-    const treshold = $o.length ? 1200 : 300
+        if ($scale.length) {
+          tl.to(
+            $scale,
+            {
+              opacity: 1,
+              scale: 1,
+              duration: 2,
+              ease: 'power2.out',
+            },
+            '<0.5'
+          )
+        }
 
-    const dur = tl.duration() * 1000 - treshold
+        if ($o.length) {
+          tl.to(
+            $o,
+            {
+              duration: 1.6,
+              opacity: 1,
+              stagger: 0.2,
+              ease: 'power2.out',
+            },
+            '<1'
+          )
+        }
 
-    setTimeout(() => {
-      onComplete()
-    }, dur)
+        isFirstLoad.value = false
+
+        const treshold = $o.length ? 1200 : 300
+
+        const dur = tl.duration() * 1000 - treshold
+
+        setTimeout(() => {
+          onComplete()
+          resolve()
+        }, dur)
+      })()
+    })
   }
 
   return {

@@ -22,9 +22,13 @@
   --card-shadow-color: rgba(0, 0, 0, 0.05);
 
   --card-shadow-b: 0px 1px 2px 0px var(--card-shadow-color);
-  --card-shadow: 0px 1px 2px 0px var(--card-shadow-color), 0px -1px 2px 0px var(--card-shadow-color);
+  --card-shadow:
+    0px 1px 2px 0px var(--card-shadow-color),
+    0px -1px 2px 0px var(--card-shadow-color);
 
-  --card-shadow-md: hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
+  --card-shadow-md:
+    hsl(206 22% 7% / 35%) 0px 10px 38px -10px,
+    hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
   --section-spacing: 90px;
 }
 
@@ -49,7 +53,7 @@ $base-rem-unit: 16;
 //breakpoints
 $uls: 2100px;
 $ls: 1366px;
-$br1: 960px;
+$br1: 860px;
 $br2: 768px;
 $br3: 660px;
 $br4: 460px;

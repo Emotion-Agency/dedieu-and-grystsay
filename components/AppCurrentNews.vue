@@ -9,7 +9,7 @@ interface IProps {
 const props = defineProps<IProps>()
 
 const { story } = await useGlobalStory()
-const isMobile = useSSRMediaQuery('(max-width: 960px)')
+const isMobile = useSSRMediaQuery('(max-width: 860px)')
 
 const newsProjects =
   props.content?.news?.[0]?.content?.items ??

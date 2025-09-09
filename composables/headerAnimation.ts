@@ -86,13 +86,13 @@ export const useHeaderAnimation = () => {
         transformOrigin: 'left',
       })
 
-      window.innerWidth > 960 &&
+      window.innerWidth > 860 &&
         gsap.set($headerItemsLines, {
           scaleY: 0,
           transformOrigin: 'bottom',
         })
 
-      window.innerWidth > 960 &&
+      window.innerWidth > 860 &&
         gsap.set($headerItems, { yPercent: 100, clipPath: 'inset(0 0 110% 0)' })
 
       gsap.set($langSwitcher, { opacity: 0 })
@@ -100,7 +100,7 @@ export const useHeaderAnimation = () => {
         opacity: 0,
       })
 
-      window.innerWidth <= 960 &&
+      window.innerWidth <= 860 &&
         gsap.set($burger, {
           opacity: 0,
         })
@@ -111,7 +111,7 @@ export const useHeaderAnimation = () => {
         { scaleX: 1, duration: 1, ease: 'sine.inOut' },
         '<'
       )
-      window.innerWidth > 960 &&
+      window.innerWidth > 860 &&
         navbarTl.to(
           $headerItemsLines,
           {
@@ -121,7 +121,7 @@ export const useHeaderAnimation = () => {
           },
           '<'
         )
-      window.innerWidth > 960 &&
+      window.innerWidth > 860 &&
         navbarTl.to(
           $headerItems,
           {
@@ -133,7 +133,7 @@ export const useHeaderAnimation = () => {
           '<40%'
         )
 
-      window.innerWidth <= 960 &&
+      window.innerWidth <= 860 &&
         navbarTl.to(
           $burger,
           {

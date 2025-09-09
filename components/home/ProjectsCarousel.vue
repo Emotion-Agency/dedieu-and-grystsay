@@ -243,7 +243,7 @@ const handleOpen = async (project: iStory<iProjectsContent>, idx: number) => {
     0
   )
 
-  window.innerWidth < 960 && gsap.set(el.value, { height: $clone.scrollHeight })
+  window.innerWidth < 860 && gsap.set(el.value, { height: $clone.scrollHeight })
 
   tl.to($content, { duration: 0, opacity: 1 }, '<65%')
   tl.to($backBtn, { duration: 1, opacity: 1, y: 0, ease: 'expo.out' }, '<')
@@ -341,7 +341,7 @@ const handleClose = () => {
 
   tl.to($items.value, { duration: 1, x: 0, ease: 'sine.inOut' }, '<')
 
-  window.innerWidth < 960 && tl.to(el.value, { height: '100%', duration: 1 })
+  window.innerWidth < 860 && tl.to(el.value, { height: '100%', duration: 1 })
 }
 </script>
 

@@ -9,7 +9,7 @@ interface IProps {
 
 const props = defineProps<IProps>()
 
-const isMobile = useSSRMediaQuery('(max-width: 960px)')
+const isMobile = useSSRMediaQuery('(max-width: 860px)')
 const images = props.content.carousel
 const isExpanded = ref(false)
 const $el = ref<HTMLElement | null>(null)

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { gsap } from '~/libs/gsap'
+import { gsap, ScrollTrigger } from '~/libs/gsap'
 import { useFooterStory } from '~/composables/stories/footerStory'
 
 const { story: footerStory } = await useFooterStory()
@@ -20,21 +20,18 @@ onMounted(() => {
   if ($el.value) {
     const $title = $el.value.querySelectorAll('.footer__title')
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: $el.value,
-        start: 'top 80%',
-      },
+    const tl = gsap.timeline()
+
+    new ScrollTrigger({
+      trigger: $el.value,
+      animation: tl,
+      start: () => 'top-=100% top',
+      end: () => 'bottom bottom',
+      scrub: true,
     })
 
-    gsap.set($title, {
-      opacity: 0,
-      translateY: 50,
-    })
-
-    tl.to($title, {
-      opacity: 1,
-      translateY: 0,
+    tl.from($title, {
+      yPercent: -50,
       stagger: 0.1,
       duration: 2.5,
       ease: 'power2.out',

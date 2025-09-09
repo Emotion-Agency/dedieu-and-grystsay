@@ -106,7 +106,11 @@ export const useHeaderAnimation = () => {
         })
 
       navbarTl.to($logoText, { opacity: 1, duration: 1, stagger: 0.03 })
-      navbarTl.to($headerLine, { scaleX: 1, duration: 1 }, '<')
+      navbarTl.to(
+        $headerLine,
+        { scaleX: 1, duration: 1, ease: 'power2.inOut' },
+        '<'
+      )
       window.innerWidth > 960 &&
         navbarTl.to(
           $headerItemsLines,

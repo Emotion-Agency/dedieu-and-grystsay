@@ -11,7 +11,7 @@ export interface iProjectsContent {
   title: string
   description: string
   preview: iImage
-  body: any
+  body: any[]
   meta: iMeta[]
   component: string
   _uid: string

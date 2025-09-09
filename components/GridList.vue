@@ -77,7 +77,7 @@ onMounted(() => {
 
         <div class="grid-list__content">
           <h3 class="grid-list__title">
-            {{ item?.content?.title }}
+            {{ findProjectTitle(item) }}
           </h3>
           <p class="grid-list__description">
             {{ item?.content?.description }}

@@ -5,11 +5,7 @@ interface IProps {
   content: iCurrentProjectHero
 }
 
-const props = defineProps<IProps>()
-
-onMounted(() => {
-  console.log(props.content)
-})
+defineProps<IProps>()
 </script>
 
 <template>

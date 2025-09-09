@@ -13,9 +13,9 @@ export const basicObject: IBasicObject = {
   css: false,
   appear: true,
   onEnter() {
-    resetScroll()
     document.documentElement.style.cursor = 'auto'
     document.body.style.pointerEvents = 'auto'
+    resetScroll()
   },
   onLeave() {
     window.elenis?.stop()

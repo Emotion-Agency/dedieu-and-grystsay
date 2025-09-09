@@ -43,7 +43,7 @@ onBeforeUnmount(() => {
 
 <template>
   <section ref="$el" class="full-assets container">
-    <div class="full-assets__wrapper">
+    <div v-if="content?.assets?.length" class="full-assets__wrapper">
       <FullImageSlider
         v-if="content?.assets.length > 1"
         :images="content?.assets"

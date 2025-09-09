@@ -23,7 +23,6 @@ const elRef = useTemplateRef('el')
 const { init } = useHeaderAnimation()
 
 onMounted(async () => {
-  console.log('mounted')
   const { default: NavbarPos } = await import('~/utils/navbarPos')
   navbarPos = new NavbarPos()
   navbarPos.init()

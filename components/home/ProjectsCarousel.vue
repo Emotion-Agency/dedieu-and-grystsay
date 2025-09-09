@@ -77,11 +77,10 @@ onMounted(() => {
   st.value = new ScrollTrigger({
     trigger: el.value,
     once: true,
-    start: () => 'top-=40% top',
+    start: () => 'top 40%',
     end: () => 'bottom bottom',
     scrub: true,
     onEnter: () => {
-      console.log('entered')
       tl.play()
     },
   })
@@ -347,7 +346,7 @@ const handleClose = () => {
 </script>
 
 <template>
-  <section ref="el" class="p-carousel container">
+  <section ref="el" data-o class="p-carousel container">
     <ul class="p-carousel__grid">
       <li
         v-for="(project, idx) in content.projects.slice(0, 6)"

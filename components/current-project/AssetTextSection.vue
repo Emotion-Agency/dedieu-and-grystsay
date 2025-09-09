@@ -12,7 +12,10 @@ const showModal = ref(false)
 
 const $el = ref<HTMLElement | null>(null)
 
-onMounted(() => {
+const tl = ref<GSAPTimeline>(null)
+
+onMounted(async () => {
+  await document.fonts.ready
   if ($el.value) {
     const $title = $el.value.querySelector('.asset-text__title')
     const $text = $el.value.querySelector('.asset-text__description')
@@ -26,7 +29,7 @@ onMounted(() => {
       type: 'lines',
     })
 
-    const tl = gsap.timeline({
+    tl.value = gsap.timeline({
       scrollTrigger: {
         trigger: $el.value,
         start: 'top 80%',
@@ -40,13 +43,13 @@ onMounted(() => {
     gsap.set($btn, { opacity: 0, translateY: 20 })
     gsap.set($img, { opacity: 0, scale: 0.8 })
 
-    tl.to($img, {
+    tl.value.to($img, {
       opacity: 1,
       scale: 1,
       duration: 2,
       ease: 'power2.out',
     })
-    tl.to(
+    tl.value.to(
       titleSplit.lines,
       {
         opacity: 1,
@@ -57,7 +60,7 @@ onMounted(() => {
       },
       '<'
     )
-    tl.to(
+    tl.value.to(
       textSplit.lines,
       {
         opacity: 1,
@@ -68,7 +71,7 @@ onMounted(() => {
       },
       '<20%'
     )
-    tl.to(
+    tl.value.to(
       $btn,
       {
         opacity: 1,
@@ -79,6 +82,10 @@ onMounted(() => {
       '<35%'
     )
   }
+})
+
+onBeforeUnmount(() => {
+  tl.value?.kill()
 })
 </script>
 

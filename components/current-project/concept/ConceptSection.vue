@@ -16,7 +16,11 @@ const images = props.content.corousel
 
 const $el = ref<HTMLElement | null>(null)
 
-onMounted(() => {
+const tl = ref<GSAPTimeline>(null)
+
+onMounted(async () => {
+  await document.fonts.ready
+
   if ($el.value) {
     const $title = $el.value.querySelector('.p-concept__title')
     const $text = $el.value.querySelector('.p-concept__text')
@@ -28,7 +32,7 @@ onMounted(() => {
       type: 'lines',
     })
 
-    const tl = gsap.timeline({
+    tl.value = gsap.timeline({
       scrollTrigger: {
         trigger: $el.value,
         start: 'top 80%',
@@ -40,7 +44,7 @@ onMounted(() => {
       translateY: 20,
     })
 
-    tl.to(
+    tl.value.to(
       titleSplit.lines,
       {
         opacity: 1,
@@ -51,7 +55,7 @@ onMounted(() => {
       },
       '<'
     )
-    tl.to(
+    tl.value.to(
       textSplit.lines,
       {
         opacity: 1,
@@ -63,6 +67,10 @@ onMounted(() => {
       '<20%'
     )
   }
+})
+
+onBeforeUnmount(() => {
+  tl.value?.kill()
 })
 </script>
 

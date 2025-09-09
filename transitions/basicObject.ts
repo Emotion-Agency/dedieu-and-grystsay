@@ -1,5 +1,3 @@
-import { resetScroll } from '../utils/resetScroll'
-
 interface IBasicObject {
   mode: 'out-in' | 'in-out' | 'default'
   css: boolean
@@ -15,7 +13,6 @@ export const basicObject: IBasicObject = {
   onEnter() {
     document.documentElement.style.cursor = 'auto'
     document.body.style.pointerEvents = 'auto'
-    resetScroll()
   },
   onLeave() {
     window.elenis?.stop()

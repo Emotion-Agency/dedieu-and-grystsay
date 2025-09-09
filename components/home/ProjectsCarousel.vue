@@ -39,6 +39,8 @@ const hideIndicator = (idx: number) => {
   isIndicatorVisible.value[idx] = false
 }
 
+const st = ref<ScrollTrigger>(null)
+
 onMounted(() => {
   isIndicatorVisible.value = new Array($items.value.length).fill(false)
 
@@ -50,6 +52,7 @@ onMounted(() => {
     onComplete: () => {
       $revealers.forEach(el => el.remove())
       gsap.set($assets, { clearProps: 'all' })
+      tl.kill()
     },
   })
   gsap.set($assets, { scaleY: 0, pointerEvents: 'none' })
@@ -71,16 +74,21 @@ onMounted(() => {
     '<60%'
   )
 
-  new ScrollTrigger({
+  st.value = new ScrollTrigger({
     trigger: el.value,
     once: true,
     start: () => 'top-=40% top',
     end: () => 'bottom bottom',
     scrub: true,
     onEnter: () => {
+      console.log('entered')
       tl.play()
     },
   })
+})
+
+onBeforeUnmount(() => {
+  st.value?.kill()
 })
 
 useIntersectionObserver($items, entries => {

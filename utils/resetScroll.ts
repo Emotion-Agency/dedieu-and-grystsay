@@ -1,3 +1,5 @@
+import { ScrollTrigger } from '~/libs/gsap'
+
 export const resetScroll = () => {
   setTimeout(() => {
     window?.scrollTo(0, 0)
@@ -6,7 +8,6 @@ export const resetScroll = () => {
       force: true,
     })
     window?.elenis?.start()
-
-    console.log(window?.elenis)
-  }, 500)
+    ScrollTrigger.refresh()
+  }, 0)
 }

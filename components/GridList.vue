@@ -35,9 +35,11 @@ const onGetMore = () => {
   )
 }
 
+const tl = ref<GSAPTimeline>(null)
+
 onMounted(() => {
   if ($el.value) {
-    const tl = gsap.timeline({
+    tl.value = gsap.timeline({
       scrollTrigger: {
         trigger: $el.value,
         start: 'top 90%',
@@ -46,13 +48,17 @@ onMounted(() => {
 
     gsap.set($el.value, { opacity: 0, translateY: 100 })
 
-    tl.to($el.value, {
+    tl.value.to($el.value, {
       opacity: 1,
       translateY: 0,
       duration: 3,
       ease: 'power2.out',
     })
   }
+})
+
+onBeforeUnmount(() => {
+  tl.value?.kill()
 })
 </script>
 

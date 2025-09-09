@@ -10,9 +10,11 @@ defineProps<iProps>()
 
 const $el = ref<HTMLElement | null>(null)
 
+const tl = ref<GSAPTimeline>(null)
+
 onMounted(() => {
   if ($el.value) {
-    const tl = gsap.timeline({
+    tl.value = gsap.timeline({
       scrollTrigger: {
         trigger: $el.value,
         start: 'top 80%',
@@ -23,7 +25,7 @@ onMounted(() => {
       width: 0,
     })
 
-    tl.to(
+    tl.value.to(
       $el.value,
       {
         width: '100%',
@@ -33,6 +35,10 @@ onMounted(() => {
       '20%'
     )
   }
+})
+
+onBeforeUnmount(() => {
+  tl.value?.kill()
 })
 </script>
 

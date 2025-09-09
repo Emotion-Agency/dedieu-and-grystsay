@@ -46,16 +46,11 @@ const startAnimation = () => {
   })
 }
 
-const observeVisibility = () => {
-  if (!containerRef.value || !tween) return
-
-  const observer = new IntersectionObserver(
-    ([entry]) => (entry.isIntersecting ? tween?.play() : tween?.pause()),
-    { threshold: 0.1 }
-  )
-
-  observer.observe(containerRef.value)
-}
+useIntersectionObserver(
+  containerRef.value,
+  ([entry]) => (entry.isIntersecting ? tween?.play() : tween?.pause()),
+  { threshold: 0.1 }
+)
 
 onMounted(async () => {
   if (containerRef.value) {
@@ -98,7 +93,10 @@ onMounted(async () => {
 
   await generateRepeatCount()
   startAnimation()
-  observeVisibility()
+})
+
+onBeforeUnmount(() => {
+  tween?.kill()
 })
 </script>
 

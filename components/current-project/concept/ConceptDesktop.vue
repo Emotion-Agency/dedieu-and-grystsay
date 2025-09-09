@@ -21,11 +21,13 @@ const { isSliding, visibleSlides, handleSlideNext } = useMultiSliderAnimation(
   3
 )
 
+const tl = ref<GSAPTimeline>(null)
+
 onMounted(() => {
   if ($el.value) {
     const $images = $el.value.querySelectorAll('.concept-desk__item')
 
-    const tl = gsap.timeline({
+    tl.value = gsap.timeline({
       scrollTrigger: {
         trigger: $el.value,
         start: 'top 80%',
@@ -37,7 +39,7 @@ onMounted(() => {
       scale: 0.9,
     })
 
-    tl.to($images, {
+    tl.value.to($images, {
       opacity: 1,
       duration: 2.4,
       scale: 1,
@@ -45,6 +47,10 @@ onMounted(() => {
       ease: 'power2.out',
     })
   }
+})
+
+onBeforeUnmount(() => {
+  tl.value?.kill()
 })
 </script>
 

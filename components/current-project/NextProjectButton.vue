@@ -14,9 +14,11 @@ const { story } = await useGlobalStory()
 
 const $el = ref<HTMLElement | null>(null)
 
+const tl = ref<GSAPTimeline>(null)
+
 onMounted(() => {
   if ($el.value) {
-    const tl = gsap.timeline({
+    tl.value = gsap.timeline({
       scrollTrigger: {
         trigger: $el.value,
         start: 'top 80%',
@@ -25,13 +27,17 @@ onMounted(() => {
 
     gsap.set($el.value, { opacity: 0, scale: 0.6 })
 
-    tl.to($el.value, {
+    tl.value.to($el.value, {
       opacity: 1,
       scale: 1,
       duration: 2,
       ease: 'power2.out',
     })
   }
+})
+
+onBeforeUnmount(() => {
+  tl.value?.kill()
 })
 </script>
 

@@ -20,6 +20,7 @@ export const useLoadingAnimation = () => {
   const animate = async (parent?: HTMLElement, wait = 0.2) => {
     return new Promise<void>(resolve => {
       ;(async () => {
+        await document.fonts.ready
         document.documentElement.style.cursor = 'wait'
         document.body.style.pointerEvents = 'none'
 

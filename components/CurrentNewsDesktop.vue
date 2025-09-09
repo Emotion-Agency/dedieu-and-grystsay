@@ -26,7 +26,6 @@ const { isSliding, visibleSlides, handleSlideNext } = useMultiSliderAnimation(
 let tl: GSAPTimeline
 
 onMounted(() => {
-  console.log(props.projects)
   if ($el.value) {
     tl = gsap.timeline({
       scrollTrigger: {
@@ -68,7 +67,7 @@ onBeforeUnmount(() => {
       >
         <component
           :is="idx !== 3 ? NuxtLink : 'div'"
-          :to="project?.full_slug"
+          :to="'/' + project?.full_slug"
           class="curr-pr-desk__img-wrapper"
         >
           <div

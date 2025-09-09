@@ -33,10 +33,6 @@ onMounted(async () => {
 onBeforeUnmount(() => {
   navbarPos && navbarPos.destroy()
 })
-
-watch(isMenuOpened, val => {
-  console.log(val)
-})
 </script>
 
 <template>

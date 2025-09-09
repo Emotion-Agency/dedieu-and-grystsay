@@ -46,7 +46,10 @@ onBeforeUnmount(() => {
         :key="idx"
         class="curr-pr-mob__item"
       >
-        <NuxtLink :to="project.full_slug" class="curr-pr-mob__item-content">
+        <NuxtLink
+          :to="'/' + project.full_slug"
+          class="curr-pr-mob__item-content"
+        >
           <CustomImage
             :src="project?.content?.preview?.filename"
             :alt="project?.content?.preview?.alt"

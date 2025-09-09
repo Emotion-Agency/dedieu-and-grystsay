@@ -412,7 +412,7 @@ const handleClose = () => {
         <div class="p-carousel-clone__btn-wrapper">
           <LoFiButton
             tag="nuxt-link"
-            :to="selectedProject?.full_slug"
+            :to="'/' + selectedProject?.full_slug"
             variant="dark"
             class="p-carousel-clone__btn"
           >

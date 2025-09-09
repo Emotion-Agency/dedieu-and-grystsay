@@ -16,13 +16,15 @@ const titleParts = computed(() => {
   }
 })
 
+let st: ScrollTrigger
+
 onMounted(() => {
   if ($el.value) {
     const $title = $el.value.querySelectorAll('.footer__title')
 
     const tl = gsap.timeline()
 
-    new ScrollTrigger({
+    st = new ScrollTrigger({
       trigger: $el.value,
       animation: tl,
       start: () => 'top-=100% top',
@@ -37,6 +39,10 @@ onMounted(() => {
       ease: 'power2.out',
     })
   }
+})
+
+onBeforeUnmount(() => {
+  st?.kill()
 })
 </script>
 

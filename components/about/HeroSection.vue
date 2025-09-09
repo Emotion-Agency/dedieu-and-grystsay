@@ -2,7 +2,7 @@
 import type { iAboutHero } from '~/types/aboutTypes'
 
 interface IProps {
-  content: iAboutHero
+  content: iAboutHero | undefined
 }
 
 defineProps<IProps>()

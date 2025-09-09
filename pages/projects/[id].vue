@@ -51,10 +51,26 @@ const resolveSectionByName = (name: string) => {
 
   return sections[name]
 }
+
+const meta = computed(() => {
+  const data = story?.value?.content?.meta[0]
+
+  if (!data) {
+    return null
+  }
+
+  return {
+    title: data.title,
+    description: data.description,
+    ogImage: data?.image?.filename,
+  }
+})
 </script>
 
 <template>
   <div v-if="story">
+    <PageMeta v-if="meta" v-bind="meta" />
+
     <template v-for="item in body" :key="item._uid">
       <component
         :is="resolveSectionByName(item.component)"

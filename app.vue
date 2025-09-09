@@ -49,9 +49,10 @@ const isContactPage = computed(() => route.path.includes('/contact'))
         name="viewport"
         content="width=device-width, initial-scale=1"
       ></Meta>
-      <Link rel="icon" type="image/x-icon" href="/favicon.ico"></Link>
+      <Link rel="icon" type="image/x-icon" href="/favicon.svg"></Link>
     </Head>
     <AppGrid />
+    <GlobalMeta />
     <!-- <Landscape /> -->
     <SmoothScroll>
       <AppHeader :is-contact-page="isContactPage" />

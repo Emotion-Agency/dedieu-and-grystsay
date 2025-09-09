@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { gsap } from '~/libs/gsap'
-import type { iCurrentNews } from '~/types/projectsTypes'
+import type { iProjectsContent } from '~/types/projectsTypes'
+import type { iStory } from '~/types/story'
 
 interface IProps {
-  projects: iCurrentNews[]
+  projects: iStory<iProjectsContent>[]
 }
 
 defineProps<IProps>()
@@ -45,21 +46,21 @@ onBeforeUnmount(() => {
         :key="idx"
         class="curr-pr-mob__item"
       >
-        <div class="curr-pr-mob__item-content">
+        <NuxtLink :to="project.full_slug" class="curr-pr-mob__item-content">
           <CustomImage
-            :src="project.asset.filename"
-            :alt="project.asset.alt"
+            :src="project?.content?.preview?.filename"
+            :alt="project?.content?.preview?.alt"
             class="curr-pr-mob__img"
           />
 
           <div class="curr-pr-mob__info">
-            <h3 class="curr-pr-mob__title">{{ project.title }}</h3>
-            <p class="curr-pr-mob__text">{{ project.text }}</p>
+            <h3 class="curr-pr-mob__title">{{ findProjectTitle(project) }}</h3>
+            <p class="curr-pr-mob__text">{{ project?.content?.description }}</p>
             <p class="curr-pr-mob__number">
               {{ idx + 1 }}
             </p>
           </div>
-        </div>
+        </NuxtLink>
       </li>
     </ul>
   </div>
@@ -110,5 +111,9 @@ onBeforeUnmount(() => {
   font-size: 70px;
   line-height: 1em;
   margin-top: 30px;
+}
+
+.curr-pr-mob__item-content {
+  display: block;
 }
 </style>

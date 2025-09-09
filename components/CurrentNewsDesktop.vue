@@ -1,9 +1,13 @@
 <script setup lang="ts">
+import { NuxtLink } from '#components'
 import { gsap } from '~/libs/gsap'
-import type { iCurrentNews } from '~/types/projectsTypes'
+
+import type { iProjectsContent } from '~/types/projectsTypes'
+
+import type { iStory } from '~/types/story'
 
 interface IProps {
-  projects: iCurrentNews[]
+  projects: iStory<iProjectsContent>[]
   nextSlideButton?: string
 }
 const props = defineProps<IProps>()
@@ -22,6 +26,7 @@ const { isSliding, visibleSlides, handleSlideNext } = useMultiSliderAnimation(
 let tl: GSAPTimeline
 
 onMounted(() => {
+  console.log(props.projects)
   if ($el.value) {
     tl = gsap.timeline({
       scrollTrigger: {
@@ -61,46 +66,52 @@ onBeforeUnmount(() => {
         class="curr-pr-desk__item"
         @click="idx === 3 && handleSlideNext()"
       >
-        <div class="curr-pr-desk__img-wrapper">
+        <component
+          :is="idx !== 3 ? NuxtLink : 'div'"
+          :to="project?.full_slug"
+          class="curr-pr-desk__img-wrapper"
+        >
           <div
             class="curr-pr-desk__img-track"
             :class="{ 'is-sliding': isSliding }"
           >
             <div class="curr-pr-desk__img-container">
               <CustomImage
-                :src="project.asset.filename"
-                :alt="project.asset.alt"
+                :src="project?.content?.preview?.filename"
+                :alt="project?.content?.preview?.alt"
                 class="curr-pr-desk__img"
                 data-msa-img
               />
             </div>
             <div aria-hidden class="curr-pr-desk__img-container">
               <CustomImage
-                :src="nextProject.asset.filename"
-                :alt="nextProject.asset.alt"
+                :src="nextProject?.content?.preview?.filename"
+                :alt="nextProject?.content?.preview?.alt"
                 class="curr-pr-desk__img"
                 data-msa-img
               />
             </div>
           </div>
-        </div>
+        </component>
         <template v-if="idx !== 3">
           <div class="curr-pr-desk__i-content">
             <div class="curr-pr-desk__i">
               <h3 data-msa-title class="curr-pr-desk__title">
-                {{ project.title }}
+                {{ findProjectTitle(project) }}
               </h3>
-              <p data-msa-text class="curr-pr-desk__desc">{{ project.text }}</p>
+              <p data-msa-text class="curr-pr-desk__desc">
+                {{ project?.content?.description }}
+              </p>
               <p data-msa-number class="curr-pr-desk__number">
                 {{ currentIndex + 1 }}
               </p>
             </div>
             <div aria-hidden class="curr-pr-desk__i">
               <h3 data-msa-title class="curr-pr-desk__title">
-                {{ nextProject.title }}
+                {{ findProjectTitle(project) }}
               </h3>
               <p data-msa-text class="curr-pr-desk__desc">
-                {{ nextProject.text }}
+                {{ nextProject?.content?.description }}
               </p>
               <p data-msa-number class="curr-pr-desk__number">
                 {{ nextIndex + 1 }}
@@ -184,6 +195,7 @@ onBeforeUnmount(() => {
 }
 
 .curr-pr-desk__img-wrapper {
+  display: block;
   position: relative;
   width: 100%;
   height: 100%;

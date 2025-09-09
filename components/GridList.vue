@@ -75,8 +75,8 @@ onBeforeUnmount(() => {
       >
         <div class="grid-list__img-wrapper">
           <CustomImage
-            :src="item?.content?.body[2]?.assets[0]?.filename"
-            :alt="item?.content?.body[2]?.assets[0]?.alt"
+            :src="item?.content?.preview?.filename"
+            :alt="item?.content?.preview?.alt"
             class="grid-list__img"
           />
         </div>

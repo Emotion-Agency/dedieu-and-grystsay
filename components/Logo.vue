@@ -8,6 +8,8 @@ const props = defineProps<iProps>()
 const fillColor = computed(() =>
   props.color === 'light' ? 'var(--background)' : 'var(--foreground)'
 )
+
+const { isInEditor } = useAppState()
 </script>
 
 <template>
@@ -23,7 +25,7 @@ const fillColor = computed(() =>
     <div class="dag-logo__emblem">
       <div class="dag-logo__emblem-line" />
     </div>
-    <div class="dag-logo__bg"></div>
+    <div v-if="!isInEditor" class="dag-logo__bg"></div>
     <svg
       width="171"
       height="30"

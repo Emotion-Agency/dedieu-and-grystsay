@@ -4,6 +4,8 @@ import { useFonts } from '~/composables/fonts'
 
 useFonts()
 
+const { isInEditor } = useAppState()
+
 const { isFirstLoad, init } = useLoadingAnimation()
 
 const loadingAnimation = async () => {
@@ -18,6 +20,11 @@ onMounted(async () => {
   )
 
   detectOrientationChanges()
+
+  if (isInEditor.value) {
+    isFirstLoad.value = false
+    return
+  }
 
   const ilInstance = imagesLoaded(document.body, { background: true })
 

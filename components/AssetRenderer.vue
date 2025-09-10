@@ -4,7 +4,7 @@ import CustomImage from '~/components/CustomImage.vue'
 import CustomVideo from '~/components/CustomVideo.vue'
 
 interface BaseProps {
-  src: string
+  src: string | undefined
 }
 
 interface ImageProps {

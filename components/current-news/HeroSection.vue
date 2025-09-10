@@ -9,13 +9,14 @@ defineProps<IProps>()
 </script>
 
 <template>
-  <section class="curr-news-hero container">
+  <section ref="$el" class="curr-news-hero container">
     <div class="curr-news-hero__wrapper">
       <div class="curr-news-hero__content">
-        <h1 class="curr-news-hero__title">{{ content?.title }}</h1>
+        <h1 data-split class="curr-news-hero__title">{{ content?.title }}</h1>
         <div class="curr-news-hero__text-wrapper">
-          <p class="curr-news-hero__text">{{ content?.text }}</p>
+          <p data-split class="curr-news-hero__text">{{ content?.text }}</p>
           <CustomImage
+            data-preload
             :src="content?.asset?.filename"
             :alt="content?.asset?.alt"
             class="curr-news-hero__img"

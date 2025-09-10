@@ -1,4 +1,4 @@
-import type { iMeta } from './story'
+import type { iImage, iMeta } from './story'
 
 export interface iGridContent {
   button: string
@@ -10,6 +10,7 @@ export interface iGridItems {
   title: string
   description: string
   body: any
+  preview: iImage
   meta: iMeta[]
   component: string
   _uid: string

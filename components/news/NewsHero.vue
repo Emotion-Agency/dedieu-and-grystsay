@@ -9,10 +9,11 @@ defineProps<IProps>()
 </script>
 
 <template>
-  <section class="news-hero container">
+  <section ref="$el" class="news-hero container">
     <div class="news-hero__wrapper">
-      <h1 class="news-hero__title">{{ content?.title }}</h1>
+      <h1 data-split class="news-hero__title">{{ content?.title }}</h1>
       <CustomImage
+        data-preload
         :src="content?.asset?.filename"
         :alt="content?.asset?.alt"
         class="news-hero__img"

@@ -1,4 +1,4 @@
-import type { iImage, iMeta } from './story'
+import type { iImage, iMeta, iStory } from './story'
 
 export interface iProjectContent {
   body: any
@@ -11,7 +11,7 @@ export interface iProjectsContent {
   title: string
   description: string
   preview: iImage
-  body: any
+  body: any[]
   meta: iMeta[]
   component: string
   _uid: string
@@ -27,18 +27,10 @@ export interface iCurrentNewsContent {
 
 export interface iCurrentAllNews {
   content: {
-    items: iCurrentNews[]
+    items: iStory<iProjectContent>
     component: string
     _uid: string
   }
-}
-
-export interface iCurrentNews {
-  asset: iImage
-  text: string
-  title: string
-  component: string
-  _uid: string
 }
 
 export interface iProjectsHero {

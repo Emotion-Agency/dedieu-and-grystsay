@@ -2,21 +2,23 @@
 import type { iAboutHero } from '~/types/aboutTypes'
 
 interface IProps {
-  content: iAboutHero
+  content: iAboutHero | undefined
 }
 
 defineProps<IProps>()
 </script>
 
 <template>
-  <section class="about-hero">
+  <section ref="$el" class="about-hero">
     <div class="about-hero__wrapper container">
       <FullImageSlider
         v-if="content?.assets.length > 1"
+        data-preload
         :images="content?.assets"
       />
       <AssetRenderer
         v-else
+        data-preload
         :src="content?.assets[0]?.filename"
         :alt="content?.assets[0]?.alt"
         :is-playing="true"

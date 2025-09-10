@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { gsap } from '~/libs/gsap'
 import type { iImage } from '~/types/story'
 
 interface IProps {
@@ -6,43 +7,49 @@ interface IProps {
 }
 const props = defineProps<IProps>()
 
-const { current, handleNext } = useSlider(props.images.length)
+const images = computed(() => {
+  return props.images
+})
 
-const isSliding = ref(false)
-const isContentVisible = ref(true)
+const $el = ref<HTMLElement | null>(null)
 
-const visibleImages = computed(() =>
-  Array.from({ length: 3 }, (_, i) => {
-    const currentIndex = (current.value + i) % props.images.length
-    const nextIndex = (currentIndex + 1) % props.images.length
+const { isSliding, visibleSlides, handleSlideNext, current } =
+  useMultiSliderAnimation($el, images, 3)
 
-    return {
-      current: props.images[currentIndex],
-      next: props.images[nextIndex],
-    }
-  })
-)
+let tl: GSAPTimeline
 
-const handleSlideNext = () => {
-  if (isSliding.value) return
+onMounted(() => {
+  if ($el.value) {
+    tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: $el.value,
+        start: 'top 80%',
+      },
+    })
 
-  isSliding.value = true
-  isContentVisible.value = false
+    gsap.set($el.value, { opacity: 0, translateY: 30 })
 
-  setTimeout(() => {
-    handleNext()
-    isContentVisible.value = true
-    isSliding.value = false
-  }, 500) // Transition duration from CSS
-}
+    tl.to($el.value, {
+      opacity: 1,
+      translateY: 0,
+      duration: 2,
+      ease: 'power2.out',
+    })
+  }
+})
+
+onBeforeUnmount(() => {
+  tl?.kill()
+})
 </script>
 
 <template>
-  <div class="vision-desk">
+  <div ref="$el" class="vision-desk">
     <ul class="vision-desk__list">
       <li
-        v-for="({ current: img, next: nextImg }, idx) in visibleImages"
+        v-for="({ current: img, next: nextImg }, idx) in visibleSlides"
         :key="idx"
+        data-msa-item
         class="vision-desk__item"
       >
         <div class="vision-desk__img-wrapper">
@@ -50,16 +57,22 @@ const handleSlideNext = () => {
             class="vision-desk__img-track"
             :class="{ 'is-sliding': isSliding }"
           >
-            <CustomImage
-              :src="img.filename"
-              :alt="img.alt"
-              class="vision-desk__img"
-            />
-            <CustomImage
-              :src="nextImg.filename"
-              :alt="nextImg.alt"
-              class="vision-desk__img"
-            />
+            <div class="vision-desk__img-container">
+              <CustomImage
+                data-msa-img
+                :src="img.filename"
+                :alt="img.alt"
+                class="vision-desk__img"
+              />
+            </div>
+            <div aria-hidden class="vision-desk__img-container">
+              <CustomImage
+                data-msa-img
+                :src="nextImg.filename"
+                :alt="nextImg.alt"
+                class="vision-desk__img"
+              />
+            </div>
           </div>
         </div>
       </li>
@@ -100,10 +113,21 @@ const handleSlideNext = () => {
   display: flex;
   height: 100%;
   width: 100%;
+}
 
-  &.is-sliding {
-    transition: transform 0.5s ease;
-    transform: translateX(-100%);
+.vision-desk__img-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+
+  &:nth-child(2) {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 0;
   }
 }
 

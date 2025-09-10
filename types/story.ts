@@ -41,5 +41,5 @@ export interface iGlobalMetaContent {
   component: string
   title: string
   description: string
-  social_image: iImage
+  image: iImage
 }

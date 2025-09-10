@@ -9,18 +9,20 @@ defineProps<IProps>()
 </script>
 
 <template>
-  <section class="prs-hero container">
+  <section ref="$el" class="prs-hero container">
     <div class="prs-hero__wrapper">
       <div class="prs-hero__content">
-        <h1 class="prs-hero__title">{{ content?.title }}</h1>
+        <h1 data-split class="prs-hero__title">{{ content?.title }}</h1>
         <CustomImage
+          data-preload
           :src="content?.asset?.filename"
           :alt="content?.asset?.alt"
           class="prs-hero__img prs-hero__img--mob"
         />
-        <p class="prs-hero__text">{{ content?.text }}</p>
+        <p data-split class="prs-hero__text">{{ content?.text }}</p>
       </div>
       <CustomImage
+        data-preload
         :src="content?.asset?.filename"
         :alt="content?.asset?.alt"
         class="prs-hero__img"

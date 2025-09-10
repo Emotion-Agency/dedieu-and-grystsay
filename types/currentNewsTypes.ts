@@ -1,13 +1,8 @@
 import type { iDividerContent } from './dividerTypes'
+import type { iFullPageAssets } from './fullAssetsTypes'
 import type { iImage, iMeta } from './story'
 import type { iTextBlock } from './textBlockTypes'
 import type { iVisionContent } from './visionTypes'
-
-export interface iCurrentNewsFullPageAssets {
-  assets: iImage[]
-  component: string
-  _uid: string
-}
 
 export interface iCurrentNewsMarquee {
   text: string
@@ -26,7 +21,7 @@ export interface iCurrentNewsHero {
 export type iCurrentNewsBody =
   | iCurrentNewsHero
   | iCurrentNewsMarquee
-  | iCurrentNewsFullPageAssets
+  | iFullPageAssets
   | iDividerContent
   | iVisionContent
   | iTextBlock

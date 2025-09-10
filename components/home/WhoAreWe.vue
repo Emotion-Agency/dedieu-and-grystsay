@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { gsap, SplitText } from '~/libs/gsap'
 import type { iHomeWhoAreWe } from '~/types/homeTypes'
 
 interface IProps {
@@ -7,72 +8,169 @@ interface IProps {
 
 const props = defineProps<IProps>()
 
+const $el = ref<HTMLElement | null>(null)
+
 const titleParts = computed(() => {
   const raw = props.content?.title || ''
   const [before, after] = raw.split('&')
 
   return [`${before.trim()} &`, after?.trim() ?? '']
 })
+
+let tl: GSAPTimeline
+
+onMounted(async () => {
+  await document.fonts.ready
+  if ($el.value) {
+    const $subtitle = $el.value.querySelector('.who-are__subtitle')
+    const $lines = $el.value.querySelectorAll('.who-are__line')
+    const $top = $el.value.querySelector('.who-are__top')
+    const $bottomLeftImg = $el.value.querySelector('.who-are__img--bottom-left')
+    const $bottomRightImg = $el.value.querySelector(
+      '.who-are__img--bottom-right'
+    )
+    const $title = $el.value.querySelectorAll('.who-are__title span')
+    const $text = $el.value.querySelector('.who-are__text')
+
+    const textSplit = new SplitText($text, {
+      type: 'lines',
+    })
+
+    tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: $el.value,
+        start: 'top 80%',
+        once: true,
+      },
+      onComplete: () => {
+        textSplit.revert()
+      },
+    })
+
+    gsap.set(textSplit.lines, { opacity: 0, translateY: 20 })
+
+    gsap.set([$subtitle, $top, $bottomLeftImg, $bottomRightImg], {
+      opacity: 0,
+      translateY: 50,
+    })
+    gsap.set($lines, {
+      width: 0,
+    })
+    gsap.set($title, { opacity: 0, translateY: 20 })
+
+    tl.to($subtitle, {
+      opacity: 1,
+      y: 0,
+      duration: 1.5,
+      ease: 'power2.out',
+    })
+    tl.to(
+      $lines,
+      {
+        width: '100%',
+        stagger: 0.4,
+        duration: 1,
+        ease: 'power2.out',
+      },
+      '<20%'
+    )
+    tl.to(
+      $top,
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1.5,
+        ease: 'power2.out',
+      },
+      '<10%'
+    )
+    tl.to(
+      $title,
+      {
+        opacity: 1,
+        y: 0,
+        duration: 2,
+        ease: 'power2.out',
+        stagger: 0.2,
+      },
+      '<20%'
+    )
+    tl.to(
+      [$bottomLeftImg, $bottomRightImg],
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1.5,
+        ease: 'power2.out',
+      },
+      '<20%'
+    )
+    tl.to(
+      textSplit.lines,
+      { opacity: 1, y: 0, duration: 1.5, ease: 'expo.out', stagger: 0.1 },
+      '<'
+    )
+  }
+})
+
+onBeforeUnmount(() => {
+  tl?.kill()
+})
 </script>
 
 <template>
-  <section class="who-are container">
-    <div class="who-are__wrapper">
-      <p class="who-are__subtitle">
-        {{ content?.subtitle }}
+  <section ref="$el" class="who-are container">
+    <p class="who-are__subtitle">
+      {{ content?.subtitle }}
+    </p>
+    <div class="who-are__top">
+      <div class="who-are__line" />
+      <div class="who-are__top-content">
+        <AssetRenderer
+          class="who-are__img"
+          :src="content?.assets[0]?.filename"
+          :alt="content?.assets[0]?.alt"
+          :is-playing="true"
+        />
+        <AssetRenderer
+          class="who-are__img who-are__img--top-right"
+          :src="content?.assets[1]?.filename"
+          :alt="content?.assets[1]?.alt"
+          :is-playing="true"
+        />
+        <NuxtLink :to="content?.link[0]?.url?.cached_url" class="who-are__link">
+          <div class="who-are__plus">
+            <div />
+            <div />
+          </div>
+          <span>{{ content?.link[0]?.label }}</span>
+        </NuxtLink>
+      </div>
+    </div>
+    <div class="who-are__middle">
+      <div class="who-are__line" />
+      <h2 class="who-are__title">
+        <span>{{ titleParts[0] + ' ' }} </span>
+        <span>{{ titleParts[1] }}</span>
+      </h2>
+      <div class="who-are__line" />
+    </div>
+    <div class="who-are__bottom">
+      <AssetRenderer
+        class="who-are__img who-are__img--bottom-left"
+        :src="content?.assets[2]?.filename"
+        :alt="content?.assets[2]?.alt"
+        :is-playing="true"
+      />
+      <p class="who-are__text">
+        {{ content?.text }}
       </p>
-      <div class="who-are__top">
-        <div class="who-are__line" />
-        <div class="who-are__top-content">
-          <AssetRenderer
-            class="who-are__img"
-            :src="content?.assets[0]?.filename"
-            :alt="content?.assets[0]?.alt"
-            :is-playing="true"
-          />
-          <AssetRenderer
-            class="who-are__img who-are__img--top-right"
-            :src="content?.assets[1]?.filename"
-            :alt="content?.assets[1]?.alt"
-            :is-playing="true"
-          />
-          <NuxtLink
-            :to="content?.link[0]?.url?.cached_url"
-            class="who-are__link"
-          >
-            <div class="who-are__plus">
-              <div />
-              <div />
-            </div>
-            <span>{{ content?.link[0]?.label }}</span>
-          </NuxtLink>
-        </div>
-      </div>
-      <div class="who-are__middle">
-        <div class="who-are__line" />
-        <h2 class="who-are__title">
-          <span>{{ titleParts[0] + ' ' }} </span>
-          <span>{{ titleParts[1] }}</span>
-        </h2>
-        <div class="who-are__line" />
-      </div>
-      <div class="who-are__bottom">
-        <AssetRenderer
-          class="who-are__img who-are__img--bottom-left"
-          :src="content?.assets[2]?.filename"
-          :alt="content?.assets[2]?.alt"
-          :is-playing="true"
-        />
-        <p class="who-are__text">
-          {{ content?.text }}
-        </p>
-        <AssetRenderer
-          class="who-are__img who-are__img--bottom-right"
-          :src="content?.assets[3]?.filename"
-          :alt="content?.assets[3]?.alt"
-          :is-playing="true"
-        />
-      </div>
+      <AssetRenderer
+        class="who-are__img who-are__img--bottom-right"
+        :src="content?.assets[3]?.filename"
+        :alt="content?.assets[3]?.alt"
+        :is-playing="true"
+      />
     </div>
   </section>
 </template>

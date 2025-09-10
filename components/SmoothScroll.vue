@@ -7,7 +7,9 @@ const ticker = (time: number) => {
 }
 
 onMounted(() => {
-  window.elenis = new Lenis({})
+  window.scrollTo(0, 0)
+
+  window.elenis = new Lenis()
 
   window.elenis.on('scroll', ScrollTrigger.update)
 

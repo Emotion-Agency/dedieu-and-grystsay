@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { gsap, SplitText } from '~/libs/gsap'
 import type { iVisionContent } from '~/types/visionTypes'
 
 interface IProps {
@@ -8,9 +9,10 @@ interface IProps {
 
 const props = defineProps<IProps>()
 
-const isMobile = useSSRMediaQuery('(max-width: 960px)')
+const isMobile = useSSRMediaQuery('(max-width: 860px)')
 const images = props.content.carousel
 const isExpanded = ref(false)
+const $el = ref<HTMLElement | null>(null)
 
 const displayedText = computed(() =>
   isExpanded.value
@@ -21,10 +23,75 @@ const displayedText = computed(() =>
 const toggleText = () => {
   isExpanded.value = !isExpanded.value
 }
+
+let tl: GSAPTimeline
+
+onMounted(async () => {
+  await document.fonts.ready
+  if ($el.value) {
+    const $title = $el.value.querySelector('.vision__title')
+    const $text = $el.value.querySelector('.vision__text')
+    const $line = $el.value.querySelector('.vision__line')
+
+    const textSplit = new SplitText($text, {
+      type: 'lines',
+    })
+
+    tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: $el.value,
+        start: 'top 80%',
+      },
+    })
+
+    gsap.set($line, {
+      width: 0,
+    })
+    gsap.set($title, {
+      opacity: 0,
+      translateY: 20,
+    })
+    gsap.set(textSplit.lines, {
+      opacity: 0,
+      translateY: 20,
+    })
+
+    tl.to($line, {
+      width: '100%',
+      duration: 1.8,
+      ease: 'power2.out',
+    })
+    tl.to(
+      $title,
+      {
+        opacity: 1,
+        translateY: 0,
+        duration: 1.8,
+        ease: 'power2.out',
+      },
+      '<'
+    )
+    tl.to(
+      textSplit.lines,
+      {
+        opacity: 1,
+        y: 0,
+        duration: 2,
+        ease: 'expo.out',
+        stagger: 0.1,
+      },
+      '<20%'
+    )
+  }
+})
+
+onBeforeUnmount(() => {
+  tl?.kill()
+})
 </script>
 
 <template>
-  <div class="vision">
+  <div ref="$el" class="vision">
     <div class="vision__info">
       <h3 class="vision__title">
         {{ content?.title }}

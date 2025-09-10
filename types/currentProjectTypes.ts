@@ -1,4 +1,5 @@
 import type { iDividerContent } from './dividerTypes'
+import type { iFullPageAssets } from './fullAssetsTypes'
 import type { iImage, iMeta } from './story'
 import type { iTextBlock } from './textBlockTypes'
 import type { iVisionContent } from './visionTypes'
@@ -20,12 +21,6 @@ export interface iCurrentProjectAssetText {
   _uid: string
 }
 
-export interface iCurrentProjectFullPageAssets {
-  assets: iImage[]
-  component: string
-  _uid: string
-}
-
 export interface iCurrentProjectMarquee {
   text: string
   component: string
@@ -42,7 +37,7 @@ export interface iCurrentProjectHero {
 export type iCurrentProjectBody =
   | iCurrentProjectHero
   | iCurrentProjectMarquee
-  | iCurrentProjectFullPageAssets
+  | iFullPageAssets
   | iCurrentProjectAssetText
   | iCurrentProjectConcept
   | iDividerContent

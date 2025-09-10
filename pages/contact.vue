@@ -26,8 +26,8 @@ const meta = computed(() => {
 <template>
   <div>
     <PageMeta v-if="meta" v-bind="meta" />
-    <section class="contact container">
-      <h1 class="contact__title">{{ story?.content?.title }}</h1>
+    <section ref="$el" class="contact container">
+      <h1 data-split class="contact__title">{{ story?.content?.title }}</h1>
       <ContactContent />
     </section>
   </div>
@@ -42,8 +42,10 @@ const meta = computed(() => {
   background-color: var(--foreground);
   padding-top: vw(165);
   padding-bottom: vw(35);
+  gap: vw(40);
 
   @media (max-width: $br1) {
+    gap: 40px;
     padding-top: 85px;
     padding-bottom: 30px;
   }

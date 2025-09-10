@@ -11,12 +11,14 @@ defineProps<IProps>()
 <template>
   <section class="curr-pr container">
     <div class="curr-pr__wrapper">
-      <h1 class="curr-pr__title">
+      <h1 data-split class="curr-pr__title">
         {{ content?.title }}
       </h1>
-      <CircleButton direction="left" class="curr-pr__btn">
-        {{ content?.rotating_text }}
-      </CircleButton>
+      <div data-scale class="curr-pr__btn-wrapper">
+        <CircleButton direction="left" class="curr-pr__btn">
+          {{ content?.rotating_text }}
+        </CircleButton>
+      </div>
     </div>
   </section>
 </template>
@@ -40,7 +42,6 @@ defineProps<IProps>()
   line-height: 0.78em;
   letter-spacing: -0.03em;
   text-transform: uppercase;
-  word-break: break-word;
 
   @media (min-width: $br1) {
     max-width: vw(1100);
@@ -56,16 +57,19 @@ defineProps<IProps>()
   }
 }
 
-.curr-pr__btn {
+.curr-pr__btn-wrapper {
   position: absolute;
   right: 0;
   bottom: 0;
-  font-size: vw(15);
-  line-height: 1.67em;
-  padding: vw(45);
 
   @media (max-width: $br1) {
     display: none;
   }
+}
+
+.curr-pr__btn {
+  font-size: vw(15);
+  line-height: 1.67em;
+  padding: vw(45);
 }
 </style>

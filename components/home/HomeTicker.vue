@@ -10,7 +10,7 @@ defineProps<IProps>()
 </script>
 
 <template>
-  <section class="h-ticker">
+  <section data-o class="h-ticker">
     <div class="h-ticker__wrapper container">
       <Ticker>{{ content?.text }}</Ticker>
     </div>

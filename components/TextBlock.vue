@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { iTextBlock } from '~/types/textBlockTypes'
+import { gsap } from '~/libs/gsap'
 
 interface IProps {
   content: iTextBlock
@@ -7,15 +8,76 @@ interface IProps {
 
 const props = defineProps<IProps>()
 
+const $el = ref<HTMLElement | null>(null)
+
 const size = props.content?.size?.toLowerCase()
 const { path, params } = useRoute()
 
 const isAboutPage = computed(() => path.includes('/about'))
 const isCurrentNewsPage = computed(() => path.includes(`/news/${params?.id}`))
+
+let tl: GSAPTimeline
+
+onMounted(() => {
+  if ($el.value) {
+    const $title = $el.value.querySelector('.text-block__title')
+    const $line = $el.value.querySelector('.text-block__line')
+    const $text = $el.value.querySelector('.text-block__text')
+
+    tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: $el.value,
+        start: 'top 80%',
+      },
+    })
+
+    gsap.set($title, {
+      opacity: 0,
+      translateY: 50,
+    })
+    gsap.set($text, {
+      opacity: 0,
+      translateY: 50,
+    })
+    gsap.set($line, {
+      width: 0,
+    })
+
+    tl.to($title, {
+      opacity: 1,
+      translateY: 0,
+      duration: 1.8,
+      ease: 'power2.out',
+    })
+    tl.to(
+      $line,
+      {
+        width: '100%',
+        duration: 2,
+        ease: 'power2.out',
+      },
+      '<10%'
+    )
+    tl.to(
+      $text,
+      {
+        opacity: 1,
+        translateY: 0,
+        duration: 2.2,
+        ease: 'power2.out',
+      },
+      '<'
+    )
+  }
+})
+
+onBeforeUnmount(() => {
+  tl?.kill()
+})
 </script>
 
 <template>
-  <div class="text-block">
+  <div ref="$el" class="text-block">
     <h2
       v-if="content?.title"
       class="text-block__title"

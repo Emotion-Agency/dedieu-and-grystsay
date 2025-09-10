@@ -1,36 +1,69 @@
 <script setup lang="ts">
-import type { iCurrentNews } from '~/types/projectsTypes'
+import { gsap } from '~/libs/gsap'
+import type { iProjectsContent } from '~/types/projectsTypes'
+import type { iStory } from '~/types/story'
 
 interface IProps {
-  projects: iCurrentNews[]
+  projects: iStory<iProjectsContent>[]
 }
 
 defineProps<IProps>()
+
+const $el = ref<HTMLElement | null>(null)
+
+let tl: GSAPTimeline
+
+onMounted(() => {
+  if ($el.value) {
+    tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: $el.value,
+        start: 'top 80%',
+      },
+    })
+
+    gsap.set($el.value, { opacity: 0, translateY: 50 })
+
+    tl.to($el.value, {
+      opacity: 1,
+      translateY: 0,
+      duration: 2,
+      ease: 'power2.out',
+    })
+  }
+})
+
+onBeforeUnmount(() => {
+  tl?.kill()
+})
 </script>
 
 <template>
-  <div class="curr-pr-mob">
+  <div ref="$el" class="curr-pr-mob">
     <ul class="curr-pr-mob__list">
       <li
         v-for="(project, idx) in projects"
         :key="idx"
         class="curr-pr-mob__item"
       >
-        <div class="curr-pr-mob__item-content">
+        <NuxtLink
+          :to="'/' + project.full_slug"
+          class="curr-pr-mob__item-content"
+        >
           <CustomImage
-            :src="project.asset.filename"
-            :alt="project.asset.alt"
+            :src="project?.content?.preview?.filename"
+            :alt="project?.content?.preview?.alt"
             class="curr-pr-mob__img"
           />
 
           <div class="curr-pr-mob__info">
-            <h3 class="curr-pr-mob__title">{{ project.title }}</h3>
-            <p class="curr-pr-mob__text">{{ project.text }}</p>
+            <h3 class="curr-pr-mob__title">{{ findProjectTitle(project) }}</h3>
+            <p class="curr-pr-mob__text">{{ project?.content?.description }}</p>
             <p class="curr-pr-mob__number">
               {{ idx + 1 }}
             </p>
           </div>
-        </div>
+        </NuxtLink>
       </li>
     </ul>
   </div>
@@ -81,5 +114,9 @@ defineProps<IProps>()
   font-size: 70px;
   line-height: 1em;
   margin-top: 30px;
+}
+
+.curr-pr-mob__item-content {
+  display: block;
 }
 </style>

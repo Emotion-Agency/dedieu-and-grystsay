@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { gsap } from '~/libs/gsap'
 import type { iImage } from '~/types/story'
 
 interface IProps {
@@ -8,41 +9,59 @@ interface IProps {
 
 const props = defineProps<IProps>()
 
-const { current, handleNext } = useSlider(props.images.length)
+const images = computed(() => {
+  return props.images
+})
 
-const isSliding = ref(false)
+const $el = ref<HTMLElement | null>(null)
 
-const visibleImages = computed(() =>
-  Array.from({ length: 3 }, (_, i) => {
-    const currentIndex = (current.value + i) % props.images.length
-    const nextIndex = (currentIndex + 1) % props.images.length
-
-    return {
-      current: props.images[currentIndex],
-      next: props.images[nextIndex],
-    }
-  })
+const { isSliding, visibleSlides, handleSlideNext } = useMultiSliderAnimation(
+  $el,
+  images,
+  3
 )
 
-const handleSlideNext = () => {
-  if (isSliding.value) return
+let tl: GSAPTimeline
 
-  isSliding.value = true
+onMounted(() => {
+  if ($el.value) {
+    const $images = $el.value.querySelectorAll('.concept-desk__item')
 
-  setTimeout(() => {
-    handleNext()
-    isSliding.value = false
-  }, 500) // Transition duration from CSS
-}
+    tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: $el.value,
+        start: 'top 80%',
+      },
+    })
+
+    gsap.set($images, {
+      opacity: 0,
+      scale: 0.9,
+    })
+
+    tl.to($images, {
+      opacity: 1,
+      duration: 2.4,
+      scale: 1,
+      stagger: 0.2,
+      ease: 'power2.out',
+    })
+  }
+})
+
+onBeforeUnmount(() => {
+  tl?.kill()
+})
 </script>
 
 <template>
-  <div class="concept-desk">
+  <div ref="$el" class="concept-desk">
     <ul class="concept-desk__list">
       <li
-        v-for="({ current: image, next: nextImage }, idx) in visibleImages"
+        v-for="({ current: image, next: nextImage }, idx) in visibleSlides"
         :key="idx"
         class="concept-desk__item"
+        data-msa-item
         @click="idx === 2 && handleSlideNext()"
       >
         <div class="concept-desk__img-wrapper">
@@ -50,16 +69,23 @@ const handleSlideNext = () => {
             class="concept-desk__img-track"
             :class="{ 'is-sliding': isSliding }"
           >
-            <CustomImage
-              :src="image.filename"
-              :alt="image.alt"
-              class="concept-desk__img"
-            />
-            <CustomImage
-              :src="nextImage.filename"
-              :alt="nextImage.alt"
-              class="concept-desk__img"
-            />
+            <div class="concept-desk__img-container">
+              <CustomImage
+                data-msa-img
+                :src="image.filename"
+                :alt="image.alt"
+                class="concept-desk__img"
+              />
+            </div>
+            <div aria-hidden class="concept-desk__img-container">
+              <CustomImage
+                aria-hidden
+                data-msa-img
+                :src="nextImage.filename"
+                :alt="nextImage.alt"
+                class="concept-desk__img"
+              />
+            </div>
           </div>
         </div>
 
@@ -143,16 +169,29 @@ const handleSlideNext = () => {
   display: flex;
   height: 100%;
   width: 100%;
+  position: relative;
+}
 
-  &.is-sliding {
-    transition: transform 0.5s ease;
-    transform: translateX(-100%);
+.concept-desk__img-container {
+  position: relative;
+  width: 100%;
+  height: vw(290);
+  z-index: 1;
+
+  &:nth-child(2) {
+    position: absolute;
+    width: 100%;
+    height: vw(290);
+    top: 0;
+    left: 0;
+    z-index: 0;
   }
 }
 
 .concept-desk__img {
   display: block;
-  height: vw(290);
+  height: 100%;
+  width: 100%;
   min-width: 100%;
   object-fit: cover;
 }

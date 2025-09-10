@@ -7,11 +7,11 @@ type tHomeStory = () => Promise<{
 }>
 
 export const useHomeStory: tHomeStory = async () => {
-  const story = useState<iStory<iHomeContent>>('index', () => null)
+  const story = useState<iStory<iHomeContent>>('home', () => null)
 
   try {
     if (!story.value) {
-      const res = await useGetStory('index')
+      const res = await useGetStory('home')
 
       story.value = res.value
     }

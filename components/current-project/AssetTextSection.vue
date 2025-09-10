@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { gsap, SplitText } from '~/libs/gsap'
 import type { iCurrentProjectAssetText } from '~/types/currentProjectTypes'
 
 interface IProps {
@@ -8,10 +9,88 @@ interface IProps {
 defineProps<IProps>()
 
 const showModal = ref(false)
+
+const $el = ref<HTMLElement | null>(null)
+
+let tl: GSAPTimeline
+
+onMounted(async () => {
+  await document.fonts.ready
+  if ($el.value) {
+    const $title = $el.value.querySelector('.asset-text__title')
+    const $text = $el.value.querySelector('.asset-text__description')
+    const $btn = $el.value.querySelector('.asset-text__btn')
+    const $img = $el.value.querySelector('.asset-text__asset')
+
+    const titleSplit = new SplitText($title, {
+      type: 'lines',
+    })
+    const textSplit = new SplitText($text, {
+      type: 'lines',
+    })
+
+    tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: $el.value,
+        start: 'top 80%',
+      },
+    })
+
+    gsap.set([titleSplit.lines, textSplit.lines], {
+      opacity: 0,
+      translateY: 20,
+    })
+    gsap.set($btn, { opacity: 0, translateY: 20 })
+    gsap.set($img, { opacity: 0, scale: 0.8 })
+
+    tl.to($img, {
+      opacity: 1,
+      scale: 1,
+      duration: 2,
+      ease: 'power2.out',
+    })
+    tl.to(
+      titleSplit.lines,
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1.5,
+        ease: 'expo.out',
+        stagger: 0.1,
+      },
+      '<'
+    )
+    tl.to(
+      textSplit.lines,
+      {
+        opacity: 1,
+        y: 0,
+        duration: 2,
+        ease: 'expo.out',
+        stagger: 0.1,
+      },
+      '<20%'
+    )
+    tl.to(
+      $btn,
+      {
+        opacity: 1,
+        translateY: 0,
+        duration: 1.8,
+        ease: 'power2.out',
+      },
+      '<35%'
+    )
+  }
+})
+
+onBeforeUnmount(() => {
+  tl?.kill()
+})
 </script>
 
 <template>
-  <section class="asset-text container">
+  <section ref="$el" class="asset-text container">
     <div class="asset-text__wrapper">
       <AssetRenderer
         :alt="content?.asset?.alt"

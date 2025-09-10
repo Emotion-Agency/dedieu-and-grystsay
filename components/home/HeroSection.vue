@@ -11,16 +11,17 @@ defineProps<IProps>()
 <template>
   <section class="hero">
     <div class="hero__wrapper container">
-      <h1 class="hero__title">
+      <h1 data-split class="hero__title">
         {{ content?.title }}
       </h1>
       <div class="hero__d-wrapper">
         <CustomImage
+          data-preload
           :src="content?.asset?.filename"
           :alt="content?.asset?.alt"
           class="hero__img"
         />
-        <p class="hero__description">
+        <p data-split class="hero__description">
           {{ content?.text }}
         </p>
       </div>

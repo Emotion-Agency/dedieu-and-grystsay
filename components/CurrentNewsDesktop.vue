@@ -1,82 +1,119 @@
 <script setup lang="ts">
-import type { iCurrentNews } from '~/types/projectsTypes'
+import { NuxtLink } from '#components'
+import { gsap } from '~/libs/gsap'
+
+import type { iProjectsContent } from '~/types/projectsTypes'
+
+import type { iStory } from '~/types/story'
 
 interface IProps {
-  projects: iCurrentNews[]
+  projects: iStory<iProjectsContent>[]
   nextSlideButton?: string
 }
 const props = defineProps<IProps>()
 
-const { current, handleNext } = useSlider(props.projects.length)
+const projects = computed(() => {
+  return props.projects
+})
 
-const isSliding = ref(false)
-const isContentVisible = ref(true)
+const $el = ref<HTMLElement | null>(null)
 
-const visibleProjects = computed(() =>
-  Array.from({ length: 4 }, (_, i) => {
-    const currentIndex = (current.value + i) % props.projects.length
-    const nextIndex = (currentIndex + 1) % props.projects.length
-
-    return {
-      current: props.projects[currentIndex],
-      next: props.projects[nextIndex],
-    }
-  })
+const { isSliding, visibleSlides, handleSlideNext } = useMultiSliderAnimation(
+  $el,
+  projects
 )
 
-const handleSlideNext = () => {
-  if (isSliding.value) return
+let tl: GSAPTimeline
 
-  isSliding.value = true
-  isContentVisible.value = false
+onMounted(() => {
+  if ($el.value) {
+    tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: $el.value,
+        start: 'top 80%',
+      },
+    })
 
-  setTimeout(() => {
-    handleNext()
-    isContentVisible.value = true
-    isSliding.value = false
-  }, 500) // Transition duration from CSS
-}
+    const $items = $el.value.querySelectorAll('.curr-pr-desk__item')
+
+    gsap.set($items, { opacity: 0, translateY: 100 })
+
+    tl.to($items, {
+      opacity: 1,
+      translateY: 0,
+      stagger: 0.3,
+      duration: 2.5,
+      ease: 'power2.out',
+    })
+  }
+})
+
+onBeforeUnmount(() => {
+  tl?.kill()
+})
 </script>
 
 <template>
-  <div class="curr-pr-desk">
+  <div ref="$el" class="curr-pr-desk">
     <ul class="curr-pr-desk__list">
       <li
         v-for="(
-          { current: project, next: nextProject }, idx
-        ) in visibleProjects"
+          { current: project, next: nextProject, currentIndex, nextIndex }, idx
+        ) in visibleSlides"
         :key="idx"
+        data-msa-item
         class="curr-pr-desk__item"
         @click="idx === 3 && handleSlideNext()"
       >
-        <div class="curr-pr-desk__img-wrapper">
+        <component
+          :is="idx !== 3 ? NuxtLink : 'div'"
+          :to="'/' + project?.full_slug"
+          class="curr-pr-desk__img-wrapper"
+        >
           <div
             class="curr-pr-desk__img-track"
             :class="{ 'is-sliding': isSliding }"
           >
-            <CustomImage
-              :src="project.asset.filename"
-              :alt="project.asset.alt"
-              class="curr-pr-desk__img"
-            />
-            <CustomImage
-              :src="nextProject.asset.filename"
-              :alt="nextProject.asset.alt"
-              class="curr-pr-desk__img"
-            />
+            <div class="curr-pr-desk__img-container">
+              <CustomImage
+                :src="project?.content?.preview?.filename"
+                :alt="project?.content?.preview?.alt"
+                class="curr-pr-desk__img"
+                data-msa-img
+              />
+            </div>
+            <div aria-hidden class="curr-pr-desk__img-container">
+              <CustomImage
+                :src="nextProject?.content?.preview?.filename"
+                :alt="nextProject?.content?.preview?.alt"
+                class="curr-pr-desk__img"
+                data-msa-img
+              />
+            </div>
           </div>
-        </div>
-
+        </component>
         <template v-if="idx !== 3">
-          <div class="curr-pr-desk__i">
-            <div
-              class="curr-pr-desk__i-content"
-              :class="{ 'is-hidden': !isContentVisible }"
-            >
-              <h3 class="curr-pr-desk__title">{{ project.title }}</h3>
-              <p class="curr-pr-desk__desc">{{ project.text }}</p>
-              <p class="curr-pr-desk__number">
-                {{ ((current + idx) % props.projects.length) + 1 }}
+          <div class="curr-pr-desk__i-content">
+            <div class="curr-pr-desk__i">
+              <h3 data-msa-title class="curr-pr-desk__title">
+                {{ findProjectTitle(project) }}
+              </h3>
+              <p data-msa-text class="curr-pr-desk__desc">
+                {{ project?.content?.description }}
+              </p>
+              <p data-msa-number class="curr-pr-desk__number">
+                {{ currentIndex + 1 }}
+              </p>
+            </div>
+            <div aria-hidden class="curr-pr-desk__i">
+              <h3 data-msa-title class="curr-pr-desk__title">
+                {{ findProjectTitle(project) }}
+              </h3>
+              <p data-msa-text class="curr-pr-desk__desc">
+                {{ nextProject?.content?.description }}
+              </p>
+              <p data-msa-number class="curr-pr-desk__number">
+                {{ nextIndex + 1 }}
               </p>
             </div>
           </div>
@@ -116,6 +153,10 @@ const handleSlideNext = () => {
     .curr-pr-desk__img-wrapper {
       height: vw(380);
     }
+
+    .curr-pr-desk__i {
+      width: 110%;
+    }
   }
 
   &:nth-of-type(4) {
@@ -132,7 +173,7 @@ const handleSlideNext = () => {
 
     &:hover {
       .curr-pr-desk__img-wrapper {
-        border-radius: 100%;
+        border-radius: 50%;
       }
 
       .curr-pr-desk__btn {
@@ -153,21 +194,38 @@ const handleSlideNext = () => {
 }
 
 .curr-pr-desk__img-wrapper {
+  display: block;
   position: relative;
   width: 100%;
   height: 100%;
   overflow: hidden;
-  transition: border-radius 0.5s ease;
+  transition: border-radius 0.3s ease-out;
 }
 
 .curr-pr-desk__img-track {
-  display: flex;
   height: 100%;
   width: 100%;
+  position: relative;
 
-  &.is-sliding {
-    transition: transform 0.5s ease;
-    transform: translateX(-100%);
+  // &.is-sliding {
+  //   transition: transform 0.5s ease;
+  //   transform: translateX(-100%);
+  // }
+}
+
+.curr-pr-desk__img-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+
+  &:nth-child(2) {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 0;
   }
 }
 
@@ -176,22 +234,23 @@ const handleSlideNext = () => {
   height: 100%;
   min-width: 100%;
   object-fit: cover;
-}
-
-.curr-pr-desk__i {
   position: relative;
-  overflow: hidden;
-  padding-top: vw(25);
 }
 
 .curr-pr-desk__i-content {
-  transition:
-    opacity 0.5s ease,
-    transform 0.5s ease;
-
-  &.is-hidden {
-    opacity: 0;
-    transform: translateY(vw(-10));
+  position: relative;
+}
+.curr-pr-desk__i {
+  position: relative;
+  padding-top: vw(25);
+  &:nth-child(2) {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    visibility: hidden;
   }
 }
 

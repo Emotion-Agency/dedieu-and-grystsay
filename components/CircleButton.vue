@@ -42,7 +42,7 @@ const href = props.tag === 'a' ? props.href : undefined
   </component>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
 .circle-button {
   display: flex;
   align-items: center;

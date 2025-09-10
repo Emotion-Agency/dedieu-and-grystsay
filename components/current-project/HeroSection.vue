@@ -68,8 +68,10 @@ defineProps<IProps>()
 }
 
 .curr-pr__btn {
-  font-size: vw(15);
-  line-height: 1.67em;
-  padding: vw(45);
+  @media (min-width: $br1) {
+    font-size: vw(15) !important;
+    line-height: 1.67em !important;
+    padding: vw(45) !important;
+  }
 }
 </style>

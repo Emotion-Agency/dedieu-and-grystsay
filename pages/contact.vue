@@ -28,7 +28,7 @@ const meta = computed(() => {
     <PageMeta v-if="meta" v-bind="meta" />
     <section ref="$el" class="contact container">
       <h1 data-split class="contact__title">{{ story?.content?.title }}</h1>
-      <ContactContent />
+      <ContactContent data-o />
     </section>
   </div>
 </template>

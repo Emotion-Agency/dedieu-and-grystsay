@@ -11,12 +11,14 @@ const props = defineProps<IProps>()
 const activeImageIndex = ref(0)
 const $el = ref<HTMLElement | null>(null)
 
-const nextImages = () => {
-  activeImageIndex.value =
-    (activeImageIndex.value + 1) % props.content.assets[0].assets.length
+const nextImage = () => {
+  const assets = props.content.assets[0]?.assets ?? []
+  if (assets.length === 0) return
+  activeImageIndex.value = (activeImageIndex.value + 1) % assets.length
 }
 
 let tl: GSAPTimeline
+let intervalId: number | null = null
 
 onMounted(() => {
   if ($el.value) {
@@ -52,10 +54,16 @@ onMounted(() => {
       '<'
     )
   }
+
+  intervalId = window.setInterval(nextImage, 2000)
 })
 
 onBeforeUnmount(() => {
   tl?.kill()
+  if (intervalId !== null) {
+    window.clearInterval(intervalId)
+    intervalId = null
+  }
 })
 </script>
 
@@ -78,11 +86,7 @@ onBeforeUnmount(() => {
         />
       </div>
 
-      <NuxtLink
-        to="/projects"
-        class="all-projects__title"
-        @mouseenter="nextImages"
-      >
+      <NuxtLink to="/projects" class="all-projects__title">
         {{ content?.label }}
       </NuxtLink>
     </div>

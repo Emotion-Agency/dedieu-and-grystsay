@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { gsap } from '~/libs/gsap'
 import type { iProjectsContent } from '~/types/projectsTypes'
 import type { iStory } from '~/types/story'
 
@@ -8,38 +7,10 @@ interface IProps {
 }
 
 defineProps<IProps>()
-
-const $el = ref<HTMLElement | null>(null)
-
-let tl: GSAPTimeline
-
-onMounted(() => {
-  if ($el.value) {
-    tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: $el.value,
-        start: 'top 80%',
-      },
-    })
-
-    gsap.set($el.value, { opacity: 0, translateY: 50 })
-
-    tl.to($el.value, {
-      opacity: 1,
-      translateY: 0,
-      duration: 2,
-      ease: 'power2.out',
-    })
-  }
-})
-
-onBeforeUnmount(() => {
-  tl?.kill()
-})
 </script>
 
 <template>
-  <div ref="$el" class="curr-pr-mob">
+  <div class="curr-pr-mob">
     <ul class="curr-pr-mob__list">
       <li
         v-for="(project, idx) in projects"

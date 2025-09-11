@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { gsap, SplitText } from '~/libs/gsap'
 import type { iTextBlock } from '~/types/textBlockTypes'
 
 interface IProps {
@@ -9,7 +8,6 @@ interface IProps {
 const props = defineProps<IProps>()
 
 const isExpanded = ref(false)
-const $el = ref<HTMLElement | null>(null)
 
 const displayedText = computed(() =>
   isExpanded.value
@@ -20,66 +18,10 @@ const displayedText = computed(() =>
 const toggleText = () => {
   isExpanded.value = !isExpanded.value
 }
-
-let tl: GSAPTimeline
-
-onMounted(async () => {
-  await document.fonts.ready
-  if ($el.value) {
-    const $title = $el.value.querySelector('.pr-text-block__title')
-    const $text = $el.value.querySelector('.pr-text-block__text')
-
-    const textSplit = new SplitText($text, {
-      type: 'lines',
-    })
-
-    tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: $el.value,
-        start: 'top 80%',
-      },
-    })
-
-    gsap.set($title, {
-      opacity: 0,
-      translateY: 20,
-    })
-    gsap.set(textSplit.lines, {
-      opacity: 0,
-      translateY: 20,
-    })
-
-    tl.to(
-      $title,
-      {
-        opacity: 1,
-        translateY: 0,
-        duration: 1.8,
-        ease: 'power2.out',
-      },
-      '<'
-    )
-    tl.to(
-      textSplit.lines,
-      {
-        opacity: 1,
-        y: 0,
-        duration: 2,
-        ease: 'expo.out',
-        stagger: 0.1,
-      },
-      '<20%'
-    )
-  }
-})
-
-onBeforeUnmount(() => {
-  tl?.kill()
-})
 </script>
 
 <template>
-  <section ref="$el" class="pr-text-block container">
+  <section class="pr-text-block container">
     <div class="pr-text-block__wrapper">
       <div class="pr-text-block__info">
         <h3 class="pr-text-block__title">

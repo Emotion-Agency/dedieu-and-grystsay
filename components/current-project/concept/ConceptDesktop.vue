@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { gsap } from '~/libs/gsap'
 import type { iImage } from '~/types/story'
 
 interface IProps {
@@ -20,38 +19,6 @@ const { isSliding, visibleSlides, handleSlideNext } = useMultiSliderAnimation(
   images,
   3
 )
-
-let tl: GSAPTimeline
-
-onMounted(() => {
-  if ($el.value) {
-    const $images = $el.value.querySelectorAll('.concept-desk__item')
-
-    tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: $el.value,
-        start: 'top 80%',
-      },
-    })
-
-    gsap.set($images, {
-      opacity: 0,
-      scale: 0.9,
-    })
-
-    tl.to($images, {
-      opacity: 1,
-      duration: 2.4,
-      scale: 1,
-      stagger: 0.2,
-      ease: 'power2.out',
-    })
-  }
-})
-
-onBeforeUnmount(() => {
-  tl?.kill()
-})
 </script>
 
 <template>

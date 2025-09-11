@@ -27,7 +27,7 @@ export interface iCurrentNewsContent {
 
 export interface iCurrentAllNews {
   content: {
-    items: iStory<iProjectContent>
+    items: iStory<iProjectsContent>[]
     component: string
     _uid: string
   }

@@ -107,7 +107,7 @@ onBeforeUnmount(() => {
             </div>
             <div aria-hidden class="curr-pr-desk__i">
               <h3 data-msa-title class="curr-pr-desk__title">
-                {{ findProjectTitle(project) }}
+                {{ findProjectTitle(nextProject) }}
               </h3>
               <p data-msa-text class="curr-pr-desk__desc">
                 {{ nextProject?.content?.description }}

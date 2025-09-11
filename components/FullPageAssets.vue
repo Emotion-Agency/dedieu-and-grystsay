@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { gsap } from '~/libs/gsap'
 import type { iFullPageAssets } from '~/types/fullAssetsTypes'
 
 interface IProps {
@@ -7,42 +6,10 @@ interface IProps {
 }
 
 defineProps<IProps>()
-
-const $el = ref<HTMLElement | null>(null)
-
-let tl: GSAPTimeline
-
-onMounted(() => {
-  if ($el.value) {
-    tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: $el.value,
-        start: 'top 90%',
-      },
-    })
-
-    gsap.set($el.value, { opacity: 0, scale: 0.8 })
-
-    tl.to(
-      $el.value,
-      {
-        opacity: 1,
-        scale: 1,
-        duration: 2,
-        ease: 'power2.out',
-      },
-      '<'
-    )
-  }
-})
-
-onBeforeUnmount(() => {
-  tl?.kill()
-})
 </script>
 
 <template>
-  <section ref="$el" class="full-assets container">
+  <section class="full-assets container">
     <div v-if="content?.assets?.length" class="full-assets__wrapper">
       <FullImageSlider
         v-if="content?.assets.length > 1"

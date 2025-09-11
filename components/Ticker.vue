@@ -53,44 +53,6 @@ useIntersectionObserver(
 )
 
 onMounted(async () => {
-  if (containerRef.value) {
-    const $lines = containerRef.value.querySelectorAll('.ticker__line')
-    const $content = containerRef.value.querySelector('.ticker__wrapper')
-
-    gsap.set($lines, {
-      width: 0,
-    })
-    gsap.set($content, {
-      opacity: 0,
-      translateX: 100,
-    })
-
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: containerRef.value,
-        start: 'top 80%',
-      },
-    })
-
-    tl.to($lines, {
-      width: '100%',
-      stagger: 0.1,
-      duration: 1.8,
-      ease: 'power2.out',
-    })
-
-    tl.to(
-      $content,
-      {
-        opacity: 1,
-        translateX: 0,
-        duration: 2.2,
-        ease: 'power2.out',
-      },
-      '<'
-    )
-  }
-
   await generateRepeatCount()
   startAnimation()
 })

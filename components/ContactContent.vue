@@ -13,7 +13,7 @@ const localePath = useLocalePath()
 </script>
 
 <template>
-  <div ref="$el" class="contact-content">
+  <div class="contact-content">
     <div class="contact-content__about-block">
       <div class="contact-content__form">
         <AppForm />

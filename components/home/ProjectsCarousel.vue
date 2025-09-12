@@ -481,7 +481,7 @@ const handleClose = () => {
   grid-column: 1/-1;
 
   filter: grayscale(100%);
-  will-change: filter;
+  will-change: transform, filter;
   transition: filter 0.4s ease;
   &:hover:not(&--active) {
     filter: grayscale(0%);

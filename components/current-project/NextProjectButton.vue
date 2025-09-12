@@ -13,16 +13,14 @@ const { story } = await useGlobalStory()
 </script>
 
 <template>
-  <div>
-    <CircleButton
-      :to="project?.slug"
-      tag="nuxt-link"
-      direction="left"
-      class="next-btn"
-    >
-      {{ story?.content?.next_project }}
-    </CircleButton>
-  </div>
+  <CircleButton
+    :to="project?.slug"
+    tag="nuxt-link"
+    direction="left"
+    class="next-btn"
+  >
+    {{ story?.content?.next_project }}
+  </CircleButton>
 </template>
 
 <style lang="scss">
@@ -30,6 +28,10 @@ const { story } = await useGlobalStory()
   margin: 0 auto;
   margin-top: vw(100);
   cursor: pointer;
+  transition: background-color 0.4s ease;
+  &:hover {
+    background-color: var(--foreground);
+  }
 
   @media (max-width: $br1) {
     margin-top: 75px;

@@ -65,6 +65,12 @@ const meta = computed(() => {
     ogImage: data?.image?.filename,
   }
 })
+
+const route = useRoute()
+
+const onClick = () => {
+  route.meta.isProjectTransition = true
+}
 </script>
 
 <template>
@@ -83,7 +89,7 @@ const meta = computed(() => {
       </div>
     </template>
     <div class="container">
-      <NextProjectButton :project="nextProject" />
+      <NextProjectButton :project="nextProject" @click="onClick" />
     </div>
   </div>
 </template>

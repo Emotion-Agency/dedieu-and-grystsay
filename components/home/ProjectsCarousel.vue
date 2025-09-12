@@ -46,33 +46,28 @@ onMounted(() => {
 
   const $revealers = document.querySelectorAll('.p-carousel-item__revealer')
   const $assets = document.querySelectorAll('.p-carousel-item__asset')
+  const $img = document.querySelectorAll('.p-carousel-item__img')
 
   const tl = gsap.timeline({
     paused: true,
     onComplete: () => {
-      $revealers.forEach(el => el.remove())
       gsap.set($assets, { clearProps: 'all' })
+      gsap.set($revealers, { clearProps: 'all' })
       tl.kill()
     },
   })
-  gsap.set($assets, { scaleY: 0, pointerEvents: 'none' })
+  gsap.set($img, { visibility: 'hidden' })
+  gsap.set($assets, { pointerEvents: 'none' })
+  gsap.set($revealers, { scaleY: 0, transition: 'none' })
 
-  tl.to($assets, {
+  tl.to($revealers, {
     scaleY: 1,
     ease: 'power3.out',
     duration: 1,
     stagger: 0.05,
   })
-  tl.to(
-    $revealers,
-    {
-      scaleX: 0,
-      ease: 'power3.out',
-      duration: 1,
-      stagger: 0.04,
-    },
-    '<60%'
-  )
+
+  tl.to($img, { duration: 0, visibility: 'visible' })
 
   st.value = new ScrollTrigger({
     trigger: el.value,
@@ -476,15 +471,17 @@ const handleClose = () => {
 .p-carousel-item__asset {
   width: vw(200);
   height: 100%;
-  transform-origin: bottom;
   max-height: 90svh;
   grid-column: 1/-1;
 
   filter: grayscale(100%);
-  will-change: filter;
+  will-change: transform, filter;
   transition: filter 0.4s ease;
   &:hover:not(&--active) {
     filter: grayscale(0%);
+    .p-carousel-item__revealer {
+      transform: scaleX(0);
+    }
   }
 
   @media (max-width: $br1) {
@@ -505,9 +502,11 @@ const handleClose = () => {
   inset: 0;
   width: 100%;
   height: 100%;
+  transition: transform 0.5s ease;
+
   background-color: var(--foreground);
   z-index: 1;
-  transform-origin: right;
+  transform-origin: bottom right;
 }
 
 .p-carousel-clone {

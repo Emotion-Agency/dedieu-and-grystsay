@@ -149,9 +149,9 @@ watch(isMenuOpened, () => {
                 @close="toggleMenu"
               />
             </div>
+            <LanguageSwitcher variant="menu" class="burger-menu__lang" />
 
             <div class="burger-menu__bottom">
-              <LanguageSwitcher variant="menu" class="burger-menu__lang" />
               <MadeByText
                 :content="madeByStory?.content"
                 color="light"
@@ -330,6 +330,12 @@ watch(isMenuOpened, () => {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+.burger-menu__nav {
+  @media (max-width: $br1) {
+    padding-bottom: 7vh;
+  }
 }
 
 .burger-menu__bottom {

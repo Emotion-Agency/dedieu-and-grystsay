@@ -97,9 +97,10 @@ watch(current, handleChangeSlide)
 }
 
 .concept-mob__list {
-  height: 504px;
+  height: 100%;
   width: 100%;
   position: relative;
+  aspect-ratio: 325/470;
 }
 
 .concept-mob__item {

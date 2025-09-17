@@ -205,7 +205,6 @@ const localePath = useLocalePath()
 .contact-content__contacts {
   display: flex;
   flex-direction: column;
-  gap: vw(50);
 
   @media (min-width: $br1) {
     max-width: vw(400);
@@ -213,7 +212,6 @@ const localePath = useLocalePath()
 
   @media (max-width: $br1) {
     max-width: 70%;
-    gap: 24px;
   }
 
   @media (max-width: $br4) {
@@ -255,9 +253,11 @@ const localePath = useLocalePath()
   font-size: vw(16);
   position: relative;
   width: fit-content;
+  margin-top: vw(50);
 
   @media (max-width: $br1) {
     font-size: 16px;
+    margin-top: 26px;
   }
 }
 
@@ -265,10 +265,12 @@ const localePath = useLocalePath()
   @include regular;
   font-size: vw(16);
   line-height: 1.4em;
+  margin-top: vw(66);
 
   @media (max-width: $br1) {
     font-size: 16px;
     letter-spacing: -0.01em;
+    margin-top: 26px;
   }
 }
 

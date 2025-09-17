@@ -19,7 +19,7 @@ const isContactPage = computed(() => route.path.includes('/contact'))
   background-color: var(--foreground);
 
   display: none;
-  z-index: 99;
+  z-index: 110;
   transition: background-color 3s ease;
 }
 </style>

@@ -3,15 +3,26 @@ import type { iTextBlock } from '~/types/textBlockTypes'
 
 interface IProps {
   content: iTextBlock
+  isCurrentNews?: boolean
 }
 
 const props = defineProps<IProps>()
 
 const size = props.content?.size?.toLowerCase()
-const { path, params } = useRoute()
+const isExpanded = ref(false)
+const { path } = useRoute()
 
 const isAboutPage = computed(() => path.includes('/about'))
-const isCurrentNewsPage = computed(() => path.includes(`/news/${params?.id}`))
+
+const displayedText = computed(() =>
+  isExpanded.value
+    ? props.content.text
+    : truncateString(props.content.text, 143)
+)
+
+const toggleText = () => {
+  isExpanded.value = !isExpanded.value
+}
 </script>
 
 <template>
@@ -22,20 +33,31 @@ const isCurrentNewsPage = computed(() => path.includes(`/news/${params?.id}`))
       :class="{
         'text-block__title--small': size === 'sm',
         'text-block__title--medium': size === 'md',
-        'text-block__title--news': isCurrentNewsPage,
+        'text-block__title--news': isCurrentNews,
       }"
     >
       {{ content?.title }}
     </h2>
     <div
-      v-if="(isAboutPage && content?.title) || isCurrentNewsPage"
+      v-if="(isAboutPage && content?.title) || isCurrentNews"
       class="text-block__line"
       :class="{
-        'text-block__line--news': isCurrentNewsPage,
+        'text-block__line--news': isCurrentNews,
         'text-block__line--about': isAboutPage,
       }"
     />
-    <p class="text-block__text" v-html="content?.text" />
+    <div v-if="isCurrentNews" class="text-block__text">
+      <span>{{ displayedText }}</span>
+      <button
+        type="button"
+        class="text-block__btn underline-reverse"
+        @click="toggleText"
+      >
+        {{ isExpanded ? 'less' : 'more' }}
+      </button>
+    </div>
+
+    <p v-else class="text-block__text" v-html="content?.text" />
   </div>
 </template>
 
@@ -113,9 +135,34 @@ const isCurrentNewsPage = computed(() => path.includes(`/news/${params?.id}`))
   line-height: 1.4em;
   letter-spacing: -0.01em;
   margin-top: vw(30);
+  display: inline-block;
 
   @media (max-width: $br1) {
     margin-top: 30px;
+    font-size: 18px;
+  }
+}
+
+.text-block__btn {
+  @include semibold;
+  display: inline-block;
+  background-color: transparent;
+  line-height: 1.4em;
+  letter-spacing: -0.01em;
+  position: relative;
+  text-transform: lowercase;
+
+  @media (max-width: $br1) {
+    @include regular;
+    font-size: 18px;
+  }
+
+  &::before {
+    bottom: vw(2);
+
+    @media (max-width: $br1) {
+      bottom: 2px;
+    }
   }
 }
 </style>

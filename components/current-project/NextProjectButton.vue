@@ -26,7 +26,7 @@ const { story } = await useGlobalStory()
 <style lang="scss">
 .next-btn {
   margin: 0 auto;
-  margin-top: vw(100);
+  margin-top: vw(110);
   cursor: pointer;
   transition: background-color 0.4s ease;
   &:hover {
@@ -34,7 +34,7 @@ const { story } = await useGlobalStory()
   }
 
   @media (max-width: $br1) {
-    margin-top: 75px;
+    margin-top: 88px;
   }
 }
 </style>

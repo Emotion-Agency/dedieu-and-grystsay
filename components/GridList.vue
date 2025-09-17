@@ -267,7 +267,7 @@ onBeforeUnmount(() => {
 
 .grid-list__description {
   @include regular;
-  font-size: vw(18);
+  font-size: vw(16);
   line-height: 1.4em;
   letter-spacing: -0.01em;
   margin-top: vw(15);

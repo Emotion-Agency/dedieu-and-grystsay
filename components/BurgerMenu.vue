@@ -28,7 +28,8 @@ const menuTransition: TransitionProps = {
   mode: 'out-in',
   onEnter(el, done) {
     const links = el.querySelectorAll('.navigation__link')
-    const bottomItems = el.querySelectorAll('.burger-menu__bottom')
+    const lang = el.querySelector('.burger-menu__lang')
+    const bottomContent = el.querySelector('.burger-menu__bottom')
     enterTimeline = gsap.timeline({ onComplete: done })
 
     enterTimeline
@@ -50,7 +51,19 @@ const menuTransition: TransitionProps = {
         '<+0.2'
       )
       .fromTo(
-        bottomItems,
+        lang,
+        { y: 20, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.5,
+          stagger: 0.1,
+          ease: 'power2.out',
+        },
+        '<+0.3'
+      )
+      .fromTo(
+        bottomContent,
         { y: 20, opacity: 0 },
         {
           y: 0,
@@ -65,7 +78,8 @@ const menuTransition: TransitionProps = {
 
   onLeave(el, done) {
     const links = el.querySelectorAll('.navigation__link')
-    const bottomItems = el.querySelectorAll('.burger-menu__bottom')
+    const lang = el.querySelector('.burger-menu__lang')
+    const bottomContent = el.querySelector('.burger-menu__bottom')
     leaveTimeline = gsap.timeline({ onComplete: done })
 
     leaveTimeline
@@ -81,7 +95,7 @@ const menuTransition: TransitionProps = {
         0
       )
       .to(
-        bottomItems,
+        lang,
         {
           y: 20,
           opacity: 0,
@@ -92,13 +106,24 @@ const menuTransition: TransitionProps = {
         '<+0.1'
       )
       .to(
+        bottomContent,
+        {
+          y: 20,
+          opacity: 0,
+          duration: 0.3,
+          stagger: 0.05,
+          ease: 'power2.in',
+        },
+        '<+0.2'
+      )
+      .to(
         el,
         {
           clipPath: fromClipPath,
           duration: 0.8,
           ease: 'power2.inOut',
         },
-        '<+0.1'
+        '<+0.2'
       )
   },
 }
@@ -149,9 +174,9 @@ watch(isMenuOpened, () => {
                 @close="toggleMenu"
               />
             </div>
+            <LanguageSwitcher variant="menu" class="burger-menu__lang" />
 
             <div class="burger-menu__bottom">
-              <LanguageSwitcher variant="menu" class="burger-menu__lang" />
               <MadeByText
                 :content="madeByStory?.content"
                 color="light"
@@ -330,6 +355,12 @@ watch(isMenuOpened, () => {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+.burger-menu__nav {
+  @media (max-width: $br1) {
+    padding-bottom: 7vh;
+  }
 }
 
 .burger-menu__bottom {

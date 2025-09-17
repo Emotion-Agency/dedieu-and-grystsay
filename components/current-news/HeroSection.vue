@@ -40,11 +40,7 @@ defineProps<IProps>()
   position: relative;
   display: grid;
   height: 100%;
-
-  @media (min-width: $br1) {
-    grid-template-columns: 1fr vw(424);
-    gap: vw(78);
-  }
+  width: 100%;
 
   @media (max-width: $br1) {
     grid-template-columns: repeat(1, 1fr);

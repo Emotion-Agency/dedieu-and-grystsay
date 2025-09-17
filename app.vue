@@ -45,8 +45,21 @@ useHead({
 })
 
 const route = useRoute()
+const { locale } = useI18n()
 
-const isContactPage = computed(() => route.path.includes('/contact'))
+const cleanPath = computed(() => normalizePath(route.path, locale.value))
+
+const isMainPage = computed(
+  () => cleanPath.value === '/' || cleanPath.value === '/index'
+)
+const isContactPage = computed(() => cleanPath.value.includes('/contact'))
+const isAboutPage = computed(() => cleanPath.value.includes('/about'))
+const isNewsPage = computed(() => cleanPath.value === '/news')
+const isCurrentNewsPage = computed(() => cleanPath.value.startsWith('/news/'))
+const isProjectsPage = computed(() => cleanPath.value === '/projects')
+const isCurrentProjectPage = computed(() =>
+  cleanPath.value.startsWith('/projects/')
+)
 </script>
 
 <template>
@@ -71,7 +84,17 @@ const isContactPage = computed(() => route.path.includes('/contact'))
         </main>
         <Revealer />
         <Preloader v-if="isFirstLoad" />
-        <AppFooter v-if="!isContactPage" />
+        <AppFooter
+          v-if="!isContactPage"
+          :class="{
+            'app__footer--main': isMainPage,
+            'app__footer--about': isAboutPage,
+            'app__footer--news': isNewsPage,
+            'app__footer--current-news': isCurrentNewsPage,
+            'app__footer--projects': isProjectsPage,
+            'app__footer--current-project': isCurrentProjectPage,
+          }"
+        />
       </NuxtLayout>
     </SmoothScroll>
     <ToastGroup />
@@ -86,5 +109,55 @@ const isContactPage = computed(() => route.path.includes('/contact'))
 
 .app__main {
   flex: 1;
+}
+
+.app__footer {
+  &--main {
+    padding-top: vw(142);
+
+    @media (max-width: $br1) {
+      padding-top: 120px;
+    }
+  }
+
+  &--about {
+    padding-top: vw(76);
+
+    @media (max-width: $br1) {
+      padding-top: 100px;
+    }
+  }
+
+  &--projects {
+    padding-top: vw(138);
+
+    @media (max-width: $br1) {
+      padding-top: 100px;
+    }
+  }
+
+  &--current-project {
+    padding-top: vw(110);
+
+    @media (max-width: $br1) {
+      padding-top: 88px;
+    }
+  }
+
+  &--news {
+    padding-top: vw(134);
+
+    @media (max-width: $br1) {
+      padding-top: 100px;
+    }
+  }
+
+  &--current-news {
+    padding-top: vw(190);
+
+    @media (max-width: $br1) {
+      padding-top: 100px;
+    }
+  }
 }
 </style>

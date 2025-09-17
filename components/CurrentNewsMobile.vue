@@ -74,7 +74,7 @@ defineProps<IProps>()
 
 .curr-pr-mob__text {
   @include regular;
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1.4em;
   letter-spacing: -0.01em;
   margin-top: 15px;

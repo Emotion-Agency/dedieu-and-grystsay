@@ -5,48 +5,18 @@ interface IProps {
   content: iHomeAllProjects
 }
 
-const props = defineProps<IProps>()
-
-const activeImageIndex = ref(0)
-const $el = ref<HTMLElement | null>(null)
-
-const nextImage = () => {
-  const assets = props.content.assets[0]?.assets ?? []
-  if (assets.length === 0) return
-  activeImageIndex.value = (activeImageIndex.value + 1) % assets.length
-}
-
-let intervalId: number | null = null
-
-onMounted(() => {
-  intervalId = window.setInterval(nextImage, 2000)
-})
-
-onBeforeUnmount(() => {
-  if (intervalId !== null) {
-    window.clearInterval(intervalId)
-    intervalId = null
-  }
-})
+defineProps<IProps>()
 </script>
 
 <template>
   <section class="all-projects container">
     <div class="all-projects__wrapper">
       <div
-        v-for="(item, idx) in content?.assets"
+        v-for="(item, idx) in content.assets"
         :key="idx"
         class="all-projects__images"
       >
-        <AssetRenderer
-          v-for="(img, index) in item.assets"
-          :key="index"
-          class="all-projects__image"
-          :src="img?.filename"
-          :alt="img?.alt"
-          :class="{ 'all-projects__image--active': activeImageIndex === index }"
-          :is-playing="true"
-        />
+        <HomeProjectSlide :assets="item.assets" />
       </div>
 
       <NuxtLink to="/projects" class="all-projects__title">
@@ -153,20 +123,6 @@ onBeforeUnmount(() => {
     @media (max-width: $br1) {
       display: none;
     }
-  }
-}
-
-.all-projects__image {
-  position: absolute;
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0;
-  transition: opacity 0.3s ease-in-out;
-
-  &--active {
-    opacity: 1;
   }
 }
 

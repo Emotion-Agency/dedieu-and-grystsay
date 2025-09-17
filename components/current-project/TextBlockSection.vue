@@ -44,11 +44,11 @@ const toggleText = () => {
 
 <style scoped lang="scss">
 .pr-text-block {
-  padding-top: vw(60);
+  padding-top: vw(40);
   padding-bottom: vw(40);
 
   @media (max-width: $br1) {
-    padding-top: 20px;
+    padding-top: 40px;
     padding-bottom: 0;
   }
 }
@@ -112,7 +112,7 @@ const toggleText = () => {
 
   @media (max-width: $br1) {
     @include regular;
-    font-size: 16px;
+    font-size: 18px;
   }
 
   &::before {

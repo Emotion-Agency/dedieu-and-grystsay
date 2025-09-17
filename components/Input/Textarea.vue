@@ -69,7 +69,7 @@ const onInput = () => {
   border: none;
   outline: none;
   resize: none;
-  padding: rem(25) rem(28);
+  padding: rem(22);
   width: 100%;
   height: 100%;
   background-color: transparent;
@@ -81,6 +81,10 @@ const onInput = () => {
     text-transform: capitalize;
     transition: color 0.3s $easing;
     @include regular;
+  }
+
+  @media (max-width: $br1) {
+    padding: 21px 16px;
   }
 }
 </style>

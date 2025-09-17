@@ -142,3 +142,9 @@ body {
 .cursor-none * {
   cursor: none !important;
 }
+
+@media (max-width: $br1) {
+  section.pr-full-assets:last-child {
+    display: none !important;
+  }
+}

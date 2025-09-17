@@ -119,7 +119,7 @@ const toggleText = () => {
 
   @media (max-width: $br1) {
     @include regular;
-    font-size: 16px;
+    font-size: 18px;
   }
 
   &::before {

@@ -40,5 +40,11 @@ defineProps<IProps>()
   width: 100vw;
   height: 100vh;
   object-fit: cover;
+
+  @media (max-width: $br1) {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 325/470;
+  }
 }
 </style>

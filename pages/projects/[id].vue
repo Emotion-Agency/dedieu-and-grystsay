@@ -8,7 +8,6 @@ import ProjectTicker from '~/components/current-project/ProjectTicker.vue'
 import TextBlockSection from '~/components/current-project/TextBlockSection.vue'
 import VisionSection from '~/components/current-project/VisionSection.vue'
 import Divider from '~/components/Divider.vue'
-import FullPageAssets from '~/components/FullPageAssets.vue'
 import { useCurrentProjectStory } from '~/composables/stories/projects/currentProjectStory'
 import { useProjectsStories } from '~/composables/stories/projects/projectsStories'
 
@@ -72,18 +71,27 @@ const route = useRoute()
 const onClick = () => {
   route.meta.isProjectTransition = true
 }
+
+const lastFullAssetsIndex = computed(
+  () =>
+    body.value?.findLastIndex(item => item.component === 'full_page_assets') ??
+    -1
+)
 </script>
 
 <template>
   <div v-if="story">
     <PageMeta v-if="meta" v-bind="meta" />
 
-    <template v-for="item in body" :key="item._uid">
+    <template v-for="(item, idx) in body" :key="item._uid">
       <component
         :is="resolveSectionByName(item.component)"
         v-if="resolveSectionByName(item.component)"
         v-editable="item"
         :content="item"
+        :is-last-full-assets="
+          item.component === 'full_page_assets' && idx === lastFullAssetsIndex
+        "
       />
       <div v-else>
         <p>Unknown component: {{ item.component }}</p>

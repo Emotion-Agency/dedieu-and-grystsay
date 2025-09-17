@@ -3,19 +3,20 @@ import type { iFullPageAssets } from '~/types/fullAssetsTypes'
 
 interface IProps {
   content: iFullPageAssets
+  isLastFullAssets?: boolean
 }
 
 defineProps<IProps>()
 </script>
 
 <template>
-  <section class="pr-full-assets">
+  <div class="pr-full-assets" :class="{ 'last-full-assets': isLastFullAssets }">
     <FullPageAssets :content="content" />
-  </section>
+  </div>
 </template>
 
 <style scoped lang="scss">
-.pr-full-assets {
+.last-full-assets {
   @media (max-width: $br1) {
     display: none;
   }

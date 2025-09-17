@@ -267,14 +267,14 @@ onBeforeUnmount(() => {
 
 .grid-list__description {
   @include regular;
-  font-size: vw(18);
+  font-size: vw(16);
   line-height: 1.4em;
   letter-spacing: -0.01em;
   margin-top: vw(15);
   @include line-clamp(6);
 
   @media (max-width: $br1) {
-    font-size: 18px;
+    font-size: 16px;
     margin-top: 15px;
   }
 }

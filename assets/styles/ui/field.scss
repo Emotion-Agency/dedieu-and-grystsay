@@ -37,7 +37,9 @@
   //   color: var(--background);
   //   transition: color 0.3s $easing;
   // }
-
+  @media (max-width: $br1) {
+    height: 62px;
+  }
   &--number {
     padding-left: rem(12);
     padding-right: rem(12);

@@ -11,7 +11,6 @@
   align-items: center;
   position: relative;
   overflow: hidden;
-  height: rem(62);
   border: rem(1) solid var(--background);
   transition: border-color 0.3s $easing;
   caret-color: var(--background);
@@ -37,9 +36,7 @@
   //   color: var(--background);
   //   transition: color 0.3s $easing;
   // }
-  @media (max-width: $br1) {
-    height: 62px;
-  }
+
   &--number {
     padding-left: rem(12);
     padding-right: rem(12);

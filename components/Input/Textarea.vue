@@ -84,7 +84,7 @@ const onInput = () => {
   }
 
   @media (max-width: $br1) {
-    padding: 16px 22px;
+    padding: 21px 16px;
   }
 }
 </style>

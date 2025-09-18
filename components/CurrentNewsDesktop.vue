@@ -48,7 +48,7 @@ const { isSliding, visibleSlides, handleSlideNext } = useMultiSliderAnimation(
               <CustomImage
                 :src="project?.content?.preview?.filename"
                 :alt="project?.content?.preview?.alt"
-                :width="424"
+                :width="848"
                 class="curr-pr-desk__img"
                 data-msa-img
               />
@@ -57,7 +57,7 @@ const { isSliding, visibleSlides, handleSlideNext } = useMultiSliderAnimation(
               <CustomImage
                 :src="nextProject?.content?.preview?.filename"
                 :alt="nextProject?.content?.preview?.alt"
-                :width="424"
+                :width="848"
                 class="curr-pr-desk__img"
                 data-msa-img
               />

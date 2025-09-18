@@ -17,8 +17,7 @@ defineProps<IProps>()
           data-preload
           :src="content?.asset?.filename"
           :alt="content?.asset?.alt"
-          :width="424"
-          :height="287"
+          :width="828"
           class="prs-hero__img prs-hero__img--mob"
         />
         <p data-split class="prs-hero__text">{{ content?.text }}</p>
@@ -27,8 +26,7 @@ defineProps<IProps>()
         data-preload
         :src="content?.asset?.filename"
         :alt="content?.asset?.alt"
-        :width="424"
-        :height="287"
+        :width="828"
         class="prs-hero__img"
       />
     </div>

@@ -25,7 +25,6 @@ defineProps<IProps>()
             :src="project?.content?.preview?.filename"
             :alt="project?.content?.preview?.alt"
             :width="650"
-            :height="940"
             class="curr-pr-mob__img"
           />
 

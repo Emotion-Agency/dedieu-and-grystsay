@@ -51,8 +51,7 @@ onBeforeUnmount(() => {
               data-msa-img
               :src="img.filename"
               :alt="img.alt"
-              :width="106"
-              :height="106"
+              :width="212"
               class="project-slide__img"
             />
           </div>
@@ -61,8 +60,7 @@ onBeforeUnmount(() => {
               data-msa-img
               :src="nextImg.filename"
               :alt="nextImg.alt"
-              :width="106"
-              :height="106"
+              :width="212"
               class="project-slide__img"
             />
           </div>

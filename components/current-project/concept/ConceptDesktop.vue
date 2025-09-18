@@ -41,8 +41,7 @@ const { isSliding, visibleSlides, handleSlideNext } = useMultiSliderAnimation(
                 data-msa-img
                 :src="image.filename"
                 :alt="image.alt"
-                :width="200"
-                :height="290"
+                :width="400"
                 class="concept-desk__img"
               />
             </div>
@@ -52,8 +51,7 @@ const { isSliding, visibleSlides, handleSlideNext } = useMultiSliderAnimation(
                 data-msa-img
                 :src="nextImage.filename"
                 :alt="nextImage.alt"
-                :width="200"
-                :height="290"
+                :width="400"
                 class="concept-desk__img"
               />
             </div>

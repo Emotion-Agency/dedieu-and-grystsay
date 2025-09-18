@@ -35,8 +35,7 @@ const { isSliding, visibleSlides, handleSlideNext, current } =
                 data-msa-img
                 :src="img.filename"
                 :alt="img.alt"
-                :width="424"
-                :height="346"
+                :width="828"
                 class="vision-desk__img"
               />
             </div>
@@ -45,8 +44,7 @@ const { isSliding, visibleSlides, handleSlideNext, current } =
                 data-msa-img
                 :src="nextImg.filename"
                 :alt="nextImg.alt"
-                :width="424"
-                :height="346"
+                :width="828"
                 class="vision-desk__img"
               />
             </div>

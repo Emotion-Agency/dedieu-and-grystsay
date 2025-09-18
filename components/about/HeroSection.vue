@@ -21,6 +21,7 @@ defineProps<IProps>()
         data-preload
         :src="content?.assets[0]?.filename"
         :alt="content?.assets[0]?.alt"
+        :width="1920"
         :is-playing="true"
         class="about-hero__img"
       />

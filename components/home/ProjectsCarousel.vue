@@ -367,6 +367,8 @@ const handleClose = () => {
         >
           <AssetRenderer
             :src="project.content?.preview?.filename"
+            :width="1320"
+            :height="745"
             class="p-carousel-item__img"
           />
           <div class="p-carousel-item__revealer" />
@@ -392,6 +394,8 @@ const handleClose = () => {
       <div class="p-carousel-clone__asset">
         <AssetRenderer
           :src="selectedProject.content?.preview?.filename"
+          :width="1320"
+          :height="745"
           class="p-carousel-clone__img"
         />
       </div>

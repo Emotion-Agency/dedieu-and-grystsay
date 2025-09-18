@@ -77,6 +77,8 @@ onBeforeUnmount(() => {
           <CustomImage
             :src="item?.content?.preview?.filename"
             :alt="item?.content?.preview?.alt"
+            :width="559"
+            :height="567"
             class="grid-list__img"
           />
         </div>

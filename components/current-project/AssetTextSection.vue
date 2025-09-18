@@ -17,6 +17,8 @@ const showModal = ref(false)
         :alt="content?.asset?.alt"
         :src="content?.asset?.filename"
         :is-playing="true"
+        :width="647"
+        :height="667"
         class="asset-text__asset"
       />
       <div class="asset-text__content">

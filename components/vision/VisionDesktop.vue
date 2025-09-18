@@ -35,6 +35,8 @@ const { isSliding, visibleSlides, handleSlideNext, current } =
                 data-msa-img
                 :src="img.filename"
                 :alt="img.alt"
+                :width="424"
+                :height="346"
                 class="vision-desk__img"
               />
             </div>
@@ -43,6 +45,8 @@ const { isSliding, visibleSlides, handleSlideNext, current } =
                 data-msa-img
                 :src="nextImg.filename"
                 :alt="nextImg.alt"
+                :width="424"
+                :height="346"
                 class="vision-desk__img"
               />
             </div>
@@ -68,6 +72,7 @@ const { isSliding, visibleSlides, handleSlideNext, current } =
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: vw(24);
+  height: vw(424);
 }
 
 .vision-desk__item {

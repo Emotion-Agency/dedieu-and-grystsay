@@ -28,12 +28,16 @@ const titleParts = computed(() => {
           :src="content?.assets[0]?.filename"
           :alt="content?.assets[0]?.alt"
           :is-playing="true"
+          :width="162"
+          :height="200"
         />
         <AssetRenderer
           class="who-are__img who-are__img--top-right"
           :src="content?.assets[1]?.filename"
           :alt="content?.assets[1]?.alt"
           :is-playing="true"
+          :width="162"
+          :height="200"
         />
         <NuxtLink :to="content?.link[0]?.url?.cached_url" class="who-are__link">
           <div class="who-are__plus">
@@ -58,6 +62,8 @@ const titleParts = computed(() => {
         :src="content?.assets[2]?.filename"
         :alt="content?.assets[2]?.alt"
         :is-playing="true"
+        :width="162"
+        :height="200"
       />
       <p class="who-are__text">
         {{ content?.text }}
@@ -67,6 +73,8 @@ const titleParts = computed(() => {
         :src="content?.assets[3]?.filename"
         :alt="content?.assets[3]?.alt"
         :is-playing="true"
+        :width="162"
+        :height="200"
       />
     </div>
   </section>

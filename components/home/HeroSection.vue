@@ -19,6 +19,8 @@ defineProps<IProps>()
           data-preload
           :src="content?.asset?.filename"
           :alt="content?.asset?.alt"
+          :width="424"
+          :height="287"
           class="hero__img"
         />
         <p data-split class="hero__description">

@@ -16,6 +16,8 @@ defineProps<IProps>()
         data-preload
         :src="content?.asset?.filename"
         :alt="content?.asset?.alt"
+        :width="424"
+        :height="287"
         class="news-hero__img"
       />
     </div>

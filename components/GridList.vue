@@ -20,7 +20,7 @@ const { width } = useWindowSize()
 const isMobile = computed(() => width.value <= 860)
 const $el = ref<HTMLElement | null>(null)
 
-const SHOW_STEP = 3
+const SHOW_STEP = 7
 
 const visibleCount = ref(SHOW_STEP)
 

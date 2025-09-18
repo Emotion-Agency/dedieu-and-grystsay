@@ -67,6 +67,12 @@ const href = props.tag === 'a' ? props.href : undefined
   //   box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.5);
   // }
 
+  &:hover {
+    span {
+      animation-play-state: paused;
+    }
+  }
+
   span {
     display: flex;
     animation: rotate-animation 7s linear infinite;

@@ -455,7 +455,7 @@ const handleClose = () => {
 .p-carousel-item {
   position: relative;
   overflow: hidden;
-  width: vw(200);
+  width: vw(212);
   height: 100%;
   aspect-ratio: 200/745;
   flex-shrink: 0;

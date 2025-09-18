@@ -10,6 +10,7 @@ const props = defineProps<IProps>()
 
 const size = props.content?.size?.toLowerCase()
 const isExpanded = ref(false)
+const MAX_LENGTH = 700
 const { path } = useRoute()
 
 const isAboutPage = computed(() => path.includes('/about'))
@@ -17,7 +18,7 @@ const isAboutPage = computed(() => path.includes('/about'))
 const displayedText = computed(() =>
   isExpanded.value
     ? props.content.text
-    : truncateString(props.content.text, 143)
+    : truncateString(props.content.text, MAX_LENGTH)
 )
 
 const toggleText = () => {
@@ -49,6 +50,7 @@ const toggleText = () => {
     <div v-if="isCurrentNews" class="text-block__text">
       <span>{{ displayedText }}</span>
       <button
+        v-if="content.text.length > MAX_LENGTH"
         type="button"
         class="text-block__btn underline-reverse"
         @click="toggleText"

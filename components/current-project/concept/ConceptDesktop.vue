@@ -71,7 +71,7 @@ const { isSliding, visibleSlides, handleSlideNext } = useMultiSliderAnimation(
 
 .concept-desk__list {
   display: grid;
-  grid-template-columns: vw(200) vw(200) 1fr;
+  grid-template-columns: vw(200) vw(200) vw(200);
   column-gap: vw(24);
 }
 

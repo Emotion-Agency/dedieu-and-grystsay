@@ -8,11 +8,12 @@ interface IProps {
 const props = defineProps<IProps>()
 
 const isExpanded = ref(false)
+const MAX_LENGTH = 700
 
 const displayedText = computed(() =>
   isExpanded.value
     ? props.content.text
-    : truncateString(props.content.text, 135)
+    : truncateString(props.content.text, MAX_LENGTH)
 )
 
 const toggleText = () => {
@@ -30,6 +31,7 @@ const toggleText = () => {
         <div class="pr-text-block__text">
           <span>{{ displayedText }}</span>
           <button
+            v-if="content.text.length > MAX_LENGTH"
             type="button"
             class="pr-text-block__btn underline-reverse"
             @click="toggleText"

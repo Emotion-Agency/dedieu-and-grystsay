@@ -102,7 +102,7 @@ const { isSliding, visibleSlides, handleSlideNext } = useMultiSliderAnimation(
 <style lang="scss">
 .curr-pr-desk__list {
   display: grid;
-  grid-template-columns: vw(424) vw(424) 1fr 1fr;
+  grid-template-columns: vw(424) vw(424) 1fr vw(200);
   gap: vw(24);
 }
 

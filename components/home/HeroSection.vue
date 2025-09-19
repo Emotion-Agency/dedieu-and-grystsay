@@ -58,12 +58,13 @@ defineProps<IProps>()
   font-size: vw(152);
   line-height: 0.84em;
   letter-spacing: -0.03em;
+  width: vw(860);
   text-transform: uppercase;
 
   @media (max-width: $br1) {
     font-size: size(152, 70);
     line-height: 0.89em;
-    word-break: break-word;
+    width: auto;
   }
 
   @media (max-width: $br4) {

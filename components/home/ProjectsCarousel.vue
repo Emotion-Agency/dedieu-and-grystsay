@@ -442,7 +442,7 @@ const handleClose = () => {
   width: 100%;
   max-height: 90svh;
   position: relative;
-  gap: vw(24);
+  gap: vw(20);
   overflow: hidden;
 
   @media (max-width: $br1) {
@@ -457,7 +457,7 @@ const handleClose = () => {
 .p-carousel-item {
   position: relative;
   overflow: hidden;
-  width: vw(212);
+  width: vw(214);
   height: 100%;
   aspect-ratio: 200/745;
   flex-shrink: 0;
@@ -476,7 +476,7 @@ const handleClose = () => {
 }
 
 .p-carousel-item__asset {
-  width: vw(200);
+  width: vw(214);
   height: 100%;
   transform-origin: bottom;
   max-height: 90svh;

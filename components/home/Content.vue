@@ -7,6 +7,7 @@ import ProjectsCarousel from './ProjectsCarousel.vue'
 import AllProjects from './AllProjects.vue'
 import WhoAreWe from './WhoAreWe.vue'
 import AppCurrentNews from '../AppCurrentNews.vue'
+import { blockSections } from '../sections'
 
 const { story } = await useHomeStory()
 
@@ -16,6 +17,7 @@ const body = computed(() => {
 
 const resolveSectionByName = (name: string) => {
   const sections = {
+    ...blockSections,
     hero_v1: HeroSection,
     marquee: HomeTicker,
     projects_carousel: ProjectsCarousel,

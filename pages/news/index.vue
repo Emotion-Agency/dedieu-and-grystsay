@@ -3,6 +3,7 @@ import AppCurrentNews from '~/components/AppCurrentNews.vue'
 import NewsGrid from '~/components/news/NewsGrid.vue'
 import NewsHero from '~/components/news/NewsHero.vue'
 import NewsTicker from '~/components/news/NewsTicker.vue'
+import { blockSections } from '~/components/sections'
 import { useNewsStory } from '~/composables/stories/news/newsStory'
 import { pageTransition } from '~/transitions/base'
 
@@ -18,6 +19,7 @@ const body = computed(() => {
 
 const resolveSectionByName = (name: string) => {
   const sections = {
+    ...blockSections,
     hero_v4: NewsHero,
     marquee: NewsTicker,
     news_grid: NewsGrid,

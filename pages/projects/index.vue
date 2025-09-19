@@ -3,6 +3,7 @@ import AppCurrentNews from '~/components/AppCurrentNews.vue'
 import ProjectsGrid from '~/components/projects/ProjectsGrid.vue'
 import ProjectsHero from '~/components/projects/ProjectsHero.vue'
 import ProjectsTicker from '~/components/projects/ProjectsTicker.vue'
+import { blockSections } from '~/components/sections'
 import { useProjectsStory } from '~/composables/stories/projects/projectsStory'
 import { pageTransition } from '~/transitions/base'
 
@@ -18,6 +19,7 @@ const body = computed(() => {
 
 const resolveSectionByName = (name: string) => {
   const sections = {
+    ...blockSections,
     hero_v3: ProjectsHero,
     marquee: ProjectsTicker,
     projects_grid: ProjectsGrid,

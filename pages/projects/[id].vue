@@ -8,6 +8,7 @@ import ProjectTicker from '~/components/current-project/ProjectTicker.vue'
 import TextBlockSection from '~/components/current-project/TextBlockSection.vue'
 import VisionSection from '~/components/current-project/VisionSection.vue'
 import Divider from '~/components/Divider.vue'
+import { blockSections } from '~/components/sections'
 import { useCurrentProjectStory } from '~/composables/stories/projects/currentProjectStory'
 import { useProjectsStories } from '~/composables/stories/projects/projectsStories'
 
@@ -39,6 +40,7 @@ const body = computed(() => {
 
 const resolveSectionByName = (name: string) => {
   const sections = {
+    ...blockSections,
     hero_v2: HeroSection,
     marquee: ProjectTicker,
     full_page_assets: FullPageAssetsSection,

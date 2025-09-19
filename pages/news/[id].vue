@@ -4,6 +4,7 @@ import NewsTicker from '~/components/current-news/NewsTicker.vue'
 import TextBlockSection from '~/components/current-news/TextBlockSection.vue'
 import VisionSection from '~/components/current-news/VisionSection.vue'
 import FullPageAssets from '~/components/FullPageAssets.vue'
+import { blockSections } from '~/components/sections'
 import { useCurrentNewsStory } from '~/composables/stories/news/currentNewsStory'
 
 const { params } = useRoute()
@@ -22,6 +23,7 @@ const body = computed(() => {
 
 const resolveSectionByName = (name: string) => {
   const sections = {
+    ...blockSections,
     hero_v5: HeroSection,
     marquee: NewsTicker,
     full_page_assets: FullPageAssets,

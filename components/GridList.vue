@@ -28,6 +28,13 @@ const isButtonVisible = computed(() => visibleCount.value < props.items.length)
 
 const filteredItems = computed(() => props.items.slice(0, visibleCount.value))
 
+const groupedItems = computed(
+  () =>
+    filteredItems.value
+      .map((_, i, arr) => (i % 4 === 0 ? arr.slice(i, i + 4) : null))
+      .filter(Boolean) as iStory<iGridItems>[][]
+)
+
 const onGetMore = () => {
   visibleCount.value = Math.min(
     visibleCount.value + SHOW_STEP,
@@ -65,35 +72,41 @@ onBeforeUnmount(() => {
 <template>
   <div ref="$el" class="grid-list" :class="{ [`grid-list--${type}`]: type }">
     <div class="grid-list__items">
-      <NuxtLink
-        v-for="(item, idx) in filteredItems"
-        :key="idx"
-        :data-idx="(idx % 4) + 1"
-        :data-first-circle="idx < 4"
-        class="grid-list__item"
-        :to="`/${item?.full_slug}`"
+      <div
+        v-for="(group, index) in groupedItems"
+        :key="index"
+        class="grid-list__group"
       >
-        <div class="grid-list__img-wrapper">
-          <CustomImage
-            :src="item?.content?.preview?.filename"
-            :alt="item?.content?.preview?.alt"
-            :width="1118"
-            class="grid-list__img"
-          />
-        </div>
+        <NuxtLink
+          v-for="(item, idx) in group"
+          :key="idx"
+          :data-idx="(idx % 4) + 1"
+          :data-first-circle="idx < 4"
+          class="grid-list__item"
+          :to="`/${item?.full_slug}`"
+        >
+          <div class="grid-list__img-wrapper">
+            <CustomImage
+              :src="item?.content?.preview?.filename"
+              :alt="item?.content?.preview?.alt"
+              :width="1118"
+              class="grid-list__img"
+            />
+          </div>
 
-        <div class="grid-list__content">
-          <h3 class="grid-list__title">
-            {{ findProjectTitle(item) }}
-          </h3>
-          <p class="grid-list__description">
-            {{ item?.content?.description }}
-          </p>
-          <TextButton class="grid-list__text-btn">
-            {{ story?.content?.see_more }}
-          </TextButton>
-        </div>
-      </NuxtLink>
+          <div class="grid-list__content">
+            <h3 class="grid-list__title">
+              {{ findProjectTitle(item) }}
+            </h3>
+            <p class="grid-list__description">
+              {{ item?.content?.description }}
+            </p>
+            <TextButton class="grid-list__text-btn">
+              {{ story?.content?.see_more }}
+            </TextButton>
+          </div>
+        </NuxtLink>
+      </div>
     </div>
     <CircleButton
       v-if="isButtonVisible"
@@ -121,18 +134,30 @@ onBeforeUnmount(() => {
   position: relative;
 }
 
-.grid-list__items {
-  position: relative;
-
+.grid-list__group {
   @media (min-width: $br1) {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     column-gap: vw(40);
+
+    &:not(:first-child) {
+      margin-top: vw(200);
+    }
   }
 
   @media (max-width: $br1) {
     display: flex;
     flex-direction: column;
+    gap: 72px;
+  }
+}
+
+.grid-list__items {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  @media (max-width: $br1) {
     gap: 72px;
   }
 }

@@ -110,7 +110,7 @@ const { isSliding, visibleSlides, handleSlideNext } = useMultiSliderAnimation(
 
     &:hover {
       .concept-desk__img-wrapper {
-        border-radius: 120px;
+        border-radius: vw(120);
       }
 
       .concept-desk__btn {

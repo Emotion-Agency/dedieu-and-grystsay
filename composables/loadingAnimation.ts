@@ -34,8 +34,8 @@ export const useLoadingAnimation = () => {
         const delay = isFirstLoad.value ? 3.2 : wait
 
         const onComplete = () => {
-          titleSplitter?.revert()
-          tl.revert()
+          // titleSplitter?.revert()
+          // tl.revert()
 
           document.documentElement.style.cursor = 'auto'
           document.body.style.pointerEvents = 'auto'
@@ -75,8 +75,13 @@ export const useLoadingAnimation = () => {
           titleSplitter = new SplitText($split, {
             type: 'lines',
             mask: 'lines',
+            linesClass: 'e-line',
             onSplit: target => {
-              gsap.set(target.lines, { yPercent: 110 })
+              gsap.set(target.masks, {
+                overflow: 'visible',
+                clipPath: 'inset(-0.2em 0 -0.2em 0)',
+              })
+              gsap.set(target.lines, { yPercent: 116 })
 
               tl.to(
                 target.lines,

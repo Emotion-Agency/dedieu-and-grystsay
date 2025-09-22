@@ -5,14 +5,18 @@ interface IProps {
   content: iProjectsHero
 }
 
-defineProps<IProps>()
+const props = defineProps<IProps>()
+
+const titleText = computed(() => {
+  return replaceEnterToBr(props.content?.title)
+})
 </script>
 
 <template>
   <section ref="$el" class="prs-hero container">
     <div class="prs-hero__wrapper">
       <div class="prs-hero__content">
-        <h1 data-split class="prs-hero__title">{{ content?.title }}</h1>
+        <h1 data-split class="prs-hero__title" v-html="titleText" />
         <CustomImage
           data-preload
           :src="content?.asset?.filename"

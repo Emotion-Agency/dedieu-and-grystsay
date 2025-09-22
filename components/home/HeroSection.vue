@@ -5,15 +5,18 @@ interface IProps {
   content: iHomeHero
 }
 
-defineProps<IProps>()
+const props = defineProps<IProps>()
+
+const titleText = computed(() => {
+  return replaceEnterToBr(props.content?.title)
+})
 </script>
 
 <template>
   <section class="hero">
     <div class="hero__wrapper container">
-      <h1 data-split class="hero__title">
-        {{ content?.title }}
-      </h1>
+      <h1 data-split class="hero__title" v-html="titleText" />
+
       <div class="hero__d-wrapper">
         <CustomImage
           data-preload

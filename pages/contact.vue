@@ -21,13 +21,18 @@ const meta = computed(() => {
     ogImage: data?.image?.filename,
   }
 })
+
+const titleText = computed(() => {
+  return replaceEnterToBr(story.value?.content?.title)
+})
 </script>
 
 <template>
   <div>
     <PageMeta v-if="meta" v-bind="meta" />
     <section ref="$el" class="contact container">
-      <h1 data-split class="contact__title">{{ story?.content?.title }}</h1>
+      <h1 data-split class="contact__title" v-html="titleText" />
+
       <ContactContent data-o />
     </section>
   </div>

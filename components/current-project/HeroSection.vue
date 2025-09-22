@@ -5,15 +5,17 @@ interface IProps {
   content: iCurrentProjectHero
 }
 
-defineProps<IProps>()
+const props = defineProps<IProps>()
+
+const titleText = computed(() => {
+  return replaceEnterToBr(props.content?.title)
+})
 </script>
 
 <template>
   <section class="curr-pr container">
     <div class="curr-pr__wrapper">
-      <h1 data-split class="curr-pr__title">
-        {{ content?.title }}
-      </h1>
+      <h1 data-split class="curr-pr__title" v-html="titleText" />
       <div data-scale class="curr-pr__btn-wrapper">
         <CircleButton direction="left" class="curr-pr__btn">
           {{ content?.rotating_text }}

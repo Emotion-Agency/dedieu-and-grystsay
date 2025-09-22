@@ -254,10 +254,10 @@ const handleOpen = async (project: iStory<iProjectsContent>, idx: number) => {
   )
   tl.to(
     textSplit.lines,
-    { duration: 1.2, y: 0, stagger: 0.07, ease: 'expo.out' },
-    '<30%'
+    { duration: 1.5, y: 0, stagger: 0.01, ease: 'expo.out' },
+    '<20%'
   )
-  tl.to($btn, { duration: 1, y: 0, opacity: 1, ease: 'expo.out' }, '<55%')
+  tl.to($btn, { duration: 1, y: 0, opacity: 1, ease: 'expo.out' }, '<20%')
 }
 
 const handleClose = () => {

@@ -34,8 +34,8 @@ export const useLoadingAnimation = () => {
         const delay = isFirstLoad.value ? 3.2 : wait
 
         const onComplete = () => {
-          // titleSplitter?.revert()
-          // tl.revert()
+          titleSplitter?.revert()
+          tl.revert()
 
           document.documentElement.style.cursor = 'auto'
           document.body.style.pointerEvents = 'auto'

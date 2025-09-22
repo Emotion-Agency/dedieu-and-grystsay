@@ -145,13 +145,14 @@ const { isInEditor } = useAppState()
   svg {
     max-width: 100%;
     height: 100%;
-    width: fit-content;
     height: vw(30);
+    width: vw(174);
     path {
       fill: var(--fill-color);
     }
     @media (max-width: $br1) {
       height: 24px;
+      width: 137px;
     }
   }
 

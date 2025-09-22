@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import type Lenis from 'lenis'
 import { useMenuStory } from '~/composables/stories/menuStory'
 
 interface iProps {
@@ -12,8 +13,6 @@ const { story } = await useMenuStory()
 const { isMenuOpened } = useAppState()
 const localePath = useLocalePath()
 
-let navbarPos
-
 const onClick = () => {
   isMenuOpened.value = false
 }
@@ -22,16 +21,58 @@ const elRef = useTemplateRef('el')
 
 const { init } = useHeaderAnimation()
 
+const isVisible = ref(true)
+const lastScroll = ref(0)
+const upwardCount = ref(0)
+
+watch(isVisible, val => {
+  if (!import.meta.client) {
+    return
+  }
+
+  if (!val) {
+    document.body.classList.add('nav-hidden')
+  } else {
+    document.body.classList.remove('nav-hidden')
+  }
+})
+
+const threshold = 3
+
+const onScroll = (e: Lenis) => {
+  const currentScroll = e.scroll
+
+  console.log(upwardCount.value)
+
+  if (currentScroll < lastScroll.value) {
+    // scrolling up
+    upwardCount.value++
+
+    if (upwardCount.value >= threshold && !isVisible.value) {
+      isVisible.value = true
+      upwardCount.value = 0
+    }
+  } else if (currentScroll > lastScroll.value) {
+    // scrolling down
+    upwardCount.value = 0 // reset counter
+    if (isVisible.value) {
+      isVisible.value = false
+    }
+  }
+
+  lastScroll.value = currentScroll
+}
+
+const debouncedOnScroll = useThrottleFn(onScroll, 500)
+
 onMounted(async () => {
-  const { default: NavbarPos } = await import('~/utils/navbarPos')
-  navbarPos = new NavbarPos()
-  navbarPos.init()
+  window.elenis.on('scroll', debouncedOnScroll)
 
   init(elRef.value)
 })
 
 onBeforeUnmount(() => {
-  navbarPos && navbarPos.destroy()
+  window.elenis.off('scroll', debouncedOnScroll)
 })
 </script>
 

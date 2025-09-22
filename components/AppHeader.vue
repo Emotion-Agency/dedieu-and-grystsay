@@ -37,18 +37,27 @@ watch(isVisible, val => {
   }
 })
 
-const threshold = 3
+const threshold = computed(() => {
+  if (!import.meta.client) {
+    return 0
+  }
+  return 100
+})
 
 const onScroll = (e: Lenis) => {
   const currentScroll = e.scroll
 
-  console.log(upwardCount.value)
+  if (currentScroll < 20) {
+    upwardCount.value = 0
+    isVisible.value = true
+    return
+  }
 
   if (currentScroll < lastScroll.value) {
     // scrolling up
     upwardCount.value++
 
-    if (upwardCount.value >= threshold && !isVisible.value) {
+    if (upwardCount.value >= threshold.value && !isVisible.value) {
       isVisible.value = true
       upwardCount.value = 0
     }
@@ -63,16 +72,14 @@ const onScroll = (e: Lenis) => {
   lastScroll.value = currentScroll
 }
 
-const debouncedOnScroll = useThrottleFn(onScroll, 500)
-
 onMounted(async () => {
-  window.elenis.on('scroll', debouncedOnScroll)
+  window.elenis.on('scroll', onScroll)
 
   init(elRef.value)
 })
 
 onBeforeUnmount(() => {
-  window.elenis.off('scroll', debouncedOnScroll)
+  window.elenis.off('scroll', onScroll)
 })
 </script>
 

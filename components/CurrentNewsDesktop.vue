@@ -233,6 +233,7 @@ const { isSliding, visibleSlides, handleSlideNext } = useMultiSliderAnimation(
   letter-spacing: -0.03em;
   text-transform: uppercase;
   word-break: break-word;
+  white-space: normal;
 }
 
 .curr-pr-desk__desc {

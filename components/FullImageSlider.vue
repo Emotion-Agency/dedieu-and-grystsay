@@ -269,13 +269,13 @@ useIntersectionObserver($el, ([entry]) => {
     align-items: center;
     width: 60px;
     height: 60px;
-    background-color: transparent;
+    background-color: var(--background);
     color: var(--background);
     border-radius: 50%;
 
     svg {
-      width: 14px;
-      height: 14px;
+      width: 20px;
+      height: 20px;
     }
   }
 

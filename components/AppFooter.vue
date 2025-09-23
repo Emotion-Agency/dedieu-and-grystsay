@@ -27,17 +27,22 @@ onMounted(() => {
     st = new ScrollTrigger({
       trigger: $el.value,
       animation: tl,
-      start: () => 'top-=100% top',
+      start: () => `top-=${window.innerHeight} top`,
       end: () => 'bottom bottom',
       scrub: true,
     })
 
-    tl.from($title, {
-      yPercent: -50,
-      stagger: 0.1,
-      duration: 2.5,
-      ease: 'power2.out',
-    })
+    tl.fromTo(
+      $title,
+      {
+        y: '-0.55em',
+        duration: 2.5,
+        ease: 'power2.out',
+      },
+      {
+        y: '0.08em',
+      }
+    )
   }
 })
 
@@ -91,7 +96,10 @@ onBeforeUnmount(() => {
   text-transform: uppercase;
   text-align: center;
   position: relative;
+  z-index: 5;
   word-break: break-word;
+  mix-blend-mode: difference;
+  color: var(--background);
 
   @media (max-width: $br1) {
     font-size: 60px;
@@ -100,7 +108,6 @@ onBeforeUnmount(() => {
   }
 
   &--first {
-    color: var(--foreground);
     top: vw(12);
 
     @media (max-width: $br1) {

@@ -37,6 +37,8 @@ export const useLoadingAnimation = () => {
           titleSplitter?.revert()
           tl.revert()
 
+          gsap.set($split, { clearProps: true })
+
           document.documentElement.style.cursor = 'auto'
           document.body.style.pointerEvents = 'auto'
         }
@@ -77,6 +79,7 @@ export const useLoadingAnimation = () => {
             mask: 'lines',
             linesClass: 'e-line',
             onSplit: target => {
+              gsap.set($split, { opacity: 0 })
               gsap.set(target.masks, {
                 overflow: 'visible',
                 clipPath: 'inset(-0.2em 0 -0.2em 0)',
@@ -95,6 +98,7 @@ export const useLoadingAnimation = () => {
                 },
                 delay
               )
+              tl.to($split, { duration: 0.1, opacity: 1 }, '<')
             },
           })
         }

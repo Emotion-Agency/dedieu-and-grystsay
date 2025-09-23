@@ -29,6 +29,7 @@ const isModalOpen = defineModel<boolean>('open')
     height: 100%;
     width: 100%;
     padding: 0;
+    border: none;
 
     @media (max-width: $br1) {
       padding: 0;

@@ -284,6 +284,7 @@ onBeforeUnmount(() => {
   letter-spacing: -0.03em;
   line-height: 0.86em;
   font-size: vw(50);
+  white-space: normal;
 
   @media (max-width: $br1) {
     letter-spacing: -0.02em;

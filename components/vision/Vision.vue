@@ -10,7 +10,7 @@ const props = defineProps<IProps>()
 
 const { isMobile } = useAppState()
 
-const images = props.content.carousel
+const images = computed(() => props.content?.carousel || [])
 const isExpanded = ref(false)
 const MAX_LENGTH = 700
 const showModal = ref(false)
@@ -59,7 +59,7 @@ const handleModalOpen = (idx: number) => {
     <VisionDesktop v-else :images="images" @open-modal="handleModalOpen" />
     <ModalsSliderModal
       v-model:open="showModal"
-      :images
+      :images="images"
       :current-index="currentIndex"
     />
   </div>
@@ -91,15 +91,12 @@ const handleModalOpen = (idx: number) => {
 .vision__title {
   @include medium;
   font-size: vw(40);
-  line-height: 1.4em;
+  line-height: 1em;
   letter-spacing: -0.02em;
   text-transform: uppercase;
 
-  @media (min-width: $br1) {
-    line-height: 1em;
-  }
-
   @media (max-width: $br1) {
+    line-height: 1.15em;
     font-size: 34px;
   }
 }

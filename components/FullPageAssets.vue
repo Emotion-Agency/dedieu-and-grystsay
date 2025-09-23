@@ -2,11 +2,14 @@
 import type { iImage } from '~/types/story'
 
 interface IProps {
-  images: iImage[]
+  images?: iImage[]
+  assets?: iImage[]
   currentIndex?: number
 }
 
-defineProps<IProps>()
+const props = defineProps<IProps>()
+
+const images = computed<iImage[]>(() => props.images ?? props.assets ?? [])
 </script>
 
 <template>

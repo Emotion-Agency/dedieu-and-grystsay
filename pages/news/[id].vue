@@ -57,6 +57,7 @@ const meta = computed(() => {
         :is="resolveSectionByName(item.component)"
         v-if="resolveSectionByName(item.component)"
         v-editable="item"
+        :data-o="item.component === 'full_page_assets' ? true : undefined"
         :content="item"
       />
       <div v-else>

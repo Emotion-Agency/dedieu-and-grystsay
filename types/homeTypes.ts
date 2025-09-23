@@ -14,6 +14,7 @@ export interface iHomeImages {
 
 export interface iHomeHero {
   title: string
+  mobile_title?: string
   text: string
   asset: iImage
   component: string

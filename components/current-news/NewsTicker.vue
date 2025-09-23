@@ -11,7 +11,7 @@ defineProps<IProps>()
 
 <template>
   <section class="curr-news-ticker">
-    <div class="curr-news-ticker__wrapper container">
+    <div data-o class="curr-news-ticker__wrapper container">
       <Ticker>{{ content?.text }}</Ticker>
     </div>
   </section>

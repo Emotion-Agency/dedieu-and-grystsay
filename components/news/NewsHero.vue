@@ -7,7 +7,13 @@ interface IProps {
 
 const props = defineProps<IProps>()
 
+const { isMobile } = useAppState()
+
 const titleText = computed(() => {
+  if (isMobile.value) {
+    return replaceEnterToBr(props.content?.mobile_title || props.content?.title)
+  }
+
   return replaceEnterToBr(props.content?.title)
 })
 </script>
@@ -69,7 +75,7 @@ const titleText = computed(() => {
 .news-hero__img {
   display: block;
   width: 100%;
-  height: vw(287);
+  aspect-ratio: 424/287;
   object-fit: cover;
 
   @media (min-width: $br1) {
@@ -77,10 +83,6 @@ const titleText = computed(() => {
     position: absolute;
     bottom: 0;
     right: 0;
-  }
-
-  @media (max-width: $br1) {
-    height: 233px;
   }
 }
 </style>

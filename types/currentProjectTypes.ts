@@ -29,7 +29,9 @@ export interface iCurrentProjectMarquee {
 
 export interface iCurrentProjectHero {
   rotating_text: string
+  disable_rotating_circle: boolean
   title: string
+  mobile_title?: string
   component: string
   _uid: string
 }

@@ -7,7 +7,13 @@ interface IProps {
 
 const props = defineProps<IProps>()
 
+const { isMobile } = useAppState()
+
 const titleText = computed(() => {
+  if (isMobile.value) {
+    return replaceEnterToBr(props.content?.mobile_title || props.content?.title)
+  }
+
   return replaceEnterToBr(props.content?.title)
 })
 </script>

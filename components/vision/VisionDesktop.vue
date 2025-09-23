@@ -75,7 +75,8 @@ const { isSliding, visibleSlides, handleSlideNext, current } =
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: vw(24);
-  height: vw(424);
+  // height: vw(424);
+  height: auto;
 }
 
 .vision-desk__item {

@@ -43,7 +43,7 @@ const href = props.tag === 'a' ? props.href : undefined
   @include medium;
   font-size: vw(18);
   color: inherit;
-  text-transform: capitalize;
+  text-transform: none;
 
   &:hover {
     span::before {

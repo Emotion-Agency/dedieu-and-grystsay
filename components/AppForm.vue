@@ -138,7 +138,7 @@ const onSubmit = async (e: Event) => {
 
 .form__form-btn {
   @include regular;
-  text-transform: capitalize;
+  text-transform: none;
   padding: vw(14) vw(40);
   margin-top: vw(28);
   font-size: vw(16);

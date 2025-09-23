@@ -91,7 +91,7 @@ const onInput = () => {
   }
   &::placeholder {
     color: var(--background);
-    text-transform: capitalize;
+    text-transform: none;
     transition: color 0.3s $easing;
     @include regular;
   }

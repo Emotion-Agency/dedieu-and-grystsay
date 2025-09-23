@@ -113,7 +113,7 @@ const handleModalOpen = (idx: number) => {
   font-size: vw(18);
   line-height: 1.4em;
   letter-spacing: -0.01em;
-  text-transform: capitalize;
+  text-transform: none;
   max-width: vw(425);
   margin-left: vw(223);
 

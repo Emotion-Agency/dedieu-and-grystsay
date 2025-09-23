@@ -97,7 +97,7 @@ const cursorText = computed(() => {
   color: var(--background);
   font-size: vw(14);
   line-height: 1em;
-  text-transform: capitalize;
+  text-transform: none;
   pointer-events: none;
   opacity: 0;
   transform: scale(0.5);

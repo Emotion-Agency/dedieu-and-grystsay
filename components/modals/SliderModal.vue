@@ -28,11 +28,16 @@ const isModalOpen = defineModel<boolean>('open')
   .dialog__window {
     height: 100%;
     width: 100%;
-    padding: vw(10);
+    padding: 0;
 
     @media (max-width: $br1) {
-      padding: 10px;
+      padding: 0;
     }
+  }
+
+  .dialog__window {
+    max-height: 100vh;
+    max-width: 100vw;
   }
 }
 

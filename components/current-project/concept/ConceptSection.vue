@@ -114,8 +114,8 @@ const handleModalOpen = (idx: number) => {
   line-height: 1.4em;
   letter-spacing: -0.01em;
   text-transform: none;
-  max-width: vw(425);
-  margin-left: vw(223);
+  max-width: vw(440);
+  margin-left: vw(236);
 
   @media (max-width: $br1) {
     font-size: 18px;

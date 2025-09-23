@@ -141,7 +141,7 @@ onBeforeUnmount(() => {
   @media (min-width: $br1) {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
-    column-gap: vw(40);
+    column-gap: vw(24);
 
     &:not(:first-child) {
       margin-top: vw(200);

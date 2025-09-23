@@ -24,7 +24,7 @@ const toggleText = () => {
 <template>
   <section class="pr-text-block container">
     <div class="pr-text-block__wrapper">
-      <div class="pr-text-block__info">
+      <div class="grid pr-text-block__info">
         <h3 class="pr-text-block__title">
           {{ content?.title }}
         </h3>
@@ -56,14 +56,10 @@ const toggleText = () => {
 }
 
 .pr-text-block__info {
-  display: flex;
-  align-items: flex-start;
-
-  @media (min-width: $br1) {
-    justify-content: space-between;
-  }
+  align-items: start;
 
   @media (max-width: $br1) {
+    display: flex;
     flex-direction: column;
   }
 }
@@ -92,7 +88,7 @@ const toggleText = () => {
   display: inline-block;
 
   @media (min-width: $br1) {
-    max-width: vw(880);
+    grid-column: 3/-1;
   }
 
   @media (max-width: $br1) {

@@ -79,7 +79,7 @@ const titleText = computed(() => {
   object-fit: cover;
 
   @media (min-width: $br1) {
-    max-width: vw(424);
+    max-width: vw(444);
     position: absolute;
     bottom: 0;
     right: 0;

@@ -410,6 +410,8 @@ const handleClose = () => {
 
 <style lang="scss">
 .p-carousel {
+  width: 100%;
+  overflow: hidden;
   margin-top: vw(40);
   position: relative;
 
@@ -523,7 +525,7 @@ const handleClose = () => {
 
 .p-carousel-clone__asset {
   --width: #{vw(214)};
-  --full-width: #{vw(737)};
+  --full-width: #{vw(772)};
   width: var(--width);
   flex-shrink: 0;
   height: 100%;
@@ -545,7 +547,7 @@ const handleClose = () => {
 }
 
 .p-carousel-clone__content {
-  width: vw(424);
+  width: vw(444);
   margin-left: vw(163);
   opacity: 0;
   flex-shrink: 0;

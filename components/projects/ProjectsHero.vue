@@ -57,7 +57,7 @@ const titleText = computed(() => {
   height: 100%;
 
   @media (min-width: $br1) {
-    grid-template-columns: 1fr vw(424);
+    grid-template-columns: 1fr vw(444);
     gap: vw(78);
   }
 

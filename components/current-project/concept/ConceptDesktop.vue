@@ -73,11 +73,14 @@ const { isSliding, visibleSlides, handleSlideNext } = useMultiSliderAnimation(
 <style lang="scss">
 .concept-desk {
   padding-top: vw(60);
+  @media (min-width: $br1) {
+    width: 49%;
+  }
 }
 
 .concept-desk__list {
   display: grid;
-  grid-template-columns: vw(200) vw(200) vw(200);
+  grid-template-columns: repeat(3, #{vw(208)});
   column-gap: vw(24);
 }
 

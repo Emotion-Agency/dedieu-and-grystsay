@@ -34,7 +34,7 @@ const handleModalOpen = (idx: number) => {
 
 <template>
   <div class="vision">
-    <div class="vision__info">
+    <div class="grid vision__info">
       <h3 class="vision__title">
         {{ content?.title }}
       </h3>
@@ -80,14 +80,10 @@ const handleModalOpen = (idx: number) => {
 }
 
 .vision__info {
-  display: flex;
-  align-items: flex-start;
-
-  @media (min-width: $br1) {
-    justify-content: space-between;
-  }
+  align-items: start;
 
   @media (max-width: $br1) {
+    display: flex;
     flex-direction: column;
   }
 }
@@ -116,7 +112,7 @@ const handleModalOpen = (idx: number) => {
   display: inline-block;
 
   @media (min-width: $br1) {
-    max-width: vw(880);
+    grid-column: 3/-1;
   }
 
   @media (max-width: $br1) {

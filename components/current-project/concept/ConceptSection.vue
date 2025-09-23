@@ -110,7 +110,7 @@ const handleModalOpen = (idx: number) => {
 
 .p-concept__text {
   @include medium;
-  font-size: vw(18);
+  font-size: vw(16);
   line-height: 1.4em;
   letter-spacing: -0.01em;
   text-transform: none;

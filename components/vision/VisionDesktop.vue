@@ -54,6 +54,7 @@ const { isSliding, visibleSlides, handleSlideNext, current } =
               />
             </div>
           </div>
+          <CustomCursor />
         </div>
       </li>
     </ul>

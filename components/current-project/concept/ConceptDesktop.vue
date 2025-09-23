@@ -59,6 +59,7 @@ const { isSliding, visibleSlides, handleSlideNext } = useMultiSliderAnimation(
               />
             </div>
           </div>
+          <CustomCursor v-if="idx !== 2" />
         </div>
 
         <TextButton v-if="idx === 2" class="concept-desk__btn">

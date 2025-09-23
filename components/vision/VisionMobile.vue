@@ -8,6 +8,8 @@ interface IProps {
 
 const props = defineProps<IProps>()
 
+const emit = defineEmits(['openModal'])
+
 const $items = ref<HTMLElement[]>([])
 
 const { prev, current, direction, throttledNavigate } = useSlider(
@@ -64,6 +66,7 @@ watch(current, handleChangeSlide)
           ref="$items"
           class="vision-mob__item"
           :class="{ active: idx === current, prev: idx === prev }"
+          @click="emit('openModal', idx)"
         >
           <CustomImage
             :src="img?.filename"

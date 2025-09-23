@@ -7,6 +7,7 @@ interface IProps {
 }
 
 const props = defineProps<IProps>()
+const emit = defineEmits(['openModal'])
 
 const images = computed(() => {
   return props.images
@@ -25,11 +26,13 @@ const { isSliding, visibleSlides, handleSlideNext } = useMultiSliderAnimation(
   <div ref="$el" class="concept-desk">
     <ul class="concept-desk__list">
       <li
-        v-for="({ current: image, next: nextImage }, idx) in visibleSlides"
+        v-for="(
+          { current: image, next: nextImage, currentIndex }, idx
+        ) in visibleSlides"
         :key="idx"
         class="concept-desk__item"
         data-msa-item
-        @click="idx === 2 && handleSlideNext()"
+        @click="idx === 2 ? handleSlideNext() : emit('openModal', currentIndex)"
       >
         <div class="concept-desk__img-wrapper">
           <div
@@ -83,6 +86,7 @@ const { isSliding, visibleSlides, handleSlideNext } = useMultiSliderAnimation(
   justify-content: center;
   align-items: center;
   height: fit-content;
+  cursor: pointer;
 
   &:nth-child(1) {
     @include col(1, 1);
@@ -97,7 +101,7 @@ const { isSliding, visibleSlides, handleSlideNext } = useMultiSliderAnimation(
   &:nth-child(3) {
     @include col(3, 3);
     @include row(1, 1);
-    cursor: pointer;
+
     display: flex;
     flex-direction: column;
     justify-content: center;

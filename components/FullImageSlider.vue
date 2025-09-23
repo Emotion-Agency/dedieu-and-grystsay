@@ -4,6 +4,7 @@ import type { iImage } from '~/types/story'
 
 interface IProps {
   images: iImage[]
+  currentIndex?: number
 }
 
 const props = defineProps<IProps>()
@@ -31,7 +32,8 @@ const setCursor = (type: 'left' | 'right' | null) => {
 }
 
 const { prev, current, direction, throttledNavigate } = useSlider(
-  props.images.length
+  props.images.length,
+  props.currentIndex
 )
 
 const handleChangeSlide = async () => {
@@ -82,6 +84,9 @@ const handleKeyDown = (e: KeyboardEvent) => {
 }
 
 onMounted(() => {
+  gsap.set($items.value[current.value], {
+    clipPath: 'inset(0 0 0 0)',
+  })
   prev.value = $items.value.length - 1
   window.addEventListener('keydown', handleKeyDown)
 })
@@ -207,9 +212,9 @@ useIntersectionObserver($el, ([entry]) => {
     z-index: 1;
   }
 
-  &:first-child {
-    clip-path: inset(0 0 0 0);
-  }
+  // &:first-child {
+  //   clip-path: inset(0 0 0 0);
+  // }
 }
 
 .full-slider__img {

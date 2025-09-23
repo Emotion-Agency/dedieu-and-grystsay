@@ -9,7 +9,7 @@ interface IProps {
 const props = defineProps<IProps>()
 
 const { story } = await useGlobalStory()
-const isMobile = useSSRMediaQuery('(max-width: 860px)')
+const { isMobile } = useAppState()
 
 const images = props.content.corousel
 </script>

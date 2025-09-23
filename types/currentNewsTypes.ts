@@ -12,6 +12,7 @@ export interface iCurrentNewsMarquee {
 
 export interface iCurrentNewsHero {
   title: string
+  mobile_title?: string
   text: string
   asset: iImage
   component: string

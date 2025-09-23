@@ -71,6 +71,7 @@ defineProps<IProps>()
   letter-spacing: -0.02em;
   text-transform: uppercase;
   word-break: break-word;
+  white-space: normal;
 }
 
 .curr-pr-mob__text {

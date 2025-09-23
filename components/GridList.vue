@@ -16,8 +16,7 @@ const props = withDefaults(defineProps<IProps>(), {
 
 const { story } = await useGlobalStory()
 
-const { width } = useWindowSize()
-const isMobile = computed(() => width.value <= 860)
+const { isMobile } = useAppState()
 const $el = ref<HTMLElement | null>(null)
 
 const SHOW_STEP = 7

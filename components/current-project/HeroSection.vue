@@ -7,7 +7,13 @@ interface IProps {
 
 const props = defineProps<IProps>()
 
+const { isMobile } = useAppState()
+
 const titleText = computed(() => {
+  if (isMobile.value) {
+    return replaceEnterToBr(props.content?.mobile_title || props.content?.title)
+  }
+
   return replaceEnterToBr(props.content?.title)
 })
 </script>
@@ -16,7 +22,11 @@ const titleText = computed(() => {
   <section class="curr-pr container">
     <div class="curr-pr__wrapper">
       <h1 data-split class="curr-pr__title" v-html="titleText" />
-      <div data-scale class="curr-pr__btn-wrapper">
+      <div
+        v-if="!content?.disable_rotating_circle"
+        data-scale
+        class="curr-pr__btn-wrapper"
+      >
         <CircleButton direction="left" class="curr-pr__btn">
           {{ content?.rotating_text }}
         </CircleButton>

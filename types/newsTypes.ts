@@ -13,6 +13,7 @@ export interface iNewsContent {
 export interface iNewsHero {
   asset: iImage
   title: string
+  mobile_title?: string
   component: string
   _uid: string
 }

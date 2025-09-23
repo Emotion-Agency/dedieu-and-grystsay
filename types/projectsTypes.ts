@@ -37,6 +37,7 @@ export interface iProjectsHero {
   asset: iImage
   text: string
   title: string
+  mobile_title?: string
   component: string
   _uid: string
 }

@@ -9,9 +9,16 @@ interface IProps {
 const props = defineProps<IProps>()
 
 const { story } = await useGlobalStory()
-const { isMobile } = useAppState()
+const isMobile = useSSRMediaQuery('(max-width: 860px)')
+const showModal = ref(false)
+const currentIndex = ref(0)
 
 const images = props.content.corousel
+
+const handleModalOpen = (idx: number) => {
+  currentIndex.value = idx
+  showModal.value = true
+}
 </script>
 
 <template>
@@ -25,13 +32,23 @@ const images = props.content.corousel
           {{ content?.text }}
         </p>
       </div>
-      <CurrentProjectConceptMobile v-if="isMobile" :images />
+      <CurrentProjectConceptMobile
+        v-if="isMobile"
+        :images
+        @open-modal="handleModalOpen"
+      />
       <CurrentProjectConceptDesktop
         v-else
         :images
         :next-slide-button="story?.content?.slides_next"
+        @open-modal="handleModalOpen"
       />
     </div>
+    <ModalsSliderModal
+      v-model:open="showModal"
+      :images
+      :current-index="currentIndex"
+    />
   </section>
 </template>
 

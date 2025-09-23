@@ -11,7 +11,7 @@ defineProps<IProps>()
 
 <template>
   <div class="pr-full-assets" :class="{ 'last-full-assets': isLastFullAssets }">
-    <FullPageAssets :content="content" />
+    <FullPageAssets :images="content.assets" />
   </div>
 </template>
 

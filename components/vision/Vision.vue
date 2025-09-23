@@ -13,6 +13,8 @@ const { isMobile } = useAppState()
 const images = props.content.carousel
 const isExpanded = ref(false)
 const MAX_LENGTH = 700
+const showModal = ref(false)
+const currentIndex = ref(0)
 
 const displayedText = computed(() =>
   isExpanded.value
@@ -22,6 +24,11 @@ const displayedText = computed(() =>
 
 const toggleText = () => {
   isExpanded.value = !isExpanded.value
+}
+
+const handleModalOpen = (idx: number) => {
+  currentIndex.value = idx
+  showModal.value = true
 }
 </script>
 
@@ -44,8 +51,17 @@ const toggleText = () => {
       </div>
     </div>
     <div class="vision__line" :class="{ 'vision__line--news': isNews }" />
-    <VisionMobile v-if="isMobile" :images="images" />
-    <VisionDesktop v-else :images="images" />
+    <VisionMobile
+      v-if="isMobile"
+      :images="images"
+      @open-modal="handleModalOpen"
+    />
+    <VisionDesktop v-else :images="images" @open-modal="handleModalOpen" />
+    <ModalsSliderModal
+      v-model:open="showModal"
+      :images
+      :current-index="currentIndex"
+    />
   </div>
 </template>
 

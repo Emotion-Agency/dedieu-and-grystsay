@@ -1,8 +1,9 @@
 export const useSlider = (
   _count: MaybeRefOrGetter<number>,
+  initialIndex = 0,
   threshold = 700
 ) => {
-  const current = ref(0)
+  const current = ref(initialIndex)
   const prev = ref(null)
   const direction = ref<1 | -1>(1)
 

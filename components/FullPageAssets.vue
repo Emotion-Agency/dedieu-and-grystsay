@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import type { iFullPageAssets } from '~/types/fullAssetsTypes'
+import type { iImage } from '~/types/story'
 
 interface IProps {
-  content: iFullPageAssets
+  images: iImage[]
+  currentIndex?: number
 }
 
 defineProps<IProps>()
@@ -10,15 +11,16 @@ defineProps<IProps>()
 
 <template>
   <section class="full-assets container">
-    <div v-if="content?.assets?.length" class="full-assets__wrapper">
+    <div v-if="images?.length" class="full-assets__wrapper">
       <FullImageSlider
-        v-if="content?.assets.length > 1"
-        :images="content?.assets"
+        v-if="images?.length > 1"
+        :images="images"
+        :current-index="currentIndex"
       />
       <AssetRenderer
         v-else
-        :src="content?.assets[0]?.filename"
-        :alt="content?.assets[0]?.alt"
+        :src="images[0]?.filename"
+        :alt="images[0]?.alt"
         :is-playing="true"
         class="full-assets__img"
       />

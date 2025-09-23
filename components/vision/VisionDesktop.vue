@@ -6,6 +6,8 @@ interface IProps {
 }
 const props = defineProps<IProps>()
 
+const emit = defineEmits(['openModal'])
+
 const images = computed(() => {
   return props.images
 })
@@ -20,10 +22,13 @@ const { isSliding, visibleSlides, handleSlideNext, current } =
   <div ref="$el" class="vision-desk">
     <ul class="vision-desk__list">
       <li
-        v-for="({ current: img, next: nextImg }, idx) in visibleSlides"
+        v-for="(
+          { current: img, next: nextImg, currentIndex }, idx
+        ) in visibleSlides"
         :key="idx"
         data-msa-item
         class="vision-desk__item"
+        @click="emit('openModal', currentIndex)"
       >
         <div class="vision-desk__img-wrapper">
           <div
@@ -75,6 +80,7 @@ const { isSliding, visibleSlides, handleSlideNext, current } =
 }
 
 .vision-desk__item {
+  cursor: pointer;
   height: 100%;
 }
 

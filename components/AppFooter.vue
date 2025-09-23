@@ -81,7 +81,7 @@ onBeforeUnmount(() => {
   color: var(--background);
   background-color: var(--foreground);
 
-  padding-bottom: vw(40);
+  padding-bottom: vw(52);
 
   @media (max-width: $br1) {
     padding-bottom: 20px;

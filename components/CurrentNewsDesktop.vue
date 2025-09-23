@@ -161,7 +161,7 @@ const { isSliding, visibleSlides, handleSlideNext } = useMultiSliderAnimation(
     }
 
     .curr-pr-desk__img-wrapper {
-      height: vw(200);
+      aspect-ratio: 1;
     }
   }
 }

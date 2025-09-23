@@ -41,16 +41,19 @@ const hideIndicator = (idx: number) => {
 
 const st = ref<ScrollTrigger>(null)
 
+const { isMobile } = useAppState()
+
 onMounted(() => {
   isIndicatorVisible.value = new Array($items.value.length).fill(false)
 
-  const $revealers = document.querySelectorAll('.p-carousel-item__revealer')
-  const $assets = document.querySelectorAll('.p-carousel-item__asset')
+  const $grid = document.querySelector('.p-carousel__grid')
+  const $assets = $grid.querySelectorAll('.p-carousel-item__asset')
+  const $revealers = $grid.querySelectorAll('.p-carousel-item__revealer')
 
   const tl = gsap.timeline({
     paused: true,
     onComplete: () => {
-      $revealers.forEach(el => el.remove())
+      isMobile.value && $revealers.forEach(el => el.remove())
       gsap.set($assets, { clearProps: 'all' })
       tl.kill()
     },
@@ -63,16 +66,18 @@ onMounted(() => {
     duration: 1,
     stagger: 0.05,
   })
-  tl.to(
-    $revealers,
-    {
-      scaleX: 0,
-      ease: 'power3.out',
-      duration: 1,
-      stagger: 0.04,
-    },
-    '<60%'
-  )
+
+  isMobile.value &&
+    tl.to(
+      $revealers,
+      {
+        scaleX: 0,
+        ease: 'power3.out',
+        duration: 1,
+        stagger: 0.04,
+      },
+      '<60%'
+    )
 
   st.value = new ScrollTrigger({
     trigger: el.value,
@@ -104,6 +109,9 @@ function getCloneRefs() {
 
   const $title = $clone.querySelector<HTMLElement>('.p-carousel-clone__title')
   const $text = $clone.querySelector<HTMLElement>('.p-carousel-clone__text')
+  const $revealer = $clone.querySelector<HTMLElement>(
+    '.p-carousel-item__revealer'
+  )
 
   const titleSplit = SplitText.create($title, {
     type: 'lines',
@@ -131,6 +139,7 @@ function getCloneRefs() {
     $backBtn: $clone.querySelector<HTMLElement>('.p-carousel-clone__back-btn'),
     $btn: $clone.querySelector<HTMLElement>('.p-carousel-clone__btn-wrapper'),
     $mobileBtn: $clone.querySelector('.p-carousel-clone__close-btn'),
+    $revealer,
   }
 }
 
@@ -150,6 +159,7 @@ const handleOpen = async (project: iStory<iProjectsContent>, idx: number) => {
     $asset,
     $backBtn,
     $btn,
+    $revealer,
     $content,
     titleSplit,
     textSplit,
@@ -172,6 +182,7 @@ const handleOpen = async (project: iStory<iProjectsContent>, idx: number) => {
   await nextTick()
 
   gsap.set($item, { visibility: 'hidden' })
+  gsap.set($revealer, { visibility: 'hidden', opacity: 0 })
   gsap.set(el.value, { pointerEvents: 'none' })
 
   const tl = gsap.timeline({
@@ -274,6 +285,7 @@ const handleClose = () => {
     titleSplit,
     textSplit,
     $mobileBtn,
+    $revealer,
   } = refs
 
   const idx = props.content?.projects?.findIndex(
@@ -291,7 +303,16 @@ const handleClose = () => {
     },
     onComplete: () => {
       gsap.set(
-        [$clone, $asset, $backBtn, $btn, $content, $items.value, $mobileBtn],
+        [
+          $clone,
+          $asset,
+          $backBtn,
+          $btn,
+          $content,
+          $items.value,
+          $mobileBtn,
+          $revealer,
+        ],
         {
           clearProps: 'all',
         }
@@ -320,9 +341,9 @@ const handleClose = () => {
   tl.to(
     $asset,
     {
+      filter: isMobile.value ? 'grayscale(100%)' : undefined,
       width: assetWidth,
       duration: 1,
-      filter: 'grayscale(100%)',
       ease: 'sine.inOut',
     },
     '<70%'
@@ -338,10 +359,11 @@ const handleClose = () => {
     },
     '<'
   )
+  tl.to($revealer, { duration: 0.5, opacity: 1, visibility: 'visible' }, '<')
 
   tl.to($items.value, { duration: 1, x: 0, ease: 'sine.inOut' }, '<')
 
-  window.innerWidth < 860 && tl.to(el.value, { height: '100%', duration: 1 })
+  isMobile.value && tl.to(el.value, { height: '100%', duration: 1 })
 }
 </script>
 
@@ -396,6 +418,7 @@ const handleClose = () => {
           :width="1400"
           class="p-carousel-clone__img"
         />
+        <div class="p-carousel-item__revealer" />
       </div>
       <div class="p-carousel-clone__content">
         <TextButton
@@ -481,17 +504,19 @@ const handleClose = () => {
   transform-origin: bottom;
   max-height: 90svh;
   grid-column: 1/-1;
-
-  filter: grayscale(100%);
-  will-change: transform, filter;
-  transition: filter 0.4s ease;
-  &:hover:not(&--active) {
-    filter: grayscale(0%);
+  will-change: transform;
+  @media (min-width: $br1) {
+    &:hover {
+      .p-carousel-item__revealer {
+        transform: scaleX(0);
+      }
+    }
   }
 
   @media (max-width: $br1) {
     aspect-ratio: 240/558;
     width: 200px;
+    filter: grayscale(100%);
   }
 }
 
@@ -510,6 +535,10 @@ const handleClose = () => {
   background-color: var(--foreground);
   z-index: 1;
   transform-origin: right;
+
+  @media (min-width: $br1) {
+    transition: transform 0.4s ease;
+  }
 }
 
 .p-carousel-clone {
@@ -535,17 +564,25 @@ const handleClose = () => {
 }
 
 .p-carousel-clone__asset {
-  --width: #{vw(200)};
+  --width: #{vw(214)};
   --full-width: #{vw(737)};
   width: var(--width);
   flex-shrink: 0;
   height: 100%;
   transform-origin: bottom;
   max-height: 90svh;
+  overflow: hidden;
+  position: relative;
 
   @media (max-width: $br1) {
     --width: 200px;
     --full-width: 100%;
+  }
+
+  @media (max-width: $br1) {
+    .p-carousel-item__revealer {
+      display: none;
+    }
   }
 }
 

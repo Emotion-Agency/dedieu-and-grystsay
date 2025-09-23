@@ -170,11 +170,10 @@ onBeforeUnmount(() => {
 
   @media (min-width: $br1) {
     &[data-idx='1'] {
-      @include col(1, 6);
-      width: 85%;
+      @include col(1, 4);
 
       .grid-list__img-wrapper {
-        aspect-ratio: 531/342;
+        height: vw(493);
       }
 
       .grid-list__description {

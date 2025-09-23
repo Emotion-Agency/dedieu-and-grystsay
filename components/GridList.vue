@@ -50,14 +50,17 @@ onMounted(() => {
         trigger: $el.value,
         start: 'top 90%',
       },
+      onComplete: () => {
+        gsap.set($el.value, { clearProps: 'all' })
+      },
     })
 
-    gsap.set($el.value, { opacity: 0, translateY: 100 })
+    gsap.set($el.value, { opacity: 0, pointerEvents: 'none', translateY: 50 })
 
     tl.to($el.value, {
       opacity: 1,
       translateY: 0,
-      duration: 3,
+      duration: 1.5,
       ease: 'power2.out',
     })
   }
@@ -91,6 +94,7 @@ onBeforeUnmount(() => {
               :width="1118"
               class="grid-list__img"
             />
+            <CustomCursor />
           </div>
 
           <div class="grid-list__content">
@@ -261,6 +265,7 @@ onBeforeUnmount(() => {
   flex: 1 0 auto;
   overflow: hidden;
   width: 100%;
+  position: relative;
 }
 
 .grid-list__img {

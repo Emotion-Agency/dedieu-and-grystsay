@@ -62,6 +62,7 @@ const { isSliding, visibleSlides, handleSlideNext } = useMultiSliderAnimation(
                 data-msa-img
               />
             </div>
+            <CustomCursor v-if="idx !== 3" />
           </div>
         </component>
         <template v-if="idx !== 3">

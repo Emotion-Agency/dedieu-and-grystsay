@@ -13,39 +13,17 @@ const props = defineProps<IProps>()
 
 const { story } = await useGlobalStory()
 
-const cursorIndicators = ref<(HTMLElement | null)[]>([])
 const el = useTemplateRef<HTMLElement>('el')
 
 const $items = useTemplateRef<HTMLElement[]>('items')
 
 const selectedProject = ref<iStory<iProjectsContent> | null>(null)
 
-const isIndicatorActive = ref(false)
-const isIndicatorVisible = ref<boolean[]>([])
-
-const setIndicator = (event: MouseEvent, idx: number) => {
-  const x = event.clientX
-  const y = event.clientY
-
-  const indicator = cursorIndicators.value[idx]
-  if (indicator instanceof HTMLElement) {
-    isIndicatorVisible.value[idx] = true
-    indicator.style.setProperty('--indicator-x', `${x}px`)
-    indicator.style.setProperty('--indicator-y', `${y}px`)
-  }
-}
-
-const hideIndicator = (idx: number) => {
-  isIndicatorVisible.value[idx] = false
-}
-
 const st = ref<ScrollTrigger>(null)
 
 const { isMobile } = useAppState()
 
 onMounted(() => {
-  isIndicatorVisible.value = new Array($items.value.length).fill(false)
-
   const $grid = document.querySelector('.p-carousel__grid')
   const $assets = $grid.querySelectorAll('.p-carousel-item__asset')
   const $revealers = $grid.querySelectorAll('.p-carousel-item__revealer')
@@ -93,14 +71,6 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   st.value?.kill()
-})
-
-useIntersectionObserver($items, entries => {
-  entries.forEach((entry, idx) => {
-    if (!entry.isIntersecting && isIndicatorVisible.value[idx] !== undefined) {
-      isIndicatorVisible.value[idx] = false
-    }
-  })
 })
 
 function getCloneRefs() {
@@ -377,8 +347,6 @@ const handleClose = () => {
         :data-idx="idx"
         class="p-carousel__item p-carousel-item"
         @click="handleOpen(project, idx)"
-        @mousemove="setIndicator($event, idx)"
-        @mouseleave="hideIndicator(idx)"
       >
         <div
           class="p-carousel-item__asset"
@@ -394,16 +362,7 @@ const handleClose = () => {
           />
           <div class="p-carousel-item__revealer" />
         </div>
-        <div
-          ref="cursorIndicators"
-          class="p-carousel__cursor"
-          :class="{
-            active: isIndicatorActive,
-            visible: isIndicatorVisible[idx],
-          }"
-        >
-          {{ content?.hover_text }}
-        </div>
+        <CustomCursor :text="content?.hover_text" />
       </li>
     </ul>
     <div v-if="!!selectedProject" class="p-carousel-clone">
@@ -485,7 +444,6 @@ const handleClose = () => {
   aspect-ratio: 200/745;
   flex-shrink: 0;
   flex-grow: 0;
-  cursor: none;
 
   @media (max-width: $br1) {
     max-width: 70vw;
@@ -651,45 +609,6 @@ const handleClose = () => {
 
   @media (max-width: $br1) {
     margin-top: 40px;
-  }
-}
-
-.p-carousel__cursor {
-  @include medium;
-  position: fixed;
-  z-index: 1000;
-  width: vw(87);
-  height: vw(87);
-  top: calc(var(--indicator-y, 0px) - vw(43.5));
-  left: calc(var(--indicator-x, 0px) - vw(43.5));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  background-color: var(--dark);
-  color: var(--background);
-  font-size: vw(14);
-  line-height: 1em;
-  text-transform: capitalize;
-  pointer-events: none;
-  opacity: 0;
-  transform: scale(0.5);
-  transition:
-    transform 0.4s ease,
-    opacity 0.4s ease;
-  user-select: none;
-
-  @media (max-width: $br1) {
-    display: none;
-  }
-
-  &.visible {
-    opacity: 1;
-    transform: scale(1);
-  }
-
-  &.active {
-    transform: scale(0.8);
   }
 }
 </style>

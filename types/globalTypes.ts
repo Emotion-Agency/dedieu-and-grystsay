@@ -6,4 +6,5 @@ export interface iGlobalContent {
   carousel_name: string
   back: string
   project_detail: string
+  cursor: string
 }

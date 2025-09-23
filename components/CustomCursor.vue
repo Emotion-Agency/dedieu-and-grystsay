@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { useGlobalStory } from '~/composables/stories/globalStory'
+import { gsap } from '~/libs/gsap'
 
 interface Props {
   text?: string
@@ -36,6 +37,7 @@ useIntersectionObserver($area, entries => {
 })
 
 onMounted(() => {
+  gsap.set($area.value?.parentElement, { cursor: 'none' })
   $area.value?.parentElement?.addEventListener('mousemove', setIndicator)
   $area.value?.parentElement?.addEventListener('mouseleave', hideIndicator)
 })

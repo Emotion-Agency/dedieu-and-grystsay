@@ -311,7 +311,6 @@ const handleClose = () => {
   tl.to(
     $asset,
     {
-      filter: isMobile.value ? 'grayscale(100%)' : undefined,
       width: assetWidth,
       duration: 1,
       ease: 'sine.inOut',
@@ -476,7 +475,6 @@ const handleClose = () => {
   @media (max-width: $br1) {
     aspect-ratio: 240/558;
     width: 200px;
-    filter: grayscale(100%);
   }
 }
 

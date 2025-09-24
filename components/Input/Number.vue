@@ -73,6 +73,7 @@ const inputId = computed(() => {
   border: none;
   outline: none;
   padding: rem(8) rem(12);
+  font-size: vw(16);
   width: 100%;
   height: 100%;
   background-color: transparent;
@@ -80,6 +81,10 @@ const inputId = computed(() => {
 
   &::placeholder {
     color: var(--foreground-muted);
+  }
+
+  @media (max-width: $br1) {
+    font-size: 16px;
   }
 }
 </style>

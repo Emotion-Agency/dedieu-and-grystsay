@@ -79,6 +79,7 @@ const onInput = () => {
   padding: rem(22);
   width: 100%;
   height: 100%;
+  font-size: vw(16);
   background-color: transparent;
   color: var(--background);
   @include regular;
@@ -98,6 +99,7 @@ const onInput = () => {
 
   @media (max-width: $br1) {
     padding: 21px 16px;
+    font-size: 16px;
   }
 }
 

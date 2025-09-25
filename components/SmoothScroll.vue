@@ -7,9 +7,11 @@ const ticker = (time: number) => {
 }
 
 onMounted(() => {
+  history.scrollRestoration = 'manual'
   window.scrollTo(0, 0)
 
   window.elenis = new Lenis()
+  window.elenis.scrollTo(0, { immediate: true, force: true })
 
   window.elenis.on('scroll', ScrollTrigger.update)
 

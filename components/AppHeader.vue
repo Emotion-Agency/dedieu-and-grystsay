@@ -37,36 +37,41 @@ watch(isVisible, val => {
   }
 })
 
-const threshold = computed(() => {
-  if (!import.meta.client) {
-    return 0
+const threshold = 3
+
+const onScrollDown = () => {
+  upwardCount.value = 0 // reset counter
+  if (isVisible.value) {
+    isVisible.value = false
   }
-  return 100
-})
+}
+
+const onScrollUp = () => {
+  upwardCount.value++
+
+  if (upwardCount.value >= threshold && !isVisible.value) {
+    isVisible.value = true
+    upwardCount.value = 0
+  }
+}
+
+const throttledOnScrollUp = useThrottleFn(onScrollUp, 700)
 
 const onScroll = (e: Lenis) => {
   const currentScroll = e.scroll
 
-  if (currentScroll < 20) {
-    upwardCount.value = 0
-    isVisible.value = true
-    return
-  }
+  // if (currentScroll < 20) {
+  //   upwardCount.value = 0
+  //   isVisible.value = true
+  //   return
+  // }
 
   if (currentScroll < lastScroll.value) {
     // scrolling up
-    upwardCount.value++
-
-    if (upwardCount.value >= threshold.value && !isVisible.value) {
-      isVisible.value = true
-      upwardCount.value = 0
-    }
+    throttledOnScrollUp()
   } else if (currentScroll > lastScroll.value) {
     // scrolling down
-    upwardCount.value = 0 // reset counter
-    if (isVisible.value) {
-      isVisible.value = false
-    }
+    onScrollDown()
   }
 
   lastScroll.value = currentScroll

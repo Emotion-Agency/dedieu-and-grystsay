@@ -92,7 +92,8 @@ const toggleText = () => {
 
   @media (max-width: $br1) {
     text-align: left;
-    font-size: 65px;
+    font-size: 36px;
+    line-height: 0.86em;
     margin-bottom: 30px;
   }
 

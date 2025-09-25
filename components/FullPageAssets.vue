@@ -43,7 +43,7 @@ const images = computed<iImage[]>(() => props.images ?? props.assets ?? [])
 .full-assets__img {
   display: block;
   width: 100vw;
-  height: 100vh;
+  height: 100svh;
   object-fit: cover;
 
   @media (max-width: $br1) {

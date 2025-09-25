@@ -11,7 +11,7 @@ defineProps<IProps>()
 <template>
   <section class="news-text-block container">
     <div class="news-text-block__wrapper">
-      <TextBlock :content="content" isCurrentNews />
+      <TextBlock :content="content" is-current-news />
     </div>
   </section>
 </template>

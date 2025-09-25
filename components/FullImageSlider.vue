@@ -172,7 +172,7 @@ useIntersectionObserver($el, ([entry]) => {
 <style scoped lang="scss">
 .full-slider {
   position: relative;
-  height: 100dvh;
+  height: 100svh;
   width: 100%;
   @media (min-width: $br1) {
     cursor: none;
@@ -267,15 +267,15 @@ useIntersectionObserver($el, ([entry]) => {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 60px;
-    height: 60px;
+    width: 40px;
+    height: 40px;
     background-color: var(--background);
     color: var(--background);
     border-radius: 50%;
 
     svg {
-      width: 20px;
-      height: 20px;
+      width: 16px;
+      height: 16px;
     }
   }
 

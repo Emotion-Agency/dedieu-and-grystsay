@@ -34,7 +34,7 @@ defineProps<IProps>()
   padding-top: vw(120);
   padding-bottom: vw(30);
   width: 100vw;
-  height: 100dvh;
+  height: 100svh;
 
   @media (max-width: $br1) {
     padding-top: var(--section-spacing);

@@ -60,11 +60,11 @@ const throttledOnScrollUp = useThrottleFn(onScrollUp, 700)
 const onScroll = (e: Lenis) => {
   const currentScroll = e.scroll
 
-  // if (currentScroll < 20) {
-  //   upwardCount.value = 0
-  //   isVisible.value = true
-  //   return
-  // }
+  if (currentScroll < 40) {
+    upwardCount.value = 0
+    isVisible.value = true
+    return
+  }
 
   if (currentScroll < lastScroll.value) {
     // scrolling up

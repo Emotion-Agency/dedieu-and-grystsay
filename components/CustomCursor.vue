@@ -106,7 +106,7 @@ const cursorText = computed(() => {
     opacity 0.4s ease;
   user-select: none;
 
-  @media (max-width: $br1) {
+  @media (max-width: $br1), (hover: none) and (cursor: coarse) {
     display: none;
   }
 

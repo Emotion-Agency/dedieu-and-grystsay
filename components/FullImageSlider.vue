@@ -231,7 +231,7 @@ useIntersectionObserver($el, ([entry]) => {
   width: 100%;
   z-index: 3;
 
-  @media (max-width: $br1) {
+  @media (max-width: $br1), (hover: none) and (pointer: coarse) {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -248,7 +248,7 @@ useIntersectionObserver($el, ([entry]) => {
   transition: transform 0.2s ease;
   outline: none;
 
-  @media (min-width: $br1) {
+  @media (min-width: $br1) and (hover: hover) and (pointer: fine) {
     &:first-child {
       height: 100%;
       width: 50%;
@@ -263,7 +263,7 @@ useIntersectionObserver($el, ([entry]) => {
     }
   }
 
-  @media (max-width: $br1) {
+  @media (max-width: $br1), (hover: none) and (pointer: coarse) {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -331,7 +331,7 @@ useIntersectionObserver($el, ([entry]) => {
     transform: scale(1);
   }
 
-  @media (max-width: $br1) {
+  @media (max-width: $br1), (hover: none) and (pointer: coarse) {
     display: none;
   }
 }

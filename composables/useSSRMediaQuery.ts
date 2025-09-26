@@ -34,13 +34,7 @@ export function useSSRMediaQuery(query: string) {
   if (import.meta.client) {
     const clientMatch = useMediaQuery(query)
 
-    onMounted(() => {
-      if (isMatch.value !== clientMatch.value) {
-        isMatch.value = clientMatch.value
-      }
-    })
-
-    watch(clientMatch, val => {
+    watchImmediate(clientMatch, val => {
       isMatch.value = val
     })
   }

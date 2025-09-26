@@ -40,6 +40,12 @@ const meta = computed(() => {
     ogImage: data?.image?.filename,
   }
 })
+
+const index = ref(0)
+
+onMounted(() => {
+  index.value++
+})
 </script>
 
 <template>
@@ -49,6 +55,7 @@ const meta = computed(() => {
       <component
         :is="resolveSectionByName(item.component)"
         v-if="resolveSectionByName(item.component)"
+        :key="index"
         v-editable="item"
         :content="item"
       />

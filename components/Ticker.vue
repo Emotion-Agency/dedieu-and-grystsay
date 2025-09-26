@@ -21,8 +21,8 @@ const generateRepeatCount = async () => {
   await nextTick()
   if (!containerRef.value || !tickerRef1.value) return
 
-  const containerWidth = containerRef.value.offsetWidth
-  const textWidth = tickerRef1.value.offsetWidth
+  const containerWidth = containerRef.value?.offsetWidth || 0
+  const textWidth = tickerRef1.value?.offsetWidth || 0
 
   repeatCount.value = Math.ceil(containerWidth / textWidth) + 2
   await nextTick()

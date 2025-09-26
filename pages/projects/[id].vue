@@ -79,6 +79,12 @@ const lastFullAssetsIndex = computed(
     body.value?.findLastIndex(item => item.component === 'full_page_assets') ??
     -1
 )
+
+const index = ref(0)
+
+onMounted(() => {
+  index.value++
+})
 </script>
 
 <template>
@@ -89,6 +95,7 @@ const lastFullAssetsIndex = computed(
       <component
         :is="resolveSectionByName(item.component)"
         v-if="resolveSectionByName(item.component)"
+        :key="index"
         v-editable="item"
         :data-o="item.component === 'full_page_assets' ? true : undefined"
         :content="item"

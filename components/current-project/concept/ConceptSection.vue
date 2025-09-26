@@ -19,18 +19,23 @@ const handleModalOpen = (idx: number) => {
   currentIndex.value = idx
   showModal.value = true
 }
+
+const index = ref(0)
+
+watch(isMobile, val => {
+  console.log(val)
+  index.value++
+})
 </script>
 
 <template>
-  <section class="p-concept container">
+  <section :key="index" class="p-concept container">
+    <p>isMobile: {{ isMobile }}</p>
     <div class="p-concept__wrapper">
       <div class="p-concept__content">
         <h2 class="p-concept__title">
           {{ content?.title }}
         </h2>
-        <p class="p-concept__text">
-          {{ content?.text }}
-        </p>
       </div>
       <CurrentProjectConceptMobile
         v-if="isMobile"
@@ -38,7 +43,7 @@ const handleModalOpen = (idx: number) => {
         @open-modal="handleModalOpen"
       />
       <CurrentProjectConceptDesktop
-        v-else
+        v-if="!isMobile"
         :images
         :next-slide-button="story?.content?.slides_next"
         @open-modal="handleModalOpen"

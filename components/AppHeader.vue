@@ -198,7 +198,7 @@ onBeforeUnmount(() => {
 .header__line {
   content: '';
   position: absolute;
-  bottom: 0;
+  bottom: 1px;
   left: 50%;
   transform: translateX(-50%);
   width: calc(100% - ($g-offset * 2));

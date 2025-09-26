@@ -79,6 +79,9 @@ export const useHeaderAnimation = () => {
         defaults: {
           ease: 'power2.out',
         },
+        onComplete: () => {
+          gsap.set($headerLine, { clearProps: 'all' })
+        },
       })
 
       gsap.set($headerLine, {

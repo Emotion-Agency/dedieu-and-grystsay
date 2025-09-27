@@ -53,6 +53,7 @@ onMounted(() => {
 <template>
   <div>
     <PageMeta v-if="meta" v-bind="meta" />
+
     <template v-for="item in body" :key="item._uid">
       <component
         :is="resolveSectionByName(item.component)"

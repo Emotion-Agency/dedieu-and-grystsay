@@ -7,7 +7,7 @@ interface IProps {
 
 const props = defineProps<IProps>()
 
-const { isMobile } = useAppState()
+const isMobile = useSSRMediaQuery()
 
 const titleText = computed(() => {
   if (isMobile.value) {

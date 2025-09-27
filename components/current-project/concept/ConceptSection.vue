@@ -9,7 +9,7 @@ interface IProps {
 const props = defineProps<IProps>()
 
 const { story } = await useGlobalStory()
-const { isMobile } = useAppState()
+const isMobile = useSSRMediaQuery()
 const showModal = ref(false)
 const currentIndex = ref(0)
 
@@ -19,17 +19,10 @@ const handleModalOpen = (idx: number) => {
   currentIndex.value = idx
   showModal.value = true
 }
-
-const index = ref(0)
-
-watch(isMobile, val => {
-  console.log(val)
-  index.value++
-})
 </script>
 
 <template>
-  <section :key="index" class="p-concept container">
+  <section class="p-concept container">
     <div class="p-concept__wrapper">
       <div class="p-concept__content">
         <h2 class="p-concept__title">

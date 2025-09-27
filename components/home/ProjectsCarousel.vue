@@ -21,10 +21,12 @@ const selectedProject = ref<iStory<iProjectsContent> | null>(null)
 
 const st = ref<ScrollTrigger>(null)
 
-const { isMobile } = useAppState()
+const isMobile = useSSRMediaQuery()
 
 onMounted(() => {
   const $grid = document.querySelector('.p-carousel__grid')
+  if (!$grid) return
+
   const $assets = $grid.querySelectorAll('.p-carousel-item__asset')
   const $revealers = $grid.querySelectorAll('.p-carousel-item__revealer')
 

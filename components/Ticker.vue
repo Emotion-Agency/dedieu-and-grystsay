@@ -71,13 +71,13 @@ onBeforeUnmount(() => {
     <div class="ticker__line" :class="'ticker__line--top'" />
     <div class="ticker__wrapper">
       <div ref="tickerRef1" class="ticker__content">
-        <template v-for="i in repeatCount" :key="'slot1-' + i">
+        <template v-for="i in repeatCount || 0" :key="'slot1-' + i">
           <span><slot /></span>
           <DownArrow v-if="!isCurrentProjects" />
         </template>
       </div>
       <div ref="tickerRef2" class="ticker__content">
-        <template v-for="i in repeatCount" :key="'slot2-' + i">
+        <template v-for="i in repeatCount || 0" :key="'slot2-' + i">
           <span><slot /></span>
           <DownArrow v-if="!isCurrentProjects" />
         </template>

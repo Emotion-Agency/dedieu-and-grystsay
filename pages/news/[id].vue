@@ -48,9 +48,10 @@ const meta = computed(() => {
   }
 })
 
+const isMobile = useSSRMediaQuery()
 const index = ref(0)
 
-onMounted(() => {
+watch(isMobile, () => {
   index.value++
 })
 </script>
@@ -58,15 +59,17 @@ onMounted(() => {
 <template>
   <div v-if="story">
     <PageMeta v-if="meta" v-bind="meta" />
+
     <template v-for="item in body" :key="item._uid">
       <component
         :is="resolveSectionByName(item.component)"
         v-if="resolveSectionByName(item.component)"
-        :key="index"
+        :key="'article-' + index"
         v-editable="item"
         :data-o="item.component === 'full_page_assets' ? true : undefined"
         :content="item"
       />
+
       <div v-else>
         <p>Unknown component: {{ item.component }}</p>
       </div>

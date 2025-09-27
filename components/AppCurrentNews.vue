@@ -9,7 +9,7 @@ interface IProps {
 const props = defineProps<IProps>()
 
 const { story } = await useGlobalStory()
-const { isMobile } = useAppState()
+const isMobile = useSSRMediaQuery()
 
 const newsProjects =
   props.content?.news?.[0]?.content?.items ??

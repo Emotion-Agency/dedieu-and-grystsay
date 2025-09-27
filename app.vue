@@ -78,9 +78,7 @@ const isCurrentProjectPage = computed(() =>
       <AppHeader :is-contact-page="isContactPage" />
       <NuxtLayout>
         <main class="app__main">
-          <KeepAlive>
-            <NuxtPage />
-          </KeepAlive>
+          <NuxtPage />
         </main>
         <Revealer />
         <Preloader v-if="isFirstLoad" />

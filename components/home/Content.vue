@@ -42,22 +42,16 @@ const meta = computed(() => {
     ogImage: data?.image?.filename,
   }
 })
-
-const index = ref(0)
-
-onMounted(() => {
-  index.value++
-})
 </script>
 
 <template>
   <div>
     <PageMeta v-if="meta" v-bind="meta" />
+
     <template v-for="item in body" :key="item._uid">
       <component
         :is="resolveSectionByName(item.component)"
         v-if="resolveSectionByName(item.component)"
-        :key="index"
         v-editable="item"
         :content="item"
       />

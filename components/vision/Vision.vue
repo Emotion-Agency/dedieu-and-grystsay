@@ -8,7 +8,7 @@ interface IProps {
 
 const props = defineProps<IProps>()
 
-const { isMobile } = useAppState()
+const isMobile = useSSRMediaQuery()
 
 const images = computed(() => props.content?.carousel || [])
 const isExpanded = ref(false)

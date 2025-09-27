@@ -3,7 +3,7 @@ import { useRequestHeaders } from 'nuxt/app'
 import { useMediaQuery } from '@vueuse/core'
 import { UAParser } from 'ua-parser-js'
 
-export function useSSRMediaQuery(query: string) {
+export function useSSRMediaQuery(query: string = '(max-width: 860px)') {
   const isMatch = useState('isSSRMatch', () => false)
 
   // Server-side detection using UA
@@ -34,7 +34,11 @@ export function useSSRMediaQuery(query: string) {
   if (import.meta.client) {
     const clientMatch = useMediaQuery(query)
 
-    watchImmediate(clientMatch, val => {
+    onMounted(() => {
+      isMatch.value = clientMatch.value
+    })
+
+    watch(clientMatch, val => {
       isMatch.value = val
     })
   }

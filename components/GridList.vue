@@ -16,7 +16,7 @@ const props = withDefaults(defineProps<IProps>(), {
 
 const { story } = await useGlobalStory()
 
-const { isMobile } = useAppState()
+const isMobile = useSSRMediaQuery()
 const $el = ref<HTMLElement | null>(null)
 
 const SHOW_STEP = 7

@@ -80,9 +80,10 @@ const lastFullAssetsIndex = computed(
     -1
 )
 
+const isMobile = useSSRMediaQuery()
 const index = ref(0)
 
-onMounted(() => {
+watch(isMobile, () => {
   index.value++
 })
 </script>
@@ -95,7 +96,7 @@ onMounted(() => {
       <component
         :is="resolveSectionByName(item.component)"
         v-if="resolveSectionByName(item.component)"
-        :key="index"
+        :key="'project-' + index"
         v-editable="item"
         :data-o="item.component === 'full_page_assets' ? true : undefined"
         :content="item"
@@ -107,6 +108,7 @@ onMounted(() => {
         <p>Unknown component: {{ item.component }}</p>
       </div>
     </template>
+
     <div class="container">
       <NextProjectButton :project="nextProject" @click="onClick" />
     </div>

@@ -5,14 +5,11 @@ export const useAppState = () => {
   const isMenuOpened = useState('isMenuOpened', () => false)
   const isTransitionEnabled = useState('isTransitionEnabled', () => true)
 
-  const isMobile = useSSRMediaQuery('(max-width: 860px)')
-
   return {
     isInEditor,
     isLoaded,
     isWaiting,
     isMenuOpened,
     isTransitionEnabled,
-    isMobile,
   }
 }

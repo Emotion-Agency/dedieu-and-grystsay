@@ -109,7 +109,7 @@ onBeforeUnmount(() => {
       </div>
     </div>
     <BurgerMenu :content="story?.content" />
-    <div class="header__line" />
+    <hr class="header__line" />
   </header>
 </template>
 
@@ -196,14 +196,15 @@ onBeforeUnmount(() => {
 }
 
 .header__line {
-  content: '';
   position: absolute;
   bottom: 1px;
   left: 50%;
   transform: translateX(-50%);
   width: calc(100% - ($g-offset * 2));
-  height: 1px;
-  background-color: var(--foreground);
+  border-color: var(--foreground);
+  border-top-width: 0;
+  border-bottom-width: 1px;
+  margin: 0;
 
   @media (max-width: $br1) {
     width: calc(100% - ($g-sm * 2));

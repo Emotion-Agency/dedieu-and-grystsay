@@ -80,7 +80,18 @@ export const useHeaderAnimation = () => {
           ease: 'power2.out',
         },
         onComplete: () => {
-          gsap.set($headerLine, { clearProps: 'all' })
+          gsap.set(
+            [
+              elRef.value,
+              $headerLine,
+              $headerItems,
+              $headerItemsLines,
+              $langSwitcher,
+              $logoText,
+              $burger,
+            ],
+            { clearProps: 'all' }
+          )
         },
       })
 

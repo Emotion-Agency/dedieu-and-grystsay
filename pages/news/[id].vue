@@ -47,13 +47,6 @@ const meta = computed(() => {
     ogImage: data?.image?.filename,
   }
 })
-
-const isMobile = useSSRMediaQuery()
-const index = ref(0)
-
-watch(isMobile, () => {
-  index.value++
-})
 </script>
 
 <template>
@@ -64,7 +57,6 @@ watch(isMobile, () => {
       <component
         :is="resolveSectionByName(item.component)"
         v-if="resolveSectionByName(item.component)"
-        :key="'article-' + index"
         v-editable="item"
         :data-o="item.component === 'full_page_assets' ? true : undefined"
         :content="item"

@@ -10,7 +10,7 @@ const props = defineProps<iProps>()
 
 const emit = defineEmits(['next'])
 
-const { story } = await useGlobalStory()
+const { story } = useGlobalStory()
 const squares = new Array(props.itemsCount)
 </script>
 

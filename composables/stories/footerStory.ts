@@ -2,11 +2,11 @@ import type { iFooterContent } from '~/types/footerTypes'
 import { useGetStory } from './getStory'
 import type { iStory } from '~/types/story'
 
-type tFooterStory = () => Promise<{
+type tFooterStory = () => Awaited<{
   story: Ref<iStory<iFooterContent>>
 }>
 
-export const useFooterStory: tFooterStory = async () => {
+export const useFooterStory: tFooterStory = () => {
   const story = useState<iStory<iFooterContent>>(
     'components/footer',
     () => null
@@ -14,9 +14,13 @@ export const useFooterStory: tFooterStory = async () => {
 
   try {
     if (!story.value) {
-      const res = await useGetStory('components/footer')
-
-      story.value = res.value
+      useAsyncData('footerStory', () => useGetStory('components/footer')).then(
+        res => {
+          if (res.data.value?.value) {
+            story.value = res.data.value?.value
+          }
+        }
+      )
     }
   } catch (error) {
     console.log(error)

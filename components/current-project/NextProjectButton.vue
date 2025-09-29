@@ -9,7 +9,7 @@ interface iProps {
 
 defineProps<iProps>()
 
-const { story } = await useGlobalStory()
+const { story } = useGlobalStory()
 </script>
 
 <template>

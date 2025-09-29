@@ -7,13 +7,13 @@ interface IProps {
 }
 
 const props = defineProps<IProps>()
+const { story } = useGlobalStory()
 
-const { story } = await useGlobalStory()
 const isMobile = useSSRMediaQuery()
 const showModal = ref(false)
 const currentIndex = ref(0)
 
-const images = props.content.corousel
+const images = computed(() => props.content.corousel)
 
 const handleModalOpen = (idx: number) => {
   currentIndex.value = idx
@@ -32,6 +32,7 @@ const handleModalOpen = (idx: number) => {
           {{ content?.text }}
         </p>
       </div>
+
       <CurrentProjectConceptMobile
         v-if="isMobile"
         :images

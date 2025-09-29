@@ -11,7 +11,7 @@ interface IProps {
 
 const props = defineProps<IProps>()
 
-const { story } = await useGlobalStory()
+const { story } = useGlobalStory()
 
 const el = useTemplateRef<HTMLElement>('el')
 

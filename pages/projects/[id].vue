@@ -80,23 +80,20 @@ const lastFullAssetsIndex = computed(
     -1
 )
 
-const isMobile = useSSRMediaQuery()
-const index = ref(0)
-
-watch(isMobile, () => {
-  index.value++
-})
+// const isMobile = useSSRMediaQuery()
 </script>
 
 <template>
   <div v-if="story">
     <PageMeta v-if="meta" v-bind="meta" />
+    <!-- <p style="position: fixed; top: 100px; left: 100px">
+      Mobile: {{ isMobile }}
+    </p> -->
 
     <template v-for="(item, idx) in body" :key="item._uid">
       <component
         :is="resolveSectionByName(item.component)"
         v-if="resolveSectionByName(item.component)"
-        :key="'project-' + index"
         v-editable="item"
         :data-o="item.component === 'full_page_assets' ? true : undefined"
         :content="item"

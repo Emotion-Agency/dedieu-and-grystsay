@@ -2,7 +2,7 @@
 import { gsap, ScrollTrigger } from '~/libs/gsap'
 import { useFooterStory } from '~/composables/stories/footerStory'
 
-const { story: footerStory } = await useFooterStory()
+const { story: footerStory } = useFooterStory()
 
 const $el = ref<HTMLElement | null>(null)
 

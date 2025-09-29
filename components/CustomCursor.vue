@@ -8,7 +8,7 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const { story } = await useGlobalStory()
+const { story } = useGlobalStory()
 
 const isIndicatorActive = ref(false)
 const isIndicatorVisible = ref<boolean>(false)

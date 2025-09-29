@@ -14,7 +14,7 @@ const props = withDefaults(defineProps<IProps>(), {
   type: 'news',
 })
 
-const { story } = await useGlobalStory()
+const { story } = useGlobalStory()
 
 const isMobile = useSSRMediaQuery()
 const $el = ref<HTMLElement | null>(null)

@@ -226,7 +226,7 @@ const handleOpen = async (project: iStory<iProjectsContent>, idx: number) => {
     0
   )
 
-  window.innerWidth < 860 && gsap.set(el.value, { height: $clone.scrollHeight })
+  isMobile.value && gsap.set(el.value, { height: $clone.scrollHeight })
 
   tl.to($content, { duration: 0, opacity: 1 }, '<65%')
   tl.to($backBtn, { duration: 1, opacity: 1, y: 0, ease: 'expo.out' }, '<')

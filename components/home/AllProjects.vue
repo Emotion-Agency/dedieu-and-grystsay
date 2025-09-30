@@ -50,6 +50,7 @@ defineProps<IProps>()
 
 .all-projects__images {
   position: absolute;
+  z-index: 2;
   display: block;
   width: vw(106);
   height: vw(106);
@@ -145,6 +146,7 @@ defineProps<IProps>()
     background-color: currentColor;
     position: absolute;
     left: 0;
+    z-index: 1;
     bottom: vw(12);
     transform: scaleX(0);
     transition: transform 0.6s ease;

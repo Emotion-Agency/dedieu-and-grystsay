@@ -81,6 +81,11 @@ const showModal = ref(false)
     aspect-ratio: 325/470;
   }
 
+  @media (max-width: $br1) and (orientation: landscape) {
+    aspect-ratio: 16/9;
+    height: 100svh;
+  }
+
   video {
     object-fit: cover;
   }

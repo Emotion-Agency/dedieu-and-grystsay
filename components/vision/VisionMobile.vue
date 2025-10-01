@@ -105,6 +105,13 @@ watch(current, handleChangeSlide)
   aspect-ratio: 325 / 470;
   width: 100%;
   position: relative;
+
+  aspect-ratio: 325/470;
+
+  @media (max-width: $br1) and (orientation: landscape) {
+    aspect-ratio: 16/9;
+    height: 100svh;
+  }
 }
 
 .vision-mob__item {

@@ -164,8 +164,8 @@ onBeforeUnmount(() => {
       pointer-events: none;
     }
 
-    &::before {
-      background-color: var(--foreground);
+    .header__line {
+      border-color: transparent;
     }
   }
 }

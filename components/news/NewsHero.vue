@@ -22,7 +22,7 @@ const titleText = computed(() => {
   <section ref="$el" class="news-hero container">
     <div class="news-hero__wrapper">
       <h1 data-split class="news-hero__title" v-html="titleText" />
-      <CustomImage
+      <AssetRenderer
         data-preload
         :src="content?.asset?.filename"
         :alt="content?.asset?.alt"

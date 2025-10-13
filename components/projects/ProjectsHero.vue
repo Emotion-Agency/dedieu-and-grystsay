@@ -32,7 +32,7 @@ const titleText = computed(() => {
         />
         <p data-split class="prs-hero__text">{{ content?.text }}</p>
       </div>
-      <CustomImage
+      <AssetRenderer
         data-preload
         :src="content?.asset?.filename"
         :alt="content?.asset?.alt"

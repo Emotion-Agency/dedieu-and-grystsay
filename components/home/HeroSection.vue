@@ -24,13 +24,14 @@ const titleText = computed(() => {
       <h1 data-split class="hero__title" v-html="titleText" />
 
       <div class="hero__d-wrapper">
-        <CustomImage
+        <AssetRenderer
           data-preload
           :src="content?.asset?.filename"
           :alt="content?.asset?.alt"
           :width="848"
           class="hero__img"
         />
+
         <p data-split class="hero__description">
           {{ content?.text }}
         </p>

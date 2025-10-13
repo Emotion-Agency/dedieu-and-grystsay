@@ -25,7 +25,8 @@ const titleText = computed(() => {
         <h1 data-split class="curr-news-hero__title" v-html="titleText" />
         <div class="curr-news-hero__text-wrapper">
           <p data-split class="curr-news-hero__text">{{ content?.text }}</p>
-          <CustomImage
+
+          <AssetRenderer
             data-preload
             :src="content?.asset?.filename"
             :alt="content?.asset?.alt"

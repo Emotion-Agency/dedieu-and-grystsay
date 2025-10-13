@@ -37,6 +37,11 @@ const titleText = computed(() => {
         :src="content?.asset?.filename"
         :alt="content?.asset?.alt"
         :width="828"
+        :video-attributes="{
+          autoplay: true,
+          playsinline: true,
+          muted: true,
+        }"
         class="prs-hero__img"
       />
     </div>

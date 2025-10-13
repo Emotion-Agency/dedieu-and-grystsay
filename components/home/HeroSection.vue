@@ -70,14 +70,14 @@ const titleText = computed(() => {
 
 .hero__title {
   @include medium;
-  font-size: vw(152);
+  font-size: vw(144);
   line-height: 0.84em;
   letter-spacing: -0.03em;
-  width: vw(860);
+  width: vw(910);
   text-transform: uppercase;
 
   @media (max-width: $br1) {
-    font-size: size(152, 70);
+    font-size: size(144, 70);
     line-height: 0.89em;
     width: auto;
   }

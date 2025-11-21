@@ -117,7 +117,6 @@ watch(current, handleChangeSlide)
 .vision-mob__item {
   width: 100%;
   height: 100%;
-  will-change: transform, clip-path;
   position: absolute;
   top: 0;
   left: 0;
@@ -126,10 +125,12 @@ watch(current, handleChangeSlide)
 
   &.active {
     z-index: 2;
+    will-change: transform;
   }
 
   &.prev {
     z-index: 1;
+    will-change: transform;
   }
 
   &:first-child {

@@ -63,7 +63,7 @@ watch(isOpen, () => {
   transition: all 0.3s ease;
   background-color: var(--foreground);
   color: var(--background);
-  z-index: 2;
+  z-index: 50;
 
   @media (min-width: $br1) {
     max-height: 95vh;

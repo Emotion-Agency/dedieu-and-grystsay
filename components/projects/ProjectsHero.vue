@@ -23,11 +23,16 @@ const titleText = computed(() => {
     <div class="prs-hero__wrapper">
       <div class="prs-hero__content">
         <h1 data-split class="prs-hero__title" v-html="titleText" />
-        <CustomImage
+        <AssetRenderer
           data-preload
           :src="content?.asset?.filename"
           :alt="content?.asset?.alt"
           :width="828"
+          :video-attributes="{
+            autoplay: true,
+            playsinline: true,
+            muted: true,
+          }"
           class="prs-hero__img prs-hero__img--mob"
         />
         <p data-split class="prs-hero__text">{{ content?.text }}</p>
@@ -132,6 +137,8 @@ const titleText = computed(() => {
 
     @media (max-width: $br1) {
       display: block;
+      aspect-ratio: 325/233;
+      height: auto;
     }
   }
 }

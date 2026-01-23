@@ -40,11 +40,21 @@ const images = computed<iImage[]>(() => props.images ?? props.assets ?? [])
   }
 }
 
+.full-assets__wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
 .full-assets__img {
   display: block;
   width: 100vw;
   height: 100svh;
   object-fit: cover;
+
+  :deep(video) {
+    object-fit: cover;
+  }
 
   @media (max-width: $br1) {
     width: 100%;
